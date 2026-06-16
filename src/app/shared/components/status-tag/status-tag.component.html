@@ -1,0 +1,100 @@
+<div class="status-stag-container">
+  <button
+    #statusTag
+    class="status-tag"
+    [disabled]="isBtnDisabled()"
+    [ngStyle]="{
+      position: isStatusBeingRenamed() ? 'absolute' : 'static',
+      display: isStatusBeingRenamed() ? 'inline-block' : 'flex',
+      width: isStatusBeingRenamed() ? '0' : '',
+      padding: isStatusBeingRenamed() ? '0' : '4px 8px 4px 6px',
+
+      'background-color': status().defaultColorId
+        ? getDefaultColor(status().defaultColorId!)![currentColorTheme()!]
+        : status().colorHex,
+    }"
+    (click)="isStatusBeingRenamed.set(true); colorPickerMenuTrigger.openMenu()"
+  >
+    @switch (status().type) {
+      @case ("not_started") {
+        <span
+          class="status-tag__symbol status-tag__symbol--radio_button_unchecked material-symbols-outlined"
+        >
+          radio_button_unchecked
+        </span>
+      }
+      @case ("active") {
+        <span
+          class="status-tag__symbol status-tag__symbol--radio_button_partial material-symbols-outlined"
+        >
+          radio_button_partial
+        </span>
+      }
+      @case ("done") {
+        <span
+          class="status-tag__symbol status-tag__symbol--check material-symbols-outlined"
+        >
+          check
+        </span>
+      }
+    }
+    <span
+      appIsEllipsed
+      #statusName="appIsEllipsed"
+      class="status-tag__name"
+      [matTooltip]="status().name"
+      [matTooltipDisabled]="!statusName.isEllipsed"
+    >
+      {{ status().name }}
+    </span>
+  </button>
+  <div
+    #colorPickerMenuTrigger="matMenuTrigger"
+    class="rename-status-form-container"
+    [matMenuTriggerFor]="colorPickerMatMenu"
+  >
+    <form
+      class="rename-status-form"
+      [ngStyle]="{
+        display: isStatusBeingRenamed() ? 'flex' : 'none',
+        border:
+          '1px solid ' +
+          (status().defaultColorId
+            ? selectedDefaultColor()![currentColorTheme()!]
+            : status().colorHex),
+      }"
+      [formGroup]="renameStatusForm()"
+    >
+      <input
+        id="status-name"
+        class="status-name-input"
+        maxlength="26"
+        autocomplete="off"
+        oninput="this.value = this.value.toUpperCase()"
+        formControlName="statusName"
+        (keydown.enter)="updateStatus()"
+      />
+      <span
+        class="save-status-name-btn-tooltip-trigger"
+        [matTooltip]="getTooltipMessage()"
+        [matTooltipClass]="'center-tooltip-text'"
+        [matTooltipDisabled]="!isSaveDisabled()"
+      >
+        <button
+          type="button"
+          class="save-status-name-btn"
+          [disabled]="isSaveDisabled()"
+          (click)="updateStatus(); $event.stopPropagation()"
+        >
+          Save
+        </button>
+      </span>
+    </form>
+  </div>
+  <mat-menu class="color-picker-mat-menu" #colorPickerMatMenu>
+    <app-color-picker-menu
+      class="color-picker-menu"
+      [(selectedDefaultColor)]="selectedDefaultColor"
+    />
+  </mat-menu>
+</div>

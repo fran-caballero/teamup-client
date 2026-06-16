@@ -1,0 +1,31 @@
+<div class="remove-user-from-workspace-warning-modal">
+  <div
+    class="remove-user-from-workspace-warning-modal__small-close-btn-container"
+  >
+    <button class="small-close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="small-close-btn__symbol small-close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <header class="remove-user-from-workspace-warning-modal__body">
+    <div class="remove-user-from-workspace-warning-modal__main-message">
+      You will remove
+      <span class="remove-user-from-workspace-warning-modal__username">
+        {{ username }}</span
+      >
+      from this workspace.
+    </div>
+
+    <div class="remove-user-from-workspace-warning-modal__secondary-message">
+      Do you want to proceed?
+    </div>
+  </header>
+
+  <div class="remove-user-from-workspace-warning-modal__footer">
+    <button class="cancel-btn" (click)="onClickCancel()">Cancel</button>
+    <button class="accept-btn" (click)="onClickAccept()">Accept</button>
+  </div>
+</div>

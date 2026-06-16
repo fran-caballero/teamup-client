@@ -1,0 +1,12 @@
+<span class="user-avatar" [ngStyle]="styles()">
+  {{ username()[0] }}
+  @if (showRemoveIndicator()) {
+    <span class="user-avatar__remove-indicator"
+      ><span
+        class="user-avatar__remove-indicator-symbol user-avatar__remove-indicator-symbol--close-small material-symbols-outlined"
+      >
+        close_small
+      </span></span
+    >
+  }
+</span>

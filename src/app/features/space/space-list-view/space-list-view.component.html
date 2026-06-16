@@ -1,0 +1,202 @@
+<div class="space-list-view">
+  @switch (selectedGroupByOption()) {
+    @case ("status") {
+      @if (
+        spaceWithCollapsibleLists().folders.length === 0 &&
+        spaceWithCollapsibleLists().lists.length === 0
+      ) {
+        <app-empty-section
+          [spaceId]="spaceWithCollapsibleLists().id"
+          [folderId]="null"
+          [sectionType]="'space'"
+        />
+      } @else {
+        @for (folder of spaceWithCollapsibleLists().folders; track folder.id) {
+          @for (list of folder.lists; track list.id) {
+            <div class="list">
+              <div class="list__path">
+                <a
+                  class="list__path-folder"
+                  [routerLink]="
+                    getFolderLink(spaceWithCollapsibleLists().id, folder.id)
+                  "
+                  [queryParams]="{ view: 'list' }"
+                >
+                  {{ folder.name }} /
+                </a>
+                <a
+                  class="list__path-list"
+                  [routerLink]="[
+                    getListLink(
+                      spaceWithCollapsibleLists().id,
+                      folder.id,
+                      list.id
+                    ),
+                  ]"
+                  [queryParams]="{ view: 'list' }"
+                >
+                  {{ list.name }}
+                </a>
+              </div>
+              <div class="list__name-row">
+                <app-collapse-expand-btn
+                  [isCollapsedOnCreation]="false"
+                  [(isCollapsed)]="list.isCollapsed"
+                />
+                @if (
+                  !isListBeingRenamed() || listBeingRenamedId() !== list.id
+                ) {
+                  <span class="list__name">
+                    {{ list.name }}
+                  </span>
+                  <app-toggle-options-dropdown-btn
+                    [dropdownMenu]="
+                      listOptionsDropdownComponent.entityOptionsDropdown
+                    "
+                    [hoverColorContrast]="'medium'"
+                  />
+                } @else {
+                  <form
+                    class="list__edit-list-name-form"
+                    [formGroup]="editListNameForm"
+                  >
+                    <div formGroupName="listNames">
+                      <input
+                        #editListNameFormInput
+                        class="list__edit-list-name-form-input"
+                        formControlName="{{ list.id }}"
+                        (blur)="onEditListName(folder.id, list.id)"
+                        (keydown.enter)="onEditListName(folder.id, list.id)"
+                      />
+                    </div>
+                  </form>
+                }
+              </div>
+              <app-entity-options-dropdown
+                #listOptionsDropdownComponent
+                [includeRename]="canRenameList(list.id)"
+                [includeDelete]="canDeleteList(list.id)"
+                (startEntityRenaming)="onStartListRenaming(list.id)"
+                (startEntityDeletion)="
+                  openDeleteListWarningModal(folder.id, list)
+                "
+              />
+              @if (!list.isCollapsed()) {
+                <app-list
+                  [isStandalone]="false"
+                  [showClosedTasks]="showClosedTasks()"
+                  [groupByOrderingOption]="groupByOrderingOption()"
+                  [isEmbedded]="false"
+                  [view]="'list'"
+                  [inputSpaceId]="spaceWithCollapsibleLists().id"
+                  [inputFolderId]="folder.id"
+                  [folderName]="folder.name"
+                  [inputList]="list"
+                />
+              }
+            </div>
+          }
+        }
+        @for (list of spaceWithCollapsibleLists().lists; track list.id) {
+          <div class="list">
+            <div class="list__path">
+              <a
+                class="list__path-list"
+                [routerLink]="[
+                  getListLink(spaceWithCollapsibleLists().id, null, list.id),
+                ]"
+                [queryParams]="{ view: 'list' }"
+              >
+                {{ list.name }}
+              </a>
+            </div>
+            <div class="list__name-row">
+              <app-collapse-expand-btn
+                [isCollapsedOnCreation]="false"
+                [(isCollapsed)]="list.isCollapsed"
+              />
+              @if (!isListBeingRenamed() || listBeingRenamedId() !== list.id) {
+                <span class="list__name">
+                  {{ list.name }}
+                </span>
+                <app-toggle-options-dropdown-btn
+                  [dropdownMenu]="
+                    listOptionsDropdownComponent.entityOptionsDropdown
+                  "
+                  [hoverColorContrast]="'medium'"
+                />
+              } @else {
+                <form
+                  class="list__edit-list-name-form"
+                  [formGroup]="editListNameForm"
+                >
+                  <div formGroupName="listNames">
+                    <input
+                      #editListNameFormInput
+                      class="list__edit-list-name-form-input"
+                      formControlName="{{ list.id }}"
+                      (blur)="onEditListName(null, list.id)"
+                      (keydown.enter)="onEditListName(null, list.id)"
+                    />
+                  </div>
+                </form>
+              }
+            </div>
+            <app-entity-options-dropdown
+              #listOptionsDropdownComponent
+              [includeRename]="canRenameList(list.id)"
+              [includeDelete]="canDeleteList(list.id)"
+              (startEntityRenaming)="onStartListRenaming(list.id)"
+              (startEntityDeletion)="openDeleteListWarningModal(null, list)"
+            />
+            @if (!list.isCollapsed()) {
+              <app-list
+                [isStandalone]="false"
+                [showClosedTasks]="showClosedTasks()"
+                [groupByOrderingOption]="groupByOrderingOption()"
+                [isEmbedded]="false"
+                [view]="'list'"
+                [inputSpaceId]="spaceWithCollapsibleLists().id"
+                [inputFolderId]="null"
+                [inputList]="list"
+              />
+            }
+          </div>
+        }
+      }
+    }
+    @case ("priority") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceWithCollapsibleLists().id"
+        [folderId]="null"
+        [selectedGroupByOption]="'priority'"
+        [taskGroups]="taskGroups()"
+        [taskGroupsType]="'inSpace'"
+        [tasksCommonAncestors]="null"
+      />
+    }
+    @case ("dueDate") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceWithCollapsibleLists().id"
+        [folderId]="null"
+        [selectedGroupByOption]="'dueDate'"
+        [taskGroups]="taskGroups()"
+        [taskGroupsType]="'inSpace'"
+        [tasksCommonAncestors]="null"
+      />
+    }
+    @case ("assignee") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceWithCollapsibleLists().id"
+        [folderId]="null"
+        [selectedGroupByOption]="'assignee'"
+        [taskGroups]="taskGroups()"
+        [taskGroupsType]="'inSpace'"
+        [tasksCommonAncestors]="null"
+      />
+    }
+  }
+</div>

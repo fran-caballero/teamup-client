@@ -1,0 +1,12 @@
+.set-priority-btn {
+  display: flex;
+  align-items: center;
+}
+
+.set-priority-btn:disabled {
+  cursor: default;
+}
+
+.set-priority-btn--hover-outlined:hover {
+  outline: 1px solid var(--hover-color-contrast-very-high);
+}

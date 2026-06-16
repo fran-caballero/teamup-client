@@ -1,0 +1,110 @@
+@if (list(); as list) {
+  <div
+    class="list-btn"
+    [ngClass]="{
+      'list-btn--in-list': isInList(),
+      'list-btn--folder-child': folder(),
+    }"
+    [matTooltip]="tooltipText"
+    [matTooltipClass]="'center-tooltip-text'"
+    [matTooltipDisabled]="!isDisabled()"
+  >
+    <div class="list-btn__left">
+      <app-list-symbol class="list-btn__symbol" />
+      @if (!isListBeingRenamed()) {
+        @if (space() && folder()) {
+          @if (buttonType() === "link") {
+            <a
+              appIsEllipsed
+              #listLink="appIsEllipsed"
+              class="list-btn__a"
+              [routerLink]="[
+                '/spaces',
+                space().id,
+                'folders',
+                folder()!.id,
+                'lists',
+                list.id,
+              ]"
+              [queryParams]="{ view: 'board' }"
+              [matTooltip]="list.name"
+              [matTooltipDisabled]="!listLink.isEllipsed"
+            >
+              {{ list.name }}
+            </a>
+          } @else {
+            <button
+              appIsEllipsed
+              #listLink="appIsEllipsed"
+              class="list-btn__btn"
+              [disabled]="isDisabled()"
+              [matTooltip]="list.name"
+              [matTooltipDisabled]="!listLink.isEllipsed"
+              (click)="listSelection.emit(list)"
+            >
+              {{ list.name }}
+            </button>
+          }
+        } @else if (space()) {
+          @if (buttonType() === "link") {
+            <a
+              appIsEllipsed
+              #listLink="appIsEllipsed"
+              class="list-btn__a"
+              [class.list-btn--folder-child]="folder()"
+              [routerLink]="['/spaces', space()!.id, 'lists', list.id]"
+              [queryParams]="{ view: 'board' }"
+              [matTooltip]="list.name"
+              [matTooltipDisabled]="!listLink.isEllipsed"
+            >
+              {{ list.name }}
+            </a>
+          } @else {
+            <button
+              appIsEllipsed
+              #listLink="appIsEllipsed"
+              class="list-btn__btn"
+              [disabled]="isDisabled()"
+              [matTooltip]="list.name"
+              [matTooltipDisabled]="!listLink.isEllipsed"
+              (click)="listSelection.emit(list)"
+            >
+              {{ list.name }}
+            </button>
+          }
+        }
+      } @else {
+        <form class="list-btn__rename-list-form" [formGroup]="renameListForm()">
+          <input
+            #renameListFormInput
+            class="list-btn__rename-list-form-input"
+            maxlength="32"
+            formControlName="listName"
+            (blur)="renameList()"
+            (keydown.enter)="renameList()"
+          />
+        </form>
+      }
+    </div>
+    <div class="list-btn__right">
+      @if (!listOptionsDropdownComponent.isEmpty()) {
+        <app-toggle-options-dropdown-btn
+          #listOptionsDropdownBtnComponent
+          class="toggle-options-dropdown-btn"
+          [ngStyle]="{ display: isOptionsDropdownOpen() ? 'block' : 'none' }"
+          [dropdownMenu]="listOptionsDropdownComponent.entityOptionsDropdown"
+          [hoverColorContrast]="'ultra-high'"
+          (isMenuOpen)="isOptionsDropdownOpen.set($event)"
+        />
+      }
+    </div>
+  </div>
+  <app-entity-options-dropdown
+    #listOptionsDropdownComponent
+    [includeRename]="canRenameList()"
+    [includeDelete]="canDeleteList()"
+    [stopInnerClickPropagation]="true"
+    (startEntityRenaming)="onStartListRenaming()"
+    (startEntityDeletion)="onStartListDeletion()"
+  />
+}

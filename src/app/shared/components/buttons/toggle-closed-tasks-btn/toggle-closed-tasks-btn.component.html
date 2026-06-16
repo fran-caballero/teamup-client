@@ -1,0 +1,16 @@
+<button
+  class="toggle-closed-tasks-btn"
+  [class.toggle-closed-tasks-btn--selected]="showClosedTasks()"
+  [matTooltip]="'Show closed tasks'"
+  [matTooltipDisabled]="toggleClosedTasksBtnText.offsetWidth > 0"
+  (click)="onClick()"
+>
+  <span
+    class="toggle-closed-tasks-btn__symbol toggle-closed-tasks-btn__symbol--check-circle material-symbols-outlined"
+  >
+    check_circle
+  </span>
+  <span #toggleClosedTasksBtnText class="toggle-closed-tasks-btn__text">
+    Show closed tasks
+  </span>
+</button>

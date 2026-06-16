@@ -1,0 +1,168 @@
+<div class="sign-up-page">
+  <div class="sign-up-page__header">
+    <div class="sign-up-page__brand">
+      <img class="sign-up-page__brand-logo" src="icons/app-logo.svg" alt="" />
+      <span class="sign-up-page__brand-name">TeamUp</span>
+    </div>
+    <div class="sign-up-page__login-btn-container">
+      <span class="sign-up-page__login-btn-container-text"
+        >Already have an account?</span
+      >
+      <a class="login-btn" [routerLink]="['/login']">Log in</a>
+    </div>
+  </div>
+
+  <div class="sign-up-page__main-section">
+    <form class="sign-up-form" [formGroup]="signUpForm">
+      <h1 class="sign-up-form__header">Seconds to sign up!</h1>
+      <div class="sign-up-form__username-input-container">
+        <label class="sign-up-form__username-input-label" for="username"
+          >Username</label
+        >
+        <div
+          class="sign-up-form__username-input-box"
+          [class.sign-up-form__username-input-box--invalid]="
+            username.touched && username.dirty && username.invalid
+          "
+        >
+          <span
+            class="sign-up-form__username-input-symbol sign-up-form__username-input-symbol--person material-symbols-outlined"
+            [class.sign-up-form__username-input-symbol--invalid]="
+              username.touched && username.dirty && username.invalid
+            "
+          >
+            person
+          </span>
+          <input
+            class="sign-up-form__username-input"
+            type="text"
+            id="username"
+            name="username"
+            maxlength="30"
+            autocomplete="new-username"
+            formControlName="username"
+            (keydown.enter)="signUp()"
+          />
+        </div>
+        @if (username.invalid && username.touched && username.dirty) {
+          <div class="sign-up-form__username-input-hint">
+            <span
+              class="sign-up-form_input-hint-symbol sign-up-form__input-hint-symbol--warning material-symbols-outlined"
+            >
+              warning
+            </span>
+            @if (username.hasError("minlength")) {
+              <span class="sign-up-form__username-input-hint-text">
+                User must be at least 6 characters long
+              </span>
+            } @else if (username.hasError("required")) {
+              <span class="sign-up-form__username-input-hint-text">
+                Username required!
+              </span>
+            } @else if (username.hasError("taken")) {
+              <span class="sign-up-form__username-input-hint-text">
+                Username already taken
+              </span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="sign-up-form__password-input-container">
+        <label class="sign-up-form__password-input-label" for="password"
+          >Password</label
+        >
+        <div
+          class="sign-up-form__password-input-box"
+          [class.sign-up-form__password-input-box--invalid]="
+            password.touched && password.dirty && password.invalid
+          "
+        >
+          <span
+            class="sign-up-form__password-input-symbol sign-up-form__password-input-symbol--lock material-symbols-outlined"
+            [class.sign-up-form__password-input-symbol--invalid]="
+              password.touched && password.dirty && password.invalid
+            "
+          >
+            lock
+          </span>
+          <input
+            #passwordInput
+            class="sign-up-form__password-input"
+            type="password"
+            id="password"
+            name="password"
+            maxlength="256"
+            autocomplete="new-password"
+            formControlName="password"
+            (keydown.enter)="signUp()"
+          />
+          @if (!isPasswordVisible()) {
+            <button
+              class="show-password-btn"
+              type="button"
+              (click)="isPasswordVisible.set(true)"
+              (click)="passwordInput.setAttribute('type', 'text')"
+            >
+              Show
+            </button>
+          } @else {
+            <button
+              class="show-password-btn"
+              type="button"
+              (click)="isPasswordVisible.set(false)"
+              (click)="passwordInput.setAttribute('type', 'password')"
+            >
+              Hide
+            </button>
+          }
+        </div>
+        @if (password.invalid && password.touched && password.dirty) {
+          <div class="sign-up-form__password-input-hint">
+            <span
+              class="sign-up-form__input-hint-symbol sign-up-form__input-hint-symbol--warning material-symbols-outlined"
+            >
+              warning
+            </span>
+            @if (password.hasError("minlength")) {
+              <span class="sign-up-form__password-input-hint-text">
+                Password must be at least 8 characters long
+              </span>
+            } @else if (password.hasError("required")) {
+              <span class="sign-up-form__password-input-hint-text">
+                Password required!
+              </span>
+            } @else if (password.hasError("specialCharacter")) {
+              <span class="sign-up-form__password-input-hint-text">
+                Password must contain at least one special character
+              </span>
+            } @else if (password.hasError("lowercaseLetter")) {
+              <span class="sign-up-form__password-input-hint-text">
+                Password must contain at least one lower case letter
+              </span>
+            } @else if (password.hasError("uppercaseLetter")) {
+              <span class="sign-up-form__password-input-hint-text">
+                Password must contain at least one uppercase letter
+              </span>
+            }
+          </div>
+        }
+      </div>
+      <button
+        class="generate-random-credentials-btn"
+        type="button"
+        (click)="generateRandomCredentials()"
+      >
+        Generate random credentials
+      </button>
+
+      <button class="sign-up-btn" (click)="signUp()">Sign up</button>
+      <div class="sign-up-warning">
+        <span class="sign-up-warning__highlight">Note:</span>
+        This application is a demo. Your user will be automatically deleted
+        after a week.
+      </div>
+    </form>
+    <div class="sign-up-page__purple-background"></div>
+  </div>
+</div>

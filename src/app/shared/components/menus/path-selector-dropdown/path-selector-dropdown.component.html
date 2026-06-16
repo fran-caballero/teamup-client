@@ -1,0 +1,36 @@
+<mat-menu #pathSelectorDropdown class="path-selector-dropdown">
+  <div class="path-selector-dropdown__header">
+    @if (personalList(); as personalList) {
+      <button
+        class="personal-list-btn"
+        (click)="
+          listSelection.emit({
+            selectedList: personalList,
+            listAncestorsIds: { spaceId: null, folderId: null },
+          })
+        "
+      >
+        <span class="open-profile-menu-btn__avatar">
+          {{ (user()?.username)![0] }}
+        </span>
+        Personal List
+      </button>
+    }
+  </div>
+
+  @if (workspace(); as workspace) {
+    <div class="path-selector-dropdown__body">
+      <h1 class="path-selector-dropdown__heading">Spaces</h1>
+      @for (space of workspace.spaces; track space.id) {
+        <app-space-btn
+          [spaceId]="space.id"
+          [buttonType]="'formElement'"
+          [sidebarWidth]="null"
+          [columnStatus]="columnStatus()"
+          (click)="$event.stopPropagation()"
+          (listSelection)="listSelection.emit($event)"
+        />
+      }
+    </div>
+  }
+</mat-menu>

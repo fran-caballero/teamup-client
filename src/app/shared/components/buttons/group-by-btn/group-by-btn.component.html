@@ -1,0 +1,140 @@
+<button
+  class="group-by-btn"
+  [matMenuTriggerFor]="groupByMenu"
+  [matTooltip]="'Group by'"
+  [matTooltipDisabled]="isTooltipDisabled()"
+>
+  <span
+    class="group-by-btn__symbol group-by-btn__symbol--stacks material-symbols-outlined"
+  >
+    stacks
+  </span>
+  <span #groupByBtnText class="group-by-btn__text">
+    Group: {{ groupByOptionsData[selectedGroupByOption()].name }}
+  </span>
+</button>
+
+<mat-menu #groupByMenu="matMenu" class="group-by-menu">
+  <div class="group-by-menu__content">
+    <div class="group-by-menu__header">Group by</div>
+    <div class="group-by-menu__btns">
+      <button
+        class="group-dropdown__btn"
+        [matMenuTriggerFor]="groupDropdown"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="group-by-menu__btn-left">
+          <div class="group-dropdown__symbol-container">
+            <span
+              class="group-dropdown__symbol group-dropdown__symbol--{{
+                groupByOptionsData[selectedGroupByOption()].materialSymbolClass
+              }} material-symbols-outlined "
+            >
+              {{
+                groupByOptionsData[selectedGroupByOption()].materialSymbolName
+              }}
+            </span>
+          </div>
+          {{ groupByOptionsData[selectedGroupByOption()].name }}
+        </div>
+        <span
+          class="group-dropdown__symbol group-dropdown__symbol--keyboard-arrow-down material-symbols-outlined"
+        >
+          keyboard_arrow_down
+        </span>
+      </button>
+      <button
+        class="asc-desc-btn"
+        [matMenuTriggerFor]="ascDescDropdown"
+        (click)="$event.stopPropagation()"
+      >
+        {{
+          groupByOrderingOption() === "ascending" ? "Ascending" : "Descending"
+        }}
+        <span
+          class="group-dropdown__symbol group-dropdown__symbol--keyboard-arrow-down material-symbols-outlined"
+        >
+          keyboard_arrow_down
+        </span>
+      </button>
+    </div>
+
+    <mat-menu #groupDropdown="matMenu" class="group-dropdown">
+      @if (!omitOptions()?.includes("status")) {
+        <button
+          class="group-dropdown__option-btn"
+          (click)="selectedGroupByOption.set('status')"
+        >
+          <div class="group-dropdown__symbol-container">
+            <span
+              class="group-dropdown__symbol group-dropdown__symbol--dialogs material-symbols-outlined"
+            >
+              dialogs
+            </span>
+          </div>
+          Status
+        </button>
+      }
+      @if (!omitOptions()?.includes("assignee")) {
+        <button
+          class="group-dropdown__option-btn"
+          (click)="selectedGroupByOption.set('assignee')"
+        >
+          <div class="group-dropdown__symbol-container">
+            <span
+              class="group-dropdown__symbol group-dropdown__symbol--person material-symbols-outlined"
+            >
+              person
+            </span>
+          </div>
+          Assignee
+        </button>
+      }
+      @if (!omitOptions()?.includes("priority")) {
+        <button
+          class="group-dropdown__option-btn"
+          (click)="selectedGroupByOption.set('priority')"
+        >
+          <div class="group-dropdown__symbol-container">
+            <span
+              class="group-dropdown__symbol group-dropdown__symbol--flag_2 material-symbols-outlined"
+            >
+              flag_2
+            </span>
+          </div>
+          Priority
+        </button>
+      }
+
+      @if (!omitOptions()?.includes("dueDate")) {
+        <button
+          class="group-dropdown__option-btn"
+          (click)="selectedGroupByOption.set('dueDate')"
+        >
+          <div class="group-dropdown__symbol-container">
+            <span
+              class="group-dropdown__symbol group-dropdown__symbol--event material-symbols-outlined"
+            >
+              event
+            </span>
+          </div>
+          Due date
+        </button>
+      }
+    </mat-menu>
+    <mat-menu #ascDescDropdown="matMenu" class="asc-desc-dropdown">
+      <button
+        class="asc-desc-dropdown__option-btn"
+        (click)="groupByOrderingOption.set('ascending')"
+      >
+        Ascending
+      </button>
+      <button
+        class="asc-desc-dropdown__option-btn"
+        (click)="groupByOrderingOption.set('descending')"
+      >
+        Descending
+      </button>
+    </mat-menu>
+  </div>
+</mat-menu>

@@ -1,0 +1,47 @@
+.space-list-view {
+  padding: 8px 14px;
+}
+
+.list {
+  margin-bottom: 18px;
+  padding: 18px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.list__path {
+  margin-left: 32px;
+  padding-bottom: 10px;
+
+  font-size: 0.8rem;
+
+  color: var(--text-color-secondary);
+}
+
+.list__name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.list__name {
+  font-size: 1rem;
+}
+
+.list__edit-list-name-form-input {
+  font-size: 1rem;
+  font-weight: 600;
+
+  border: none;
+  background: transparent;
+  color: var(--text-color-purple);
+}
+
+.list__edit-list-name-form-input:focus {
+  outline: none;
+}

@@ -1,0 +1,52 @@
+.color-mode-toggle {
+  position: relative;
+  display: flex;
+  height: 20px;
+  width: 40px;
+
+  background-color: var(--background-color-color-mode-toggle);
+  border-radius: 6px;
+}
+
+.color-mode-toggle::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background-color: var(--background-color-color-mode-toggle-btn);
+  transform: translateX(0);
+  transition: transform 200ms ease;
+}
+
+.color-mode-toggle--dark::before {
+  transform: translateX(20px);
+}
+
+.color-mode-toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18px;
+  width: 18px;
+  margin: 1px;
+  padding: 4px;
+
+  border: none;
+  background: none;
+  border-radius: 6px;
+  transition: none;
+
+  cursor: pointer;
+}
+
+.color-toggle-wrapper__symbol {
+  position: relative;
+  z-index: 10;
+
+  font-size: 0.9rem;
+
+  color: var(--text-color-heading);
+}

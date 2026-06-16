@@ -1,0 +1,17 @@
+<div class="empty-section">
+  @if (spaceId() || folderId()) {
+    @if (canCreateEntities()) {
+      <div class="empty-section__message">
+        This {{ sectionType() | titlecase }} is empty. Create a List to get
+        started.
+      </div>
+      <button class="create-list-btn" (click)="openNewListDialog()">
+        + Create list
+      </button>
+    } @else {
+      <div class="empty-section__message">
+        This {{ sectionType() | titlecase }} is still empty.
+      </div>
+    }
+  }
+</div>

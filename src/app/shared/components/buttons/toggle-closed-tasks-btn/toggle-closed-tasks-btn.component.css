@@ -1,0 +1,41 @@
+.toggle-closed-tasks-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  padding: 4px 7px;
+  gap: 4px;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-tertiary);
+}
+
+.toggle-closed-tasks-btn:hover {
+  background-color: var(--hover-color-contrast-low);
+}
+
+.toggle-closed-tasks-btn--selected {
+  background-color: var(--background-color-purple);
+  color: var(--text-color-purple);
+}
+
+.toggle-closed-tasks-btn--selected:hover {
+  background-color: var(--hover-color-purple);
+}
+
+.toggle-closed-tasks-btn__symbol--check-circle {
+  font-size: 0.8rem;
+
+  margin-top: 1px;
+}
+
+@container (max-width: 270px) {
+  .toggle-closed-tasks-btn__text {
+    display: none;
+  }
+}

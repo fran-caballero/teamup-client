@@ -1,0 +1,39 @@
+@if (list(); as list) {
+  <div
+    class="edit-list-permissions-btn"
+    [ngClass]="{
+      'edit-list-permissions-btn--folder-child': folder(),
+    }"
+    [matTooltip]="
+      'You are not allowed to edit this user\'s permissions for this list. '
+    "
+    [matTooltipClass]="'center-tooltip-text'"
+    [matTooltipDisabled]="!isDisabled()"
+  >
+    <div class="edit-list-permissions-btn__left">
+      <app-list-symbol class="edit-list-permissions-btn__icon" />
+      <div class="edit-list-permissions-btn__text">
+        {{ list.name }}
+      </div>
+    </div>
+    <div class="edit-list-permissions-btn__right">
+      <input
+        #checkbox
+        class="edit-list-permissions-btn__checkbox"
+        type="checkbox"
+        [disabled]="isDisabled() || isCheckboxDisabled()"
+        [checked]="listMembershipData() ? true : false"
+        (change)="toggleListChecked($event)"
+      />
+      <app-select-role-btn
+        [isDisabled]="isDisabled() || !checkbox.checked"
+        [disabledRoleButtons]="disabledRoleButtons()"
+        [btnType]="'subsection'"
+        [isInherited]="listMembershipData()?.isInherited"
+        [allowedAssignableRoles]="allowedAssignableRoles()"
+        [selectedRole]="listMembershipData()?.role"
+        (selectedRoleChange)="onSelectRole($event)"
+      />
+    </div>
+  </div>
+}

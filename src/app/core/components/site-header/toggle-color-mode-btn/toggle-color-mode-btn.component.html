@@ -1,0 +1,27 @@
+<div
+  class="color-mode-toggle"
+  [class.color-mode-toggle--dark]="currentColorTheme() === 'dark'"
+>
+  <button
+    class="color-mode-toggle-btn color-mode-toggle-btn--light"
+    [class.color-mode-toggle-btn--selected]="currentColorTheme() === 'light'"
+    (click)="onClickToggle('light')"
+  >
+    <span
+      class="color-toggle-wrapper__symbol color-toggle-wrapper__symbol--wb-sunny material-symbols-outlined"
+    >
+      wb_sunny
+    </span>
+  </button>
+  <button
+    class="color-mode-toggle-btn color-mode-toggle-btn--dark"
+    [class.color-mode-toggle-btn--selected]="currentColorTheme() === 'dark'"
+    (click)="onClickToggle('dark')"
+  >
+    <span
+      class="color-toggle-wrapper__symbol color-toggle-wrapper__symbol--dark-mode material-symbols-outlined"
+    >
+      dark_mode
+    </span>
+  </button>
+</div>

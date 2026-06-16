@@ -1,0 +1,108 @@
+.new-section-modal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 600px;
+
+  border-radius: 12px;
+  background-color: var(--background-color-modal);
+}
+
+.new-section-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0px 24px;
+  gap: 14px;
+}
+
+.new-section-modal__heading {
+  padding-bottom: 8px;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.new-section-modal__description {
+  font-size: 0.85rem;
+
+  color: var(--text-color-secondary);
+}
+
+.close-btn {
+  position: relative;
+  padding: 5px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+}
+
+.close-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.close-btn__symbol--close {
+  font-size: 1.2rem;
+  font-weight: 300;
+
+  color: var(--text-color-secondary);
+}
+
+.new-section-modal__body {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.new-section-modal__label {
+  padding-bottom: 8px;
+
+  font-size: 0.85rem;
+
+  color: var(--text-color-primary);
+}
+
+.new-section-modal__name-input {
+  height: 36px;
+  padding: 10px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-color-modal);
+  color: var(--text-color-heading);
+}
+
+.new-section-modal__name-input:focus {
+  border: 1px solid var(--border-color-purple-var-1);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--box-shadow-color-purple);
+}
+
+.new-section-modal__footer {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+  align-items: center;
+  padding: 16px;
+
+  border-top: 1px solid var(--border-color);
+  background-color: var(--background-color-low-contrast);
+}
+
+.create-section-btn {
+  padding: 6px 12px;
+
+  font-weight: 600;
+
+  border: none;
+  border-radius: 6px;
+  background-color: var(--background-color-purple-btn-var-3);
+  color: var(--text-color-tag-var-1);
+}
+
+.create-section-btn:hover {
+  background-color: var(--hover-color-purple-btn-var-1);
+}

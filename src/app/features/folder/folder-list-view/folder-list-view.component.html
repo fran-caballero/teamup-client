@@ -1,0 +1,116 @@
+<div class="folder-list-view">
+  @switch (selectedGroupByOption()) {
+    @case ("status") {
+      @if (folder().lists.length === 0) {
+        <app-empty-section
+          [spaceId]="spaceId()"
+          [folderId]="folder().id"
+          [sectionType]="'folder'"
+        />
+      }
+      @for (list of folder().lists; track list.id) {
+        <div class="list-wrapper">
+          <div class="list__path">
+            <span class="list__path-folder"> {{ folder().name }} / </span>
+            <a
+              class="list__path-list"
+              [routerLink]="[getListLink(spaceId(), folder().id, list.id)]"
+              [queryParams]="{ view: 'list' }"
+            >
+              {{ list.name }}
+            </a>
+          </div>
+          <div class="list__name-row">
+            <app-collapse-expand-btn
+              [isCollapsedOnCreation]="false"
+              [(isCollapsed)]="list.isCollapsed"
+            />
+            @if (!isListBeingRenamed() || listBeingRenamedId() !== list.id) {
+              <span class="list__name">
+                {{ list.name }}
+              </span>
+              @if (!listOptionsDropdownComponent.isEmpty()) {
+                <app-toggle-options-dropdown-btn
+                  [dropdownMenu]="
+                    listOptionsDropdownComponent.entityOptionsDropdown
+                  "
+                  [hoverColorContrast]="'medium'"
+                />
+              }
+            } @else {
+              <form
+                class="list__edit-list-name-form"
+                [formGroup]="editListNameForm"
+              >
+                <div formGroupName="listNames">
+                  <input
+                    #editListNameFormInput
+                    class="list__edit-list-name-form-input"
+                    formControlName="{{ list.id }}"
+                    (blur)="onEditListName(folder().id, list.id)"
+                    (keydown.enter)="onEditListName(folder().id, list.id)"
+                  />
+                </div>
+              </form>
+            }
+          </div>
+
+          <app-entity-options-dropdown
+            #listOptionsDropdownComponent
+            [includeRename]="canRenameList(list)"
+            [includeDelete]="canDeleteList(list)"
+            (startEntityRenaming)="onStartListRenaming(list.id)"
+            (startEntityDeletion)="openDeleteWarningModal(list)"
+          />
+
+          @if (!list.isCollapsed()) {
+            <app-list
+              [isStandalone]="false"
+              [showClosedTasks]="showClosedTasks()"
+              [groupByOrderingOption]="groupByOrderingOption()"
+              [isEmbedded]="false"
+              [view]="'list'"
+              [inputSpaceId]="spaceId()"
+              [inputFolderId]="folder().id"
+              [folderName]="folder().name"
+              [inputList]="list"
+            />
+          }
+        </div>
+      }
+    }
+    @case ("priority") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceId()"
+        [folderId]="folder().id"
+        [selectedGroupByOption]="'priority'"
+        [taskGroups]="taskGroups()"
+        [taskGroupsType]="'inFolder'"
+        [tasksCommonAncestors]="null"
+      />
+    }
+    @case ("dueDate") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceId()"
+        [folderId]="folder().id"
+        [selectedGroupByOption]="'dueDate'"
+        [taskGroups]="taskGroups()"
+        [tasksCommonAncestors]="null"
+        [taskGroupsType]="'inFolder'"
+      />
+    }
+    @case ("assignee") {
+      <app-list-list-view
+        [list]="null"
+        [spaceId]="spaceId()"
+        [folderId]="folder().id"
+        [selectedGroupByOption]="'assignee'"
+        [taskGroups]="taskGroups()"
+        [tasksCommonAncestors]="null"
+        [taskGroupsType]="'inFolder'"
+      />
+    }
+  }
+</div>

@@ -1,0 +1,38 @@
+.three-dots-loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.three-dots-loading-animation__dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 1px;
+
+  border-radius: 50%;
+  background-color: #ffffff;
+  animation: wave 0.8s infinite ease-in-out;
+}
+
+.three-dots-loading-animation__dot-1 {
+  animation-delay: 0s;
+}
+.three-dots-loading-animation__dot-2 {
+  animation-delay: 0.2s;
+}
+.three-dots-loading-animation__dot-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes wave {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.5);
+  }
+  40% {
+    transform: scale(1.2);
+  }
+}

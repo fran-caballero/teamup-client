@@ -1,0 +1,96 @@
+<div class="accept-invitation-modal">
+  <div class="accept-invitation-modal__small-close-btn-container">
+    <button class="small-close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="small-close-btn__symbol small-close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <header class="accept-invitation-modal__header">
+    <div class="accept-invitation-modal__main-message">
+      <span class="accept-invitation-modal__inviter-name">
+        {{ invitation.inviterUsername }}</span
+      >
+      has invited you to join the workspace:
+    </div>
+    <h2 class="accept-invitation-modal__workspace-name">
+      {{ invitationMemberships.workspaceMembership.workspaceName }}
+    </h2>
+    <div class="accept-invitation-modal__workspace-role">
+      Role in the Workspace:
+      {{ invitationMemberships.workspaceMembership.role | formatRole }}
+    </div>
+  </header>
+
+  @if (hasSubsectionMemberships(invitationMemberships)) {
+    <div class="accept-invitation-modal__body">
+      @if (invitationMemberships.spaceMemberships.length > 0) {
+        <h3 class="accept-invitation-modal__spaces-header">Spaces</h3>
+        @for (
+          spaceMembership of invitationMemberships.spaceMemberships;
+          track spaceMembership.spaceId
+        ) {
+          <ul class="accept-invitation-modal__spaces-list">
+            <li class="accept-invitation-modal__space">
+              <div class="accept-invitation-modal__space-name">
+                {{ spaceMembership.spaceName }}
+              </div>
+              <div class="accept-invitation-modal__space-role">
+                &nbsp;- Role: {{ spaceMembership.role | formatRole }}
+              </div>
+            </li>
+          </ul>
+        }
+      }
+
+      @if (invitationMemberships.folderMemberships.length > 0) {
+        <h3 class="accept-invitation-modal__folders-header">Folders</h3>
+        @for (
+          folderMembership of invitationMemberships.folderMemberships;
+          track folderMembership.folderId
+        ) {
+          <ul class="accept-invitation-modal__folders-list">
+            <li class="accept-invitation-modal__folder">
+              <div class="accept-invitation-modal__folder-name">
+                {{ folderMembership.folderName }}
+              </div>
+              <div class="accept-invitation-modal__folder-role">
+                &nbsp;- Role: {{ folderMembership.role | formatRole }}
+              </div>
+            </li>
+          </ul>
+        }
+      }
+
+      @if (invitationMemberships.listMemberships.length > 0) {
+        <h3 class="accept-invitation-modal__lists-header">Lists</h3>
+        @for (
+          listMembership of invitationMemberships.listMemberships;
+          track listMembership.listId
+        ) {
+          <ul class="accept-invitation-modal__lists-list">
+            <li class="accept-invitation-modal__list">
+              <div class="accept-invitation-modal__list-name">
+                {{ listMembership.listName }}
+              </div>
+              <div class="accept-invitation-modal__list-role">
+                &nbsp;- Role: {{ listMembership.role | formatRole }}
+              </div>
+            </li>
+          </ul>
+        }
+      }
+    </div>
+  }
+
+  <div class="accept-invitation-modal__footer">
+    <button class="decline-invitation-btn" (click)="declineInvitation()">
+      Decline
+    </button>
+    <button class="accept-invitation-btn" (click)="acceptInvitation()">
+      Accept
+    </button>
+  </div>
+</div>

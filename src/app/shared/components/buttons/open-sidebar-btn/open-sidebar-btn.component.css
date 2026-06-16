@@ -1,0 +1,21 @@
+.open-sidebar-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.open-sidebar-btn:hover {
+  background-color: var(--hover-color-contrast-high);
+}
+
+.open-sidebar-btn__symbol {
+  color: var(--text-color-primary);
+
+  font-size: 1.3rem;
+}

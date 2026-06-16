@@ -1,0 +1,27 @@
+.toggle-options-dropdown-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+
+  border: none;
+  border-radius: 4px;
+  background: none;
+}
+
+.toggle-options-dropdown-btn--hover-color-contrast-medium:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.toggle-options-dropdown-btn--hover-color-contrast-ultra-high:hover {
+  background-color: var(--hover-color-contrast-ultra-high);
+}
+
+.toggle-options-dropdown-btn__symbol--more_horiz {
+  display: inline-block;
+
+  font-size: 1.4rem;
+
+  color: var(--text-color-secondary);
+}

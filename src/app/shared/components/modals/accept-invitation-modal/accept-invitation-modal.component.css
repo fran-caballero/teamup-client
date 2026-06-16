@@ -1,0 +1,227 @@
+.accept-invitation-modal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 50vh;
+  width: 500px;
+
+  border-radius: 12px;
+  background-color: var(--background-color-modal);
+}
+
+.accept-invitation-modal__small-close-btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  padding-top: 12px;
+  padding-right: 8px;
+}
+
+.small-close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+}
+
+.small-close-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.small-close-btn__symbol--close {
+  font-size: 1.2rem;
+  font-weight: 300;
+
+  color: var(--text-color-secondary);
+}
+
+.accept-invitation-modal__header {
+  padding: 24px;
+
+  text-align: center;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accept-invitation-modal__main-message {
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-modal__inviter-name {
+  font-weight: 700;
+}
+
+.accept-invitation-modal__workspace-name {
+  padding-top: 12px;
+
+  font-size: 1.5rem;
+
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-modal__workspace-role {
+  color: var(--text-color-secondary);
+}
+
+.accept-invitation-modal__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 18px 24px 24px 24px;
+  gap: 18px;
+
+  background-color: var(--background-color-modal);
+}
+
+.accept-invitation-modal__spaces-header {
+  font-size: 1.3rem;
+
+  color: var(--text-color-heading);
+}
+
+.accept-invitation-modal__spaces-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.accept-invitation-modal__space {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.accept-invitation-modal__space-name {
+  margin: 0;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-modal__space-role {
+  color: var(--text-color-secondary);
+}
+
+.accept-invitation-modal__folders-header {
+  font-size: 1.3rem;
+
+  color: var(--text-color-heading);
+}
+
+.accept-invitation-modal__folders-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.accept-invitation-modal__folder {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.accept-invitation-modal__folder-name {
+  margin: 0;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-modal__folder-role {
+  color: var(--text-color-secondary);
+}
+
+.accept-invitation-modal__lists-header {
+  font-size: 1.3rem;
+
+  color: var(--text-color-heading);
+}
+
+.accept-invitation-modal__lists-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.accept-invitation-modal__list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.accept-invitation-modal__list-name {
+  margin: 0;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-modal__list-role {
+  color: var(--text-color-secondary);
+}
+
+.accept-invitation-modal__footer {
+  display: flex;
+  padding: 12px 24px;
+  gap: 12px;
+
+  background-color: var(--background-color-low-contrast);
+}
+
+.decline-invitation-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-primary);
+}
+
+.decline-invitation-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.accept-invitation-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-primary);
+}
+
+.accept-invitation-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}

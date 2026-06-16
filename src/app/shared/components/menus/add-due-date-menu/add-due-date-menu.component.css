@@ -1,0 +1,178 @@
+::ng-deep .add-due-date-menu {
+  overflow: hidden !important;
+  max-width: none !important;
+
+  background-color: var(--background-color-sidebar) !important;
+}
+
+::ng-deep .add-due-date-menu .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.add-due-date-menu__form {
+  display: flex;
+}
+
+.add-due-date-menu__common-dates-options {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  border: 1px solid var(--border-color);
+}
+
+.add-due-date-menu__common-dates-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  width: 220px;
+  padding: 6px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.add-due-date-menu__common-dates-option--selected {
+  background-color: var(--hover-color-contrast-high);
+}
+
+.add-due-date-menu__common-dates-option:hover {
+  background-color: var(--hover-color-contrast-high);
+}
+
+.add-due-date-menu__date-value {
+  color: var(--text-color-muted);
+}
+
+.add-due-date-menu__datepicker-container {
+  width: 220px;
+
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color-main-section);
+}
+
+.add-due-date-menu__timepicker-input-container {
+  padding: 4px;
+
+  border-radius: 8px;
+  background-color: var(--background-color-sidebar);
+}
+
+::ng-deep .add-due-date-menu__timepicker-input {
+  height: 100%;
+  width: 100%;
+  padding: 8px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-modal);
+  color: var(--text-color-sidebar-btn);
+}
+
+::ng-deep .add-due-date-menu__timepicker-input:focus {
+  outline: 1.5px solid var(--border-color-purple-var-3);
+}
+
+::ng-deep .add-due-date-menu__datepicker {
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep .mat-timepicker-panel {
+  min-width: 180px !important;
+  width: 180px !important;
+  padding: 8px !important;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep .mdc-list-item {
+  min-height: 30px !important;
+  height: 30px !important;
+
+  border-radius: 4px !important;
+}
+
+::ng-deep .mdc-list-item:hover {
+  background-color: var(--hover-color-contrast-high) !important;
+}
+
+::ng-deep .mdc-list-item--selected {
+  background-color: var(--hover-color-contrast-high) !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 0.8rem !important;
+
+  color: var(--text-color-sidebar-btn) !important;
+}
+
+::ng-deep .mat-mdc-button-base::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  opacity: 0;
+
+  border-radius: 6px;
+  background-color: var(--hover-color-contrast-medium);
+
+  content: "";
+}
+
+::ng-deep .mat-mdc-button-base:hover::after {
+  opacity: 1;
+}
+
+::ng-deep .mat-mdc-button-base {
+  transition: none !important;
+}
+
+::ng-deep .mdc-button__label,
+::ng-deep .mat-calendar-body-label {
+  color: var(--text-color-heading) !important;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  color: var(--text-color-heading) !important;
+}
+
+::ng-deep .mat-calendar-body-cell {
+  border-radius: 6px !important;
+}
+
+::ng-deep .mat-calendar-body-cell:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+::ng-deep .mat-calendar-body-cell:hover > * {
+  background: none !important;
+}
+
+::ng-deep
+  .mat-calendar-body-today:not(.mat-calendar-body-selected):not(
+    .mat-calendar-body-comparison-identical
+  ) {
+  border: none !important;
+  background-color: var(--background-color-calendar-today) !important;
+  color: white !important;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: var(--background-color-calendar-selected-day) !important;
+  color: white !important;
+}
+
+::ng-deep .mat-calendar-body-cell:hover .mat-calendar-body-selected {
+  background-color: var(--background-color-calendar-selected-day) !important;
+}
+
+::ng-deep .datepicker-panel {
+  width: 400px;
+}

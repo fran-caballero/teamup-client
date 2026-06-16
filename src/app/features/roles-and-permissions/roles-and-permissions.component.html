@@ -1,0 +1,449 @@
+<div class="roles-and-permissions">
+  @let copy = currentCopy();
+
+  <nav class="roles-and-permissions__language-links" aria-label="Language">
+    <a
+      class="roles-and-permissions__language-link"
+      [class.roles-and-permissions__language-link--selected]="
+        currentLanguage() === 'en'
+      "
+      [routerLink]="['/roles-and-permissions']"
+    >
+      {{ copy.languageLinks.english }}
+    </a>
+    <span class="roles-and-permissions__language-divider">|</span>
+    <a
+      class="roles-and-permissions__language-link"
+      [class.roles-and-permissions__language-link--selected]="
+        currentLanguage() === 'es'
+      "
+      [routerLink]="['/roles-and-permissions', 'es']"
+    >
+      {{ copy.languageLinks.spanish }}
+    </a>
+  </nav>
+  <section class="roles-and-permissions__roles roles">
+    <h2 class="roles__heading">{{ copy.heading }}</h2>
+    <div class="roles__intro">
+      {{ copy.intro }}
+    </div>
+    <div class="roles__main-content">
+      <article class="roles__role-section roles__role-section--super-admin">
+        <h2 class="roles__role-title">{{ copy.roles.superAdmin.title }}</h2>
+        <p class="roles__role-description">
+          {{ copy.roles.superAdmin.description }}
+        </p>
+        <div
+          class="roles__permission-group roles__permission-group--content-interaction"
+        >
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.superAdmin.contentInteraction.title }}
+          </h4>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.superAdmin.contentInteraction.can;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.cant }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.superAdmin.contentInteraction.cant;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+        </div>
+        <div class="roles__permission-group">
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.superAdmin.collaboration.title }}
+          </h4>
+          @if (copy.roles.superAdmin.collaboration.can; as permissions) {
+            <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+            <ul class="roles__permissions-list">
+              @for (permission of permissions; track permission) {
+                <li>{{ permission }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </article>
+      <article class="roles__role-section roles__role-section--admin">
+        <h2 class="roles__role-title">{{ copy.roles.admin.title }}</h2>
+        <p class="roles__role-description">
+          {{ copy.roles.admin.description }}
+        </p>
+        <div
+          class="roles__permission-group roles__permission-group--content-interaction"
+        >
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.admin.contentInteraction.title }}
+          </h4>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.admin.contentInteraction.can;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.cant }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.admin.contentInteraction.cant;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+        </div>
+        <div class="roles__permission-group">
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.admin.collaboration.title }}
+          </h4>
+          @if (copy.roles.admin.collaboration.can; as permissions) {
+            <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+            <ul class="roles__permissions-list">
+              @for (permission of permissions; track permission) {
+                <li>{{ permission }}</li>
+              }
+            </ul>
+          }
+          @if (copy.roles.admin.collaboration.cant; as permissions) {
+            <h5 class="roles__permissions-list-label">
+              {{ copy.labels.cant }}
+            </h5>
+            <ul class="roles__permissions-list">
+              @for (permission of permissions; track permission) {
+                <li>{{ permission }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </article>
+      <article class="roles__role-section roles__role-section--member">
+        <h2 class="roles__role-title">{{ copy.roles.member.title }}</h2>
+        <p class="roles__role-description">
+          {{ copy.roles.member.description }}
+        </p>
+        <div
+          class="roles__permission-group roles__permission-group--content-interaction"
+        >
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.member.contentInteraction.title }}
+          </h4>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.member.contentInteraction.can;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.cant }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.member.contentInteraction.cant;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+        </div>
+        <div class="roles__permission-group">
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.member.collaboration.title }}
+          </h4>
+          @if (copy.roles.member.collaboration.cant; as permissions) {
+            <h5 class="roles__permissions-list-label">
+              {{ copy.labels.cant }}
+            </h5>
+            <ul class="roles__permissions-list">
+              @for (permission of permissions; track permission) {
+                <li>{{ permission }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </article>
+      <article class="roles__role-section roles__role-section--guest">
+        <h2 class="roles__role-title">{{ copy.roles.guest.title }}</h2>
+        <p class="roles__role-description">
+          {{ copy.roles.guest.description }}
+        </p>
+        <div
+          class="roles__permission-group roles__permission-group--content-interaction"
+        >
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.guest.contentInteraction.title }}
+          </h4>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.can }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.guest.contentInteraction.can;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+          <h5 class="roles__permissions-list-label">{{ copy.labels.cant }}</h5>
+          <ul class="roles__permissions-list">
+            @for (
+              permission of copy.roles.guest.contentInteraction.cant;
+              track permission
+            ) {
+              <li>{{ permission }}</li>
+            }
+          </ul>
+        </div>
+        <div class="roles__permission-group">
+          <h4 class="roles__permission-group-title">
+            {{ copy.roles.guest.collaboration.title }}
+          </h4>
+          @if (copy.roles.guest.collaboration.cant; as permissions) {
+            <h5 class="roles__permissions-list-label">
+              {{ copy.labels.cant }}
+            </h5>
+            <ul class="roles__permissions-list">
+              @for (permission of permissions; track permission) {
+                <li>{{ permission }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </article>
+      <article class="roles__supporting-section roles__granular">
+        <h2 class="roles__supporting-section-title">
+          {{ copy.supportingSections.granular.title }}
+        </h2>
+        <p class="roles__supporting-section-description">
+          {{ copy.supportingSections.granular.description }}
+        </p>
+      </article>
+      <article class="roles__supporting-section roles__creators">
+        <h2 class="roles__supporting-section-title">
+          {{ copy.supportingSections.creators.title }}
+        </h2>
+        <p class="roles__supporting-section-description">
+          {{ copy.supportingSections.creators.intro }}
+        </p>
+        <ul class="roles__permissions-list">
+          @for (
+            permission of copy.supportingSections.creators.permissions;
+            track permission
+          ) {
+            <li>{{ permission }}</li>
+          }
+        </ul>
+      </article>
+      <article class="roles__supporting-section roles__permissions-inheritance">
+        <h2 class="roles__supporting-section-title">
+          <span
+            class="roles__supporting-section-symbol roles__supporting-section-symbol--info material-symbols-outlined"
+          >
+            info
+          </span>
+          {{ copy.supportingSections.permissionsInheritance.title }}
+        </h2>
+        @for (
+          paragraph of copy.supportingSections.permissionsInheritance
+            .paragraphs;
+          track paragraph
+        ) {
+          <p class="roles__supporting-section-description">
+            {{ paragraph }}
+          </p>
+        }
+      </article>
+    </div>
+
+    <div
+      class="roles-and-permissions__table-container roles-and-permissions__table-container--content-interaction"
+    >
+      <div class="roles-and-permissions__table-scroll">
+        <table
+          class="roles-and-permissions__content-interaction-table content-interaction-table"
+        >
+          <thead>
+            <tr
+              class="content-interaction-table__row content-interaction-table__row--main-header"
+            >
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--main-header"
+              ></th>
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--main-header"
+                colspan="3"
+                scope="col"
+              >
+                {{ copy.tables.contentInteraction.title }}
+              </th>
+            </tr>
+            <tr
+              class="content-interaction-table__row content-interaction-table__row--secondary-header"
+            >
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--secondary-header"
+              ></th>
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--secondary-header"
+                scope="col"
+              >
+                {{ copy.tables.contentInteraction.headers.creation }}
+              </th>
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--secondary-header"
+                scope="col"
+              >
+                {{ copy.tables.contentInteraction.headers.update }}
+              </th>
+              <th
+                class="content-interaction-table__cell content-interaction-table__cell--secondary-header"
+                scope="col"
+              >
+                {{ copy.tables.contentInteraction.headers.deletion }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (
+              row of copy.tables.contentInteraction.rows;
+              track row.entity
+            ) {
+              <tr class="content-interaction-table__row">
+                <th
+                  class="content-interaction-table__cell content-interaction-table__cell--entity"
+                  scope="row"
+                >
+                  {{ row.entity }}
+                </th>
+                <td class="content-interaction-table__cell">
+                  @for (cell of row.creation; track $index) {
+                    <div class="content-interaction-table__cell-line">
+                      @if (cell.context; as context) {
+                        <span class="content-interaction-table__cell-context">{{
+                          context
+                        }}</span
+                        >:
+                      }
+                      {{ cell.text }}
+                    </div>
+                  }
+                </td>
+                <td class="content-interaction-table__cell">
+                  @for (cell of row.update; track $index) {
+                    <div class="content-interaction-table__cell-line">
+                      @if (cell.context; as context) {
+                        <span class="content-interaction-table__cell-context">{{
+                          context
+                        }}</span
+                        >:
+                      }
+                      {{ cell.text }}
+                    </div>
+                  }
+                </td>
+                <td class="content-interaction-table__cell">
+                  @for (cell of row.deletion; track $index) {
+                    <div class="content-interaction-table__cell-line">
+                      @if (cell.context; as context) {
+                        <span class="content-interaction-table__cell-context">{{
+                          context
+                        }}</span
+                        >:
+                      }
+                      {{ cell.text }}
+                    </div>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      class="roles-and-permissions__table-container roles-and-permissions__table-container--collaboration"
+    >
+      <div class="roles-and-permissions__table-scroll">
+        <table
+          class="roles-and-permissions__collaboration-table collaboration-table"
+        >
+          <thead>
+            <tr
+              class="collaboration-table__row collaboration-table__row--main-header"
+            >
+              <th
+                class="collaboration-table__cell collaboration-table__cell--main-header"
+              ></th>
+              <th
+                class="collaboration-table__cell collaboration-table__cell--main-header"
+                colspan="2"
+                scope="col"
+              >
+                {{ copy.tables.collaboration.title }}
+              </th>
+            </tr>
+            <tr
+              class="collaboration-table__row collaboration-table__row--secondary-header"
+            >
+              <th
+                class="collaboration-table__cell collaboration-table__cell--secondary-header collaboration-table__cell--entity-header"
+              ></th>
+              <th
+                class="collaboration-table__cell collaboration-table__cell--secondary-header collaboration-table__cell--role-grant-header"
+                scope="col"
+              >
+                <div class="collaboration-table__cell-text-container">
+                  {{ copy.tables.collaboration.headers.grantAnyRole }}
+                </div>
+              </th>
+              <th
+                class="collaboration-table__cell collaboration-table__cell--secondary-header collaboration-table__cell--role-grant-header"
+                scope="col"
+              >
+                <div class="collaboration-table__cell-text-container">
+                  {{ copy.tables.collaboration.headers.grantMemberOrGuestRole }}
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of copy.tables.collaboration.rows; track row.entity) {
+              <tr class="collaboration-table__row">
+                <th
+                  class="collaboration-table__cell collaboration-table__cell--entity"
+                  scope="row"
+                >
+                  {{ row.entity }}
+                </th>
+
+                <td class="collaboration-table__cell">
+                  <div
+                    class="collaboration-table__cell-text-container collaboration-table__cell-text-container--role"
+                  >
+                    {{ row.grantAnyRole.text }}
+                  </div>
+                </td>
+                <td class="collaboration-table__cell">
+                  <div
+                    class="collaboration-table__cell-text-container collaboration-table__cell-text-container--role"
+                  >
+                    {{ row.grantMemberOrGuestRole.text }}
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

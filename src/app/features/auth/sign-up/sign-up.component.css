@@ -1,0 +1,358 @@
+.sign-up-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+
+  background-color: #f8f9fb;
+}
+
+.sign-up-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 30px;
+}
+
+.sign-up-page__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sign-up-page__brand-logo {
+  display: block;
+  height: 45px;
+  width: 45px;
+}
+
+.sign-up-page__brand-name {
+  line-height: 1;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+
+  color: #2a2e34;
+}
+
+.sign-up-page__login-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sign-up-page__login-btn-container-text {
+  display: flex;
+  justify-content: center;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 20px;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  border-radius: 8px;
+  box-shadow: 0 10px 25px 0px #b7b4db;
+  background-color: #5f55ee;
+  color: #ffffff;
+}
+
+.login-btn:hover {
+  background-color: #554dc9;
+}
+
+@media (max-width: 768px) {
+  .sign-up-page__header {
+    padding: 20px 16px;
+  }
+
+  .sign-up-page__login-btn-container-text {
+    display: none;
+  }
+}
+
+.sign-up-page__main-section {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  padding: 40px;
+  gap: 14px;
+
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 #0000001a;
+  background-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .sign-up-form {
+    max-width: 345px;
+  }
+}
+
+.sign-up-form__header {
+  display: flex;
+  justify-content: center;
+
+  font-size: 1.5rem;
+}
+
+.sign-up-form__username-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sign-up-form__username-input-label {
+  font-size: 0.75rem;
+}
+
+.sign-up-form__username-input-box {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 8px;
+  gap: 4px;
+
+  border: 1px solid #d6d9de;
+  border-radius: 8px;
+}
+
+.sign-up-form__username-input-box:hover {
+  border: 1px solid #adb3bd;
+}
+
+.sign-up-form__username-input-box:focus-within {
+  border: 1px solid #adb3bd;
+}
+
+.sign-up-form__username-input-box--invalid {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__username-input-box--invalid:hover {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__username-input-box--invalid:focus-within {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__username-input-symbol--person {
+  height: 22px;
+  width: 22px;
+
+  font-weight: 300;
+
+  color: #b9bec7;
+}
+
+.sign-up-form__username-input-symbol--invalid {
+  color: #e04f44;
+}
+
+.sign-up-form__username-input {
+  border: none;
+  flex-grow: 1;
+}
+
+.sign-up-form__username-input:focus {
+  outline: none;
+}
+
+.sign-up-form__input-hint-symbol--warning {
+  font-size: 0.9rem;
+  font-variation-settings: "FILL" 1;
+
+  color: #e04f44;
+}
+
+.sign-up-form__username-input-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sign-up-form__username-input-hint-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  color: #e04f44;
+}
+
+.sign-up-form__password-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sign-up-form__password-input-label {
+  font-size: 0.75rem;
+}
+
+.sign-up-form__password-input-box {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 8px;
+  gap: 4px;
+
+  border: 1px solid #d6d9de;
+  border-radius: 8px;
+}
+
+.sign-up-form__password-input-box:hover {
+  border: 1px solid #adb3bd;
+}
+
+.sign-up-form__password-input-box:focus-within {
+  border: 1px solid #adb3bd;
+}
+.sign-up-form__password-input-box--invalid {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__password-input-box--invalid:hover {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__password-input-box--invalid:focus-within {
+  border: 1px solid #e04f44;
+}
+
+.sign-up-form__password-input-symbol--lock {
+  height: 22px;
+  width: 22px;
+
+  font-weight: 300;
+  font-size: 1.3rem;
+
+  color: #b9bec7;
+}
+
+.sign-up-form__password-input-symbol--invalid {
+  color: #e04f44;
+}
+
+.sign-up-form__password-input {
+  border: none;
+  flex-grow: 1;
+}
+
+.sign-up-form__password-input:focus {
+  outline: none;
+}
+
+.show-password-btn {
+  box-sizing: content-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 600;
+
+  background: none;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  color: #7b68ee;
+}
+
+.show-password-btn:hover {
+  border-color: #7b68ee;
+}
+
+.sign-up-form__password-input-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sign-up-form__password-input-hint-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  color: #e04f44;
+}
+
+.generate-random-credentials-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+
+  font-weight: 400;
+
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  background: none;
+  color: #2a2e34;
+}
+
+.generate-random-credentials-btn:hover {
+  background-color: #f7f8f9;
+}
+
+.sign-up-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 44px;
+
+  font-weight: 800;
+
+  border: none;
+  border-radius: 8px;
+  background-color: #5f55ee;
+  color: #ffffff;
+}
+
+.sign-up-btn:hover {
+  background-color: #554dc9;
+}
+
+.sign-up-warning {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 400;
+
+  color: #2a2e34;
+}
+
+.sign-up-warning__highlight {
+  font-weight: 600;
+}
+
+.sign-up-page__purple-background {
+  position: absolute;
+  z-index: -10;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+
+  background: linear-gradient(45deg, #725bfa 0%, #e74e9d 100%);
+  clip-path: polygon(10% 46%, 91% 1%, 100% 18%, 100% 100%, 0% 100%, 0 73%);
+}
+
+@media (max-width: 768px) {
+  .sign-up-page__purple-background {
+    height: 400px;
+  }
+}

@@ -1,0 +1,21 @@
+<mat-menu #profileSettingsDropdown class="profile-settings-dropdown">
+  <div class="profile-settings-dropdown__content">
+    <header class="profile-settings-dropdown__header">
+      <app-user-avatar [username]="user()?.username || ''" />
+      <span class="profile-settings-dropdown__username">
+        {{ user()?.username }}
+      </span>
+    </header>
+    <button
+      class="profile-settings-dropdown__sign-out-btn sign-out-btn"
+      (click)="onClickSignout()"
+    >
+      <span
+        class="log-out-btn__symbol log-out-btn__symbol--logout material-symbols-outlined"
+      >
+        logout
+      </span>
+      Sign out
+    </button>
+  </div>
+</mat-menu>

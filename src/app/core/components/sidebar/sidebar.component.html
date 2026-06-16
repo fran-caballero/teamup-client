@@ -1,0 +1,199 @@
+<aside
+  #subMenuOrigin="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  class="sidebar"
+  [class.is-animating]="isAnimating()"
+  [style.width.px]="currentWidth()"
+>
+  <div class="sidebar__content">
+    <div class="sidebar-top">
+      <app-workspace-btn [sidebarWidth]="currentWidth()" />
+      <button class="close-sidebar-btn" (click)="closeSidebar()">
+        <span
+          class="material-symbols-outlined close-sidebar-btn__symbol close-sidebar-btn__symbol--left-panel-close"
+        >
+          left_panel_close
+        </span>
+      </button>
+    </div>
+    <div class="side-bar__main-section">
+      <div class="side-bar__main-section-top">
+        <a
+          class="home-btn"
+          [class.home-btn--in-home]="currentLocation() === 'home'"
+          [routerLink]="['/home']"
+        >
+          <span
+            class="home-btn__symbol home-btn__symbol--home material-symbols-outlined"
+          >
+            home
+          </span>
+          <span class="home-btn__text"> Home </span>
+        </a>
+        <a
+          class="personal-list-btn"
+          [class.personal-list-btn--in-personal-list]="
+            currentLocation() === 'personalList'
+          "
+          [routerLink]="['/personal-list']"
+        >
+          <span
+            class="personal-list-btn__symbol personal-list-btn__symbol--patient_list material-symbols-outlined"
+          >
+            patient_list </span
+          >Personal list</a
+        >
+        <a
+          class="people-btn"
+          [class.people-btn--in-people]="currentLocation() === 'people'"
+          [routerLink]="['/people']"
+          [queryParams]="{ view: 'my-team' }"
+        >
+          <span
+            class="people-btn__symbol people-btn__symbol--person material-symbols-outlined"
+          >
+            person </span
+          >People</a
+        >
+      </div>
+
+      <div class="side-bar__main-section-bottom">
+        <div class="spaces-section-title">Spaces</div>
+        @if (workspace(); as workspace) {
+          @for (space of workspace.spaces; track space.id) {
+            <app-space-btn
+              [spaceId]="space.id"
+              [buttonType]="'link'"
+              [sidebarWidth]="currentWidth()"
+            />
+          }
+          @if (isNewSpaceBeingCreated()) {
+            <form class="new-space-form" [formGroup]="newSpaceForm">
+              <div class="new-space-form__symbol-container">
+                <div class="new-space-form__symbol-frame">
+                  <span
+                    class="new-space-form__symbol new-space-form__symbol--group material-symbols-outlined"
+                  >
+                    group
+                  </span>
+                </div>
+              </div>
+              <input
+                #mainSidebarSpaceFormInput
+                class="new-space-form__input"
+                placeholder="Space name"
+                formControlName="spaceName"
+                (blur)="createSpace()"
+                (keydown.enter)="createSpace()"
+              />
+            </form>
+          }
+          @if (canCreateSpace()) {
+            <button
+              class="create-new-space-btn"
+              (click)="showMainSidebarNewSpaceForm()"
+            >
+              <span
+                class="create-new-space-btn__symbol create-new-space-btn__symbol--add material-symbols-outlined"
+              >
+                add
+              </span>
+              <span class="create-new-space-btn__text"> Create space </span>
+            </button>
+          }
+        }
+      </div>
+      <button
+        class="spaces-main-section__spaces-btn"
+        (click)="updateSpacesSidebarState()"
+      >
+        <span
+          class="material-symbols-outlined space-main-section__spaces-btn-symbol space-main-section__spaces-btn-symbol--view_comfy_alt"
+        >
+          view_comfy_alt
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    cdkDrag
+    class="sidebar__resizer"
+    (cdkDragMoved)="onDragMoved($event)"
+  ></div>
+</aside>
+<ng-template
+  #spacesSidebar
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="subMenuOrigin"
+  [cdkConnectedOverlayOpen]="isSpacesSidebarOpen()"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayPositions]="[
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top',
+    },
+  ]"
+  [cdkConnectedOverlayHeight]="mainSidebarHeight()"
+  [cdkConnectedOverlayMinHeight]="mainSidebarHeight()"
+  (backdropClick)="updateSpacesSidebarState()"
+>
+  <div
+    class="spaces-sidebar"
+    [@spacesSidebarAnimation]="spacesSidebarAnimationState()"
+    (@spacesSidebarAnimation.done)="onSpacesSidebarAnimationDone($event)"
+  >
+    <div class="spaces-sidebar__spaces-section-title">Spaces</div>
+    @if (workspace(); as workspace) {
+      @for (space of workspace.spaces; track space.id) {
+        <app-space-btn
+          [spaceId]="space.id"
+          [buttonType]="'link'"
+          [sidebarWidth]="defaultWidth"
+        />
+      }
+      @if (isNewSpaceBeingCreated()) {
+        <form
+          class="spaces-sidebar__new-space-form new-space-form"
+          [formGroup]="newSpaceForm"
+        >
+          <div class="new-space-form__symbol-container">
+            <div class="new-space-form__symbol-frame">
+              <span
+                class="new-space-form__symbol new-space-form__symbol--group material-symbols-outlined"
+              >
+                group
+              </span>
+            </div>
+          </div>
+          <!-- eslint-disable @angular-eslint/template/no-autofocus -->
+          <input
+            autofocus
+            #overlaySidebarSpaceFormInput
+            class="new-space-form__input"
+            placeholder="Space name"
+            formControlName="spaceName"
+            (blur)="createSpace()"
+            (keydown.enter)="createSpace()"
+          />
+          <!-- eslint-enable @angular-eslint/template/no-autofocus -->
+        </form>
+      }
+      @if (canCreateSpace()) {
+        <button
+          class="create-new-space-btn"
+          (click)="showOverlaySidebarNewSpaceForm()"
+        >
+          <span
+            class="create-new-space-btn__symbol create-new-space-btn__symbol--add material-symbols-outlined"
+          >
+            add
+          </span>
+          <span class="create-new-space-btn__text"> Create space </span>
+        </button>
+      }
+    }
+  </div>
+</ng-template>

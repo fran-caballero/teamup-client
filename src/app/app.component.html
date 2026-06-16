@@ -1,0 +1,66 @@
+<div class="app-container" appMaterialSymbolsNoTranslate>
+  @if (loadingState()) {
+    <span
+      class="app-container__material-symbols-warmup material-symbols-outlined"
+      aria-hidden="true"
+    >
+      home
+    </span>
+
+    @if (loadingResetCopy(); as resetCopy) {
+      <div class="reset-loading-page">
+        <header class="reset-loading-page__header">
+          <div class="reset-loading-page__header-left"></div>
+          <div class="reset-loading-page__header-right">
+            @if (user(); as user) {
+              <app-user-avatar
+                [username]="user.username"
+                [styles]="{ height: '28px', width: '28px' }"
+              />
+              <span class="reset-loading-page__username">
+                {{ user.username }}
+              </span>
+            }
+
+            <button
+              class="reset-loading-page__sign-out-btn"
+              (click)="onClickSignout()"
+            >
+              Sign Out
+            </button>
+          </div>
+        </header>
+
+        <div class="reset-loading-page__main-section loading-spinner-container">
+          <div class="resetting-info">
+            <div class="resetting-info__main-message">
+              {{ resetCopy.mainMessage }}
+            </div>
+            <div class="resetting-info__secondary-message">
+              {{ resetCopy.secondaryMessage }}
+            </div>
+          </div>
+
+          <app-loading-spinner />
+        </div>
+      </div>
+    } @else {
+      <div class="loading-spinner-container">
+        <app-loading-spinner />
+      </div>
+    }
+  } @else {
+    @if (scheduledResetNotice(); as scheduledNotice) {
+      <div class="reset-notice-banner">
+        <div class="reset-notice-banner__main-message">
+          {{ scheduledNotice.mainMessage }}
+        </div>
+        <div class="reset-notice-banner__secondary-message">
+          {{ scheduledNotice.secondaryMessage }}
+        </div>
+      </div>
+    }
+
+    <router-outlet />
+  }
+</div>

@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.space {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.section-options-header {
+  display: flex;
+  container-type: inline-size;
+  padding: 14px 18px;
+  gap: 8px;
+}
+
+.space-content {
+  flex: 1;
+  overflow: auto;
+  min-width: 0;
+
+  background-color: var(--background-color-main-section);
+}

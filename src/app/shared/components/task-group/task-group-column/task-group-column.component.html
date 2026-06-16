@@ -1,0 +1,461 @@
+<div class="column" [ngStyle]="{ 'background-color': backgroundColor() }">
+  <div class="column__header">
+    <div class="column__header-left">
+      @if (status() && isStatusBeingEdited() && tasksCommonAncestors()) {
+        <app-status-tag
+          #statusTagComponent
+          [status]="status()!"
+          [spaceId]="tasksCommonAncestors()!.spaceData?.id || null"
+          [folderId]="tasksCommonAncestors()!.folderData?.id || null"
+          [listId]="tasksCommonAncestors()!.listData.id"
+          [isOpenOnInit]="true"
+          (menuClosed)="isStatusBeingEdited.set(false)"
+        />
+      } @else {
+        <div
+          class="column__tag"
+          [ngStyle]="{ 'background-color': tagColor(), color: textColor() }"
+        >
+          <span
+            class="column__tag-symbol material-symbols-outlined"
+            [ngStyle]="{
+              'font-variation-settings': getFontVariationSettings(),
+
+              color: textColor(),
+            }"
+          >
+            {{ columnSubvariantProperties().materialSymbolName }}
+          </span>
+          <span
+            appIsEllipsed
+            #statusName="appIsEllipsed"
+            class="status-tag__name"
+            [matTooltip]="columnName()"
+            [matTooltipDisabled]="!statusName.isEllipsed"
+          >
+            {{ columnName() }}
+          </span>
+        </div>
+      }
+    </div>
+    <div class="column__header-right">
+      @if (status(); as status) {
+        @if (!groupOptionsDropdown.isEmpty()) {
+          <app-toggle-options-dropdown-btn
+            [dropdownMenu]="groupOptionsDropdown.entityOptionsDropdown"
+            [hoverColorContrast]="'ultra-high'"
+          />
+        }
+        <app-entity-options-dropdown
+          #groupOptionsDropdown
+          [dropdownTitle]="'Group options'"
+          [includeRename]="canEditStatuses()"
+          [includeDelete]="canDeleteStatuses()"
+          (startEntityRenaming)="isStatusBeingEdited.set(true)"
+          (startEntityDeletion)="openDeleteStatusWarningModal(status)"
+        />
+      }
+    </div>
+  </div>
+  <div class="column__task-group">
+    @for (
+      standaloneTask of taskGroup()?.standaloneTasks;
+      track standaloneTask.task.id
+    ) {
+      <div
+        class="task"
+        [class.task--sim-hover]="
+          openedToggleStatusMenuTaskId() === standaloneTask.task.id
+        "
+      >
+        <div class="task__name-row">
+          @if (!isTaskBeingRenamed() || taskBeingRenamedIndex() !== $index) {
+            <a
+              class="task__name"
+              [routerLink]="
+                buildTaskLinkArray(
+                  standaloneTask.taskAncestorsData.spaceData?.id || null,
+                  standaloneTask.taskAncestorsData.folderData?.id || null,
+                  standaloneTask.taskAncestorsData.listData.id,
+                  standaloneTask.task.id
+                )
+              "
+              >{{ standaloneTask.task.name }}</a
+            >
+          } @else {
+            <form class="task__edit-task-form" [formGroup]="editTaskForm">
+              <div
+                class="task__edit-task-form-name-input-container"
+                formArrayName="taskNames"
+              >
+                @for (taskNameFormControl of taskNameControls(); track $index) {
+                  @if ($index === taskBeingRenamedIndex()) {
+                    <input
+                      #editTaskFormInput
+                      class="task__edit-task-form-name-input"
+                      formControlName="{{ $index }}"
+                      (blur)="onEditTaskName(standaloneTask, $index)"
+                      (keydown.enter)="onEditTaskName(standaloneTask, $index)"
+                    />
+                  }
+                }
+              </div>
+            </form>
+          }
+          <div class="task__options-container">
+            <app-toggle-status-btn
+              [matMenuTriggerFor]="
+                toggleStatusDropdownComponent.toggleStatusDropdown
+              "
+              [isEnabled]="true"
+              [hoverColorContrast]="'medium'"
+              [status]="standaloneTask.status"
+              (menuOpened)="
+                openedToggleStatusMenuTaskId.set(standaloneTask.task.id)
+              "
+              (menuClosed)="openedToggleStatusMenuTaskId.set(null)"
+            />
+            <app-toggle-status-dropdown
+              #toggleStatusDropdownComponent
+              class="toggle-status-dropdown-component"
+              [listStatuses]="standaloneTask.listStatuses"
+              (statusSelection)="onStatusSelection($event, standaloneTask)"
+            />
+
+            @if (hasAllEditingPermissionsInTask(standaloneTask)) {
+              <button class="rename-btn" (click)="onStartTaskRenaming($index)">
+                <span
+                  class="rename-btn-symbol rename-btn-symbol--edit material-symbols-outlined"
+                >
+                  edit
+                </span>
+              </button>
+            }
+            @if (!entityOptionsDropdownComponent.isEmpty()) {
+              <app-toggle-options-dropdown-btn
+                [dropdownMenu]="
+                  entityOptionsDropdownComponent.entityOptionsDropdown
+                "
+                [hoverColorContrast]="'medium'"
+              />
+            }
+            <app-entity-options-dropdown
+              #entityOptionsDropdownComponent
+              [includeRename]="hasAllEditingPermissionsInTask(standaloneTask)"
+              [includeDelete]="
+                canDeleteTask(standaloneTask.taskAncestorsData.listData.id)
+              "
+              (startEntityRenaming)="onStartTaskRenaming($index)"
+              (startEntityDeletion)="openDeleteWarningModal(standaloneTask)"
+            />
+          </div>
+        </div>
+        @if (taskGroupType() === "inSpace" || taskGroupType() === "inFolder") {
+          <div class="task__path">
+            In
+            @if (standaloneTask.taskAncestorsData.spaceData) {
+              <a
+                class="task__path-space"
+                [routerLink]="
+                  getSpaceLink(standaloneTask.taskAncestorsData.spaceData.id)
+                "
+              >
+                {{ standaloneTask.taskAncestorsData.spaceData.name }}
+              </a>
+              @if (standaloneTask.taskAncestorsData.folderData) {
+                <span class="task__path-slash"> / </span>
+
+                <a
+                  class="task_path-space"
+                  [routerLink]="
+                    getFolderLink(
+                      standaloneTask.taskAncestorsData.spaceData.id,
+                      standaloneTask.taskAncestorsData.folderData.id
+                    )
+                  "
+                >
+                  {{ standaloneTask.taskAncestorsData.folderData.name }}
+                </a>
+              }
+              <span class="task__path-slash"> / </span>
+
+              <a
+                class="task_path-list"
+                [routerLink]="
+                  getListLink(
+                    standaloneTask.taskAncestorsData.spaceData.id,
+                    standaloneTask.taskAncestorsData.folderData?.id || null,
+                    standaloneTask.taskAncestorsData.listData.id
+                  )
+                "
+              >
+                {{ standaloneTask.taskAncestorsData.listData.name }}
+              </a>
+            }
+          </div>
+        }
+        <app-assign-task-btn
+          [isDisabled]="
+            !canAssignTasks(standaloneTask.taskAncestorsData.listData.id)
+          "
+          [listId]="standaloneTask.taskAncestorsData.listData.id"
+          [task]="standaloneTask.task"
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+            'padding-left': '6px',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-secondary)',
+          }"
+          [symbolStyles]="{
+            'padding-right': '6px',
+
+            'font-size': '1rem',
+            'font-weight': '400',
+          }"
+          [avatarStyles]="{
+            height: '20px',
+            width: '20px',
+          }"
+          [newTaskAssigneesIds]="null"
+          (assigneeSelection)="
+            onAssigneeSelection(
+              {
+                spaceId: standaloneTask.taskAncestorsData.spaceData?.id || null,
+                folderId:
+                  standaloneTask.taskAncestorsData.folderData?.id || null,
+                listId: standaloneTask.taskAncestorsData.listData.id,
+              },
+              standaloneTask.task,
+              $event
+            )
+          "
+        />
+
+        <app-add-due-date-btn
+          [isDisabled]="!hasAllEditingPermissionsInTask(standaloneTask)"
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+            'padding-left': '6px',
+
+            'font-size': '0.75rem',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-heading)',
+          }"
+          [symbolStyles]="{
+            'padding-right': '6px',
+
+            'font-size': '1rem',
+            'font-weight': '400',
+
+            color: 'var(--text-color-secondary)',
+          }"
+          [noDueDatePlaceholder]="'-'"
+          [selectedDate]="standaloneTask.task.dueDate"
+          (selectedDateChange)="
+            onSelectedDateChange(
+              extractTaskAncestorsIds(standaloneTask.taskAncestorsData),
+              standaloneTask.task,
+              $event
+            )
+          "
+        />
+        <app-set-priority-btn
+          [isDisabled]="!hasAllEditingPermissionsInTask(standaloneTask)"
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+            'padding-left': '6px',
+
+            'font-size': '0.75rem',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-heading)',
+          }"
+          [symbolStyles]="{
+            'font-size': '1rem',
+            'font-weight': '400',
+
+            'padding-right': '6px',
+          }"
+          [noPriorityPlaceholder]="'-'"
+          [(taskPriority)]="standaloneTask.task.priority"
+          (taskPriorityChange)="
+            onTaskPriorityChange(
+              extractTaskAncestorsIds(standaloneTask.taskAncestorsData),
+              standaloneTask.task
+            )
+          "
+        />
+      </div>
+    }
+    @if (isNewTaskFieldOpen()) {
+      <form class="new-task-form" [formGroup]="newTaskForm">
+        <div class="new-task-form__new-task-name-row">
+          <input
+            class="new-task-form__name-input"
+            id="new-task-form__new-task-name"
+            placeholder="Task name..."
+            autocomplete="off"
+            formControlName="taskName"
+            (keydown.enter)="onSaveNewTask()"
+          />
+
+          <button
+            class="save-new-task-btn"
+            [disabled]="!this.newTaskForm.controls.taskName.value?.trim()"
+            [matTooltip]="'Please, type a task name.'"
+            [matTooltipClass]="'center-tooltip-text'"
+            [matTooltipDisabled]="
+              !!this.newTaskForm.controls.taskName.value?.trim()
+            "
+            (click)="onSaveNewTask()"
+          >
+            Save
+            <span
+              class="save-new-task-btn__symbol save-new-task-btn__symbol--subdirectory-arrow-left material-symbols-outlined"
+            >
+              subdirectory_arrow_left
+            </span>
+          </button>
+        </div>
+        @if (taskGroupType() === "inSpace" || taskGroupType() === "inFolder") {
+          <button
+            #pathSelectorDropdownTrigger="matMenuTrigger"
+            class="select-list-btn"
+            [class.select-list-btn--invalid]="newTaskNameFormControl.invalid"
+            [matMenuTriggerFor]="
+              pathSelectorDropdownComponent.pathSelectorDropdown
+            "
+          >
+            {{
+              selectedListInNewTask()
+                ? selectedListInNewTask()!.name
+                : "Select list..."
+            }}
+          </button>
+
+          <app-path-selector-dropdown
+            #pathSelectorDropdownComponent
+            [columnStatus]="status()"
+            (listSelection)="
+              onListSelection($event.selectedList, $event.listAncestorsIds)
+            "
+          />
+        }
+
+        <app-assign-task-btn
+          [isDisabled]="
+            (taskGroupType() !== 'inList' && !selectedListInNewTask()) ||
+            (!!selectedListInNewTask() &&
+              !canAssignTasks(selectedListInNewTask()!.id))
+          "
+          [listId]="newTaskListId()"
+          [task]="null"
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-secondary)',
+            'padding-left': '6px',
+          }"
+          [symbolStyles]="{
+            'font-size': '1rem',
+            'font-weight': '400',
+
+            'padding-right': '6px',
+          }"
+          [(newTaskAssigneesIds)]="newTaskAssigneesIds"
+          (click)="$event.stopPropagation()"
+          (menuOpened)="isNewTaskAssignTaskMenuOpen.set(true)"
+          (menuClosed)="onCloseNewTaskAssignTaskMenu()"
+        />
+        <app-add-due-date-btn
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+            'padding-left': '6px',
+
+            'font-size': '0.75rem',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-secondary)',
+          }"
+          [symbolStyles]="{
+            'padding-right': '6px',
+
+            'font-size': '1rem',
+            'font-weight': '400',
+
+            color: 'var(--text-color-secondary)',
+          }"
+          [noDueDatePlaceholder]="'Select date'"
+          [(selectedDate)]="newTaskDueDate"
+          (menuOpened)="isNewTaskAddDueDateMenuOpen.set(true)"
+          (menuClosed)="onCloseNewTaskAddDueDateMenu()"
+        />
+        <app-set-priority-btn
+          class="new-task-set-priority-btn"
+          [btnStyles]="{
+            position: 'relative',
+            height: '28px',
+            width: '100%',
+            'padding-left': '6px',
+
+            'font-size': '0.75rem',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-secondary)',
+          }"
+          [symbolStyles]="{
+            'padding-right': '6px',
+
+            'font-size': '1rem',
+            'font-weight': '400',
+          }"
+          [noPriorityPlaceholder]="'Add priority'"
+          [(taskPriority)]="newTaskPriority"
+          (menuOpened)="isNewTaskSetPriorityMenuOpen.set(true)"
+          (menuClosed)="onCloseNewTaskSetPriorityMenu()"
+        />
+      </form>
+    }
+    @if (!omitAddTaskBtn()) {
+      <button
+        class="add-task-btn"
+        [disabled]="!canCreateTasks()"
+        [matTooltip]="'You don\'t have the required permissions.'"
+        [matTooltipClass]="'center-tooltip-text'"
+        [matTooltipDisabled]="canCreateTasks()"
+        (click)="openNewTaskField()"
+      >
+        <span
+          class="add-task-btn__symbol add-task-btn__symbol--add material-symbols-outlined"
+          >add</span
+        >
+        <span>Add Task</span>
+      </button>
+    }
+  </div>
+</div>

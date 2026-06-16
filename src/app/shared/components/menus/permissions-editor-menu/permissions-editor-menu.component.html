@@ -1,0 +1,66 @@
+@if (workspace(); as workspace) {
+  <div class="permissions-editor-menu">
+    <div class="permissions-editor-menu__header">
+      <div class="permissions-editor-workspace-btn__left">
+        <div class="workspace-btn">
+          <div class="workspace-btn__workspace-icon">
+            {{ workspace.name![0] }}
+          </div>
+          <div class="workspace-btn__current-workspace-name">
+            {{ workspace.name | trimName: 21 }}
+          </div>
+        </div>
+      </div>
+      <div class="permissions-editor-workspace-btn__right">
+        <button
+          class="permissions-editor-menu__clear-all-permissions-btn clear-all-permissions-btn"
+          (click)="onClickClearPermissions(); $event.stopPropagation()"
+        >
+          Clear all permissions
+        </button>
+        <input
+          class="permissions-editor-workspace-btn__checkbox"
+          type="checkbox"
+          [checked]="isWorkspaceChecked()"
+          (change)="toggleWorkspaceChecked()"
+          (click)="$event.stopPropagation()"
+        />
+        <app-select-role-btn
+          [matTooltip]="
+            'You are not allowed to edit this user\'s permissions for this workspace.'
+          "
+          [matTooltipClass]="'center-tooltip-text'"
+          [matTooltipDisabled]="canEditWorkspacePermissions()"
+          [isDisabled]="!canEditWorkspacePermissions() || !isWorkspaceChecked()"
+          [disabledRoleButtons]="getDisabledRoleButtons()"
+          [btnType]="'topLevel'"
+          [isInherited]="false"
+          [allowedAssignableRoles]="getAllowedAssignableWorkspaceRoles()"
+          [selectedRole]="workspaceRole()"
+          (selectedRoleChange)="onSelectRole($event)"
+        />
+      </div>
+    </div>
+
+    <div class="permissions-editor-menu__body">
+      <div class="permissions-editor-menu__section-title">Spaces</div>
+      @if (workspace.spaces.length === 0) {
+        <div class="permissions-editor-menu__empty-workspace-message">
+          This workspace is still empty.
+        </div>
+      }
+      @for (space of workspace.spaces; track $index) {
+        <app-edit-space-permissions-btn
+          [isDisabled]="!canEditSpacePermissions(space.id)"
+          [isCheckboxDisabled]="
+            workspaceRole() && workspaceRole() !== 'granular' ? true : false
+          "
+          [space]="space"
+          [workspaceMemberId]="workspaceMemberId()"
+          [allowedAssignableRoles]="getAllowedAssignableSpaceRoles(space.id)"
+          (click)="$event.stopPropagation()"
+        />
+      }
+    </div>
+  </div>
+}

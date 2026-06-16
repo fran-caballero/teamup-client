@@ -1,0 +1,176 @@
+<form
+  class="new-task-modal"
+  autocomplete="off"
+  [formGroup]="newTaskForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="new-task-modal__header">
+    <div class="new-task-modal__title">New task</div>
+    <button class="close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="close-btn__symbol close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <div class="new-task-modal__body">
+    <div class="new-task-modal__btns-row">
+      <button
+        #pathSelectorDropdownTrigger="matMenuTrigger"
+        class="path-selector-btn"
+        type="button"
+        [matMenuTriggerFor]="pathSelectorDropdownComponent.pathSelectorDropdown"
+      >
+        <app-path-selector-dropdown
+          #pathSelectorDropdownComponent
+          (listSelection)="
+            onListSelection($event.selectedList, $event.listAncestorsIds)
+          "
+        />
+        @if (selectedList()) {
+          <app-list-symbol
+            class="path-selector-btn__symbol--list"
+            [styles]="{ height: 15, width: 15 }"
+          />
+          <div class="path-selector-btn__text">{{ selectedList()!.name }}</div>
+        } @else {
+          <div class="path-selector-btn__text">Select a list</div>
+        }
+
+        <span
+          class="path-selector-btn__symbol path-selector-btn__symbol--keyboard-arrow-down material-symbols-outlined"
+        >
+          keyboard_arrow_down
+        </span>
+      </button>
+    </div>
+    <input
+      class="new-task-modal__name-input"
+      type="text"
+      id="task-name"
+      name="task-name"
+      placeholder="Task Name"
+      formControlName="taskName"
+      (keydown.enter)="onSubmit()"
+    />
+    @if (formSubmitted() && taskName.invalid) {
+      <div class="new-task-modal__invalid-task-name-message">
+        Task name is required
+      </div>
+    }
+    <div class="new-task-modal__btns-row">
+      <button
+        class="set-status-btn"
+        type="button"
+        [matMenuTriggerFor]="setStatusMenuComponent.toggleStatusDropdown"
+      >
+        @if (selectedStatus() && currentColorTheme()) {
+          @switch (selectedStatus()!.type) {
+            @case ("not_started") {
+              <span
+                class="set-status-btn__symbol set-status-btn__symbol--radio_button_unchecked material-symbols-outlined"
+                [ngStyle]="{
+                  color: getDefaultColor(selectedStatus()!.defaultColorId!)
+                    ? getDefaultColor(selectedStatus()!.defaultColorId!)![
+                        currentColorTheme()!
+                      ]
+                    : '',
+                }"
+                >radio_button_unchecked</span
+              >
+            }
+            @case ("active") {
+              <span
+                class="set-status-btn__symbol set-status-btn__symbol--radio_button_partial material-symbols-outlined"
+                [ngStyle]="{
+                  color: getDefaultColor(selectedStatus()!.defaultColorId!)
+                    ? getDefaultColor(selectedStatus()!.defaultColorId!)![
+                        currentColorTheme()!
+                      ]
+                    : '',
+                }"
+                >radio_button_partial</span
+              >
+            }
+            @case ("done") {
+              <span
+                class="set-status-btn__symbol set-status-btn__symbol--check_circle material-symbols-outlined"
+                [ngStyle]="{
+                  color: getDefaultColor(selectedStatus()!.defaultColorId!)
+                    ? getDefaultColor(selectedStatus()!.defaultColorId!)![
+                        currentColorTheme()!
+                      ]
+                    : '',
+                }"
+                >check_circle</span
+              >
+            }
+          }
+          {{ selectedStatus()!.name }}
+        }
+      </button>
+
+      <app-add-due-date-btn
+        [btnStyles]="{
+          display: 'flex',
+          'justify-content': 'center',
+          'align-items': 'center',
+          height: '24px',
+          padding: '3px 4px',
+          gap: '2px',
+
+          'font-size': '0.75rem',
+          'font-weight': '600',
+
+          border: '1px solid var(--border-color)',
+          'border-radius': '4px',
+          background: 'none',
+          color: 'var(--text-color-secondary)',
+        }"
+        [symbolStyles]="{
+          'padding-top': '2px',
+
+          'font-size': '0.9rem',
+        }"
+        [noDueDatePlaceholder]="'Due date'"
+        [(selectedDate)]="selectedDate"
+      />
+      <app-set-priority-btn
+        [btnStyles]="{
+          display: 'flex',
+          'justify-content': 'center',
+          'align-items': 'center',
+          padding: '3px 4px',
+          height: '24px',
+
+          gap: '2px',
+
+          'font-size': '0.75rem',
+          'font-weight': '600',
+
+          border: '1px solid var(--border-color)',
+          'border-radius': '4px',
+          background: 'none',
+          color: 'var(--text-color-secondary)',
+        }"
+        [symbolStyles]="{
+          'padding-top': '1px',
+
+          'font-size': '0.9rem',
+        }"
+        [noPriorityPlaceholder]="'Priority'"
+        [(taskPriority)]="selectedPriority"
+      />
+    </div>
+  </div>
+  <div class="new-task-modal__footer">
+    <button class="create-task-btn" type="submit">Create task</button>
+  </div>
+
+  <app-toggle-status-dropdown
+    #setStatusMenuComponent
+    [listStatuses]="selectedList()?.statuses"
+    (statusSelection)="selectedStatus.set($event)"
+  />
+</form>

@@ -1,0 +1,78 @@
+<mat-menu #toggleStatusDropdown="matMenu" class="toggle-status-dropdown">
+  @if (statusesGroupsByType(); as statusesGroupsByType) {
+    <div class="toggle-status-dropdown__content">
+      @if (statusesGroupsByType.notStartedStatuses.length > 0) {
+        <div class="toggle-status-dropdown__status-group-name">NOT STARTED</div>
+        @for (
+          status of statusesGroupsByType.notStartedStatuses;
+          track status.id
+        ) {
+          <button
+            class="toggle-status-dropdown__btn"
+            type="button"
+            (click)="statusSelection.emit(status)"
+          >
+            <span
+              class="toggle-status-dropdown-btn__symbol toggle-status-dropdown-btn__symbol--radio_button_unchecked material-symbols-outlined"
+              [ngStyle]="{
+                color: status.defaultColorId
+                  ? getDefaultColor(status.defaultColorId!)![
+                      currentColorTheme()!
+                    ]
+                  : status.colorHex,
+              }"
+              >radio_button_unchecked</span
+            >
+            {{ status.name }}
+          </button>
+        }
+      }
+      @if (statusesGroupsByType.activeStatuses.length > 0) {
+        <div class="toggle-status-dropdown__status-group-name">ACTIVE</div>
+        @for (status of statusesGroupsByType.activeStatuses; track status.id) {
+          <button
+            class="toggle-status-dropdown__btn"
+            type="button"
+            (click)="statusSelection.emit(status)"
+          >
+            <span
+              class="toggle-status-dropdown-btn__symbol toggle-status-dropdown-btn__symbol--radio_button_partial material-symbols-outlined"
+              [ngStyle]="{
+                color: status.defaultColorId
+                  ? getDefaultColor(status.defaultColorId!)![
+                      currentColorTheme()!
+                    ]
+                  : status.colorHex,
+              }"
+              >radio_button_partial</span
+            >
+            {{ status.name }}
+          </button>
+        }
+      }
+      @if (statusesGroupsByType.doneStatuses.length > 0) {
+        <div class="toggle-status-dropdown__status-group-name">DONE</div>
+        @for (status of statusesGroupsByType.doneStatuses; track status.id) {
+          <button
+            class="toggle-status-dropdown__btn"
+            type="button"
+            (click)="statusSelection.emit(status)"
+          >
+            <span
+              class="toggle-status-dropdown-btn__symbol toggle-status-dropdown-btn__symbol--check_circle material-symbols-outlined"
+              [ngStyle]="{
+                color: status.defaultColorId
+                  ? getDefaultColor(status.defaultColorId!)![
+                      currentColorTheme()!
+                    ]
+                  : status.colorHex,
+              }"
+              >check_circle</span
+            >
+            {{ status.name }}
+          </button>
+        }
+      }
+    </div>
+  }
+</mat-menu>

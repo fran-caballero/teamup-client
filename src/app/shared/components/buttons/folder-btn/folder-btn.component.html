@@ -1,0 +1,168 @@
+@if (folder(); as folder) {
+  <div class="folder-btn" [class.folder-btn--in-folder]="isInFolder()">
+    <div class="folder-btn__left">
+      <app-collapse-expand-btn
+        class="collapse-expand-btn"
+        [isCollapsedOnCreation]="true"
+        [(isCollapsed)]="isFolderCollapsed"
+      />
+      <div class="folder-btn__symbol-container">
+        <span
+          class="folder-btn__symbol folder-btn__symbol--folder material-symbols-outlined"
+        >
+          folder
+        </span>
+      </div>
+
+      @if (!isFolderBeingRenamed()) {
+        @if (buttonType() === "link") {
+          <a
+            appIsEllipsed
+            #folderLink="appIsEllipsed"
+            class="folder-btn__a"
+            [routerLink]="['/spaces', space().id, 'folders', folder.id]"
+            [queryParams]="{ view: 'board' }"
+            [matTooltip]="folder.name"
+            [matTooltipDisabled]="!folderLink.isEllipsed"
+          >
+            {{ folder.name }}</a
+          >
+        } @else {
+          <button
+            appIsEllipsed
+            #folderLink="appIsEllipsed"
+            class="folder-btn__btn"
+            [matTooltip]="folder.name"
+            [matTooltipDisabled]="!folderLink.isEllipsed"
+            (click)="onToggleFolderState()"
+          >
+            {{ folder.name }}
+          </button>
+        }
+      } @else {
+        <form class="folder-btn__edit-folder-form" [formGroup]="renameForm()">
+          <input
+            #editFolderNameFormInput
+            class="folder-btn__edit-folder-form-input"
+            maxlength="32"
+            formControlName="folderName"
+            (blur)="renameFolder()"
+            (keydown.enter)="renameFolder()"
+          />
+        </form>
+      }
+    </div>
+    <div class="folder-btn__right">
+      @if (!folderOptionsDropdownComponent.isEmpty()) {
+        <app-toggle-options-dropdown-btn
+          #folderOptionsDropdownBtnComponent
+          class="toggle-options-dropdown-btn"
+          [ngStyle]="{
+            display:
+              isOptionsDropdownOpen() ||
+              isAddChildDropdownOpen() ||
+              !isFolderCollapsed()
+                ? 'block'
+                : 'none',
+          }"
+          [dropdownMenu]="folderOptionsDropdownComponent.entityOptionsDropdown"
+          [hoverColorContrast]="'ultra-high'"
+          (isMenuOpen)="isOptionsDropdownOpen.set($event)"
+        />
+      }
+
+      @if (canCreateListsInFolder(folder.id)) {
+        <button
+          class="add-child-btn"
+          [ngStyle]="{
+            display:
+              isOptionsDropdownOpen() ||
+              isAddChildDropdownOpen() ||
+              !isFolderCollapsed()
+                ? 'flex'
+                : 'none',
+          }"
+          [matMenuTriggerFor]="addChildDropdown"
+          (menuOpened)="isAddChildDropdownOpen.set(true)"
+          (menuClosed)="isAddChildDropdownOpen.set(false)"
+        >
+          <span
+            class="add-child-btn__symbol add-child-btn__symbol--add material-symbols-outlined"
+            >add</span
+          >
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (!isFolderCollapsed()) {
+    @if (folder.lists.length === 0 && !isNewListBeingCreated()) {
+      @if (canCreateListsInFolder(folder.id)) {
+        <div class="folder-btn__empty-folder-message">
+          Create a&nbsp;
+          <button
+            class="folder-btn__empty-folder-message-new-list-btn"
+            (click)="onStartListCreation()"
+          >
+            List
+          </button>
+          .
+        </div>
+      } @else {
+        <div class="folder-btn__empty-folder-message">
+          This Folder is still empty.
+        </div>
+      }
+    } @else {
+      @for (list of folder.lists; track list.id) {
+        <app-list-btn
+          [space]="space()"
+          [folder]="folder"
+          [list]="list"
+          [isDisabled]="isListBtnDisabled(list)"
+          [columnStatus]="columnStatus()"
+          [buttonType]="buttonType()"
+          (listSelection)="listSelection.emit($event)"
+        />
+      }
+      @if (isNewListBeingCreated()) {
+        <form class="new-list-form" [formGroup]="newListForm">
+          <app-list-symbol
+            class="new-list-form__symbol new-list-form__symbol--list"
+          />
+          <input
+            #newListFormInput
+            class="new-list-form__input"
+            placeholder="List name"
+            formControlName="listName"
+            (blur)="createList()"
+            (keydown.enter)="createList()"
+          />
+        </form>
+      }
+    }
+  }
+
+  <app-entity-options-dropdown
+    #folderOptionsDropdownComponent
+    [includeRename]="canRenameFolder()"
+    [includeDelete]="canDeleteFolder()"
+    [stopInnerClickPropagation]="true"
+    (startEntityRenaming)="onStartFolderRenaming()"
+    (startEntityDeletion)="onStartFolderDeletion()"
+  />
+
+  <mat-menu #addChildDropdown class="add-child-dropdown">
+    <button
+      class="add-child-dropdown__btn add-child-dropdown__btn--list"
+      (click)="onStartListCreation()"
+    >
+      <span
+        class="add-child-dropdown__symbol add-child-dropdown__symbol--playlist_add material-symbols-outlined"
+      >
+        playlist_add
+      </span>
+      <span class="add-child-dropdown__btn-text">List</span>
+    </button>
+  </mat-menu>
+}

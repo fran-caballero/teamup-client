@@ -1,0 +1,91 @@
+<div class="list-board-view">
+  @switch (selectedGroupByOption()) {
+    @case ("status") {
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (taskGroup && hasProperty(taskGroup, "status")) {
+          <app-task-group-column
+            [taskGroup]="taskGroup"
+            [taskGroupType]="'inList'"
+            [tasksCommonAncestors]="tasksCommonAncestors()"
+            [status]="taskGroup.status"
+            [columnName]="taskGroup.status.name"
+            [columnVariant]="'status'"
+            [columnSubvariant]="taskGroup.status.type"
+            [canCreateTasks]="canCreateTasks()"
+            [omitAddTaskBtn]="isAssignedToMe()"
+            [hasAllEditingPermissionsInList]="this.hasAllEditingPermissions()"
+          />
+        }
+      }
+    }
+    @case ("priority") {
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (taskGroup && hasProperty(taskGroup, "priority")) {
+          <app-task-group-column
+            [taskGroup]="taskGroup"
+            [taskGroupType]="'inList'"
+            [tasksCommonAncestors]="tasksCommonAncestors()"
+            [columnName]="
+              taskGroup.priority
+                ? (taskGroup.priority | titlecase)
+                : 'No priority'
+            "
+            [columnVariant]="'priority'"
+            [columnSubvariant]="taskGroup.priority"
+            [canCreateTasks]="canCreateTasks()"
+            [omitAddTaskBtn]="isAssignedToMe()"
+            [hasAllEditingPermissionsInList]="this.hasAllEditingPermissions()"
+          />
+        }
+      }
+    }
+
+    @case ("dueDate") {
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (taskGroup && hasProperty(taskGroup, "dueDate")) {
+          <app-task-group-column
+            [taskGroup]="taskGroup"
+            [taskGroupType]="'inList'"
+            [tasksCommonAncestors]="tasksCommonAncestors()"
+            [columnName]="
+              taskGroup.dueDate
+                ? (taskGroup.dueDate | titlecase)
+                : 'No due date'
+            "
+            [columnVariant]="'dueDate'"
+            [columnSubvariant]="taskGroup.dueDate"
+            [canCreateTasks]="canCreateTasks()"
+            [omitAddTaskBtn]="isAssignedToMe()"
+            [hasAllEditingPermissionsInList]="this.hasAllEditingPermissions()"
+          />
+        }
+      }
+    }
+
+    @case ("assignee") {
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (taskGroup && hasProperty(taskGroup, "assignee")) {
+          <app-task-group-column
+            [taskGroup]="taskGroup"
+            [taskGroupType]="'inList'"
+            [tasksCommonAncestors]="tasksCommonAncestors()"
+            [columnName]="getAssigneeGroupingColumnName(taskGroup.assignee)"
+            [columnVariant]="'assignee'"
+            [columnSubvariant]="'user'"
+            [assigneeId]="taskGroup.assignee?.id ?? null"
+            [canCreateTasks]="canCreateTasks()"
+            [hasAllEditingPermissionsInList]="this.hasAllEditingPermissions()"
+          />
+        }
+      }
+    }
+  }
+  @if (
+    tasksCommonAncestors() &&
+    tasksCommonAncestors()!.spaceData &&
+    selectedGroupByOption() === "status" &&
+    hasAllEditingPermissions()
+  ) {
+    <app-add-status-btn [tasksAncestorsData]="tasksCommonAncestors()!" />
+  }
+</div>

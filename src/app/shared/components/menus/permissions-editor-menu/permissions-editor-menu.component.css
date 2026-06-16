@@ -1,0 +1,119 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.permissions-editor-menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.permissions-editor-menu__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.permissions-editor-workspace-btn__left {
+  display: flex;
+}
+
+.workspace-btn {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 4px;
+
+  font-weight: 600;
+
+  border: none;
+  border-radius: 4px;
+  background: none;
+}
+
+.workspace-btn:hover {
+  background-color: var(--border-color);
+}
+
+.workspace-btn__workspace-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  margin-right: 6px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  border-radius: 4px;
+  background-color: #b2e0e0;
+  color: #215256;
+}
+
+.workspace-btn__current-workspace-name {
+  padding-right: 2px;
+
+  font-size: 1rem;
+
+  color: var(--text-color-heading);
+}
+
+.permissions-editor-workspace-btn__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.permissions-editor-menu__clear-all-permissions-btn {
+  margin: 0 10px;
+}
+
+.clear-all-permissions-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 6px 6px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-secondary);
+}
+
+.clear-all-permissions-btn:hover {
+  background-color: var(--hover-color-contrast-low);
+}
+
+.permissions-editor-menu__body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.permissions-editor-menu__section-title {
+  padding-bottom: 8px;
+
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.permissions-editor-menu__empty-workspace-message {
+  padding: 18px 0;
+
+  text-align: center;
+
+  color: var(--text-color-secondary);
+}

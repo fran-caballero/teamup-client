@@ -1,0 +1,19 @@
+@if (currentColorTheme(); as currentColorTheme) {
+  <div class="color-picker-menu">
+    <div class="color-picker-menu__header">Color</div>
+    <div class="color-picker-menu__btns-section">
+      @for (color of colorsArray; track color.id) {
+        <button
+          class="color-picker-btn"
+          [class.color-picker-btn--selected]="color === selectedDefaultColor()"
+          (click)="onColorSelection($index); $event.stopPropagation()"
+        >
+          <div
+            class="color-picker-btn__color-circle"
+            [ngStyle]="{ 'background-color': color[currentColorTheme] }"
+          ></div>
+        </button>
+      }
+    </div>
+  </div>
+}

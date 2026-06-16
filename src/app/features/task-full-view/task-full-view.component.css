@@ -1,0 +1,279 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.task-full-view {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+  min-height: 0;
+  min-width: 0;
+  padding: 24px max(24px, calc((100vw - 1100px) / 2));
+}
+
+.task-full-view__task-name-form {
+  margin-bottom: 20px;
+}
+
+.task-full-view__name {
+  overflow: hidden;
+  min-height: 35px;
+  width: 100%;
+  padding-left: 8px;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-heading);
+
+  resize: none;
+}
+
+.task-full-view__name:hover {
+  background-color: var(--hover-color-contrast-low);
+}
+
+.task-full-view__name:focus {
+  outline: none !important;
+  border: 1px solid var(--border-color);
+}
+
+.task-full-view__info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-auto-rows: 36px;
+  margin-bottom: 40px;
+  gap: 8px;
+}
+
+.task-full-view__info-field {
+  display: grid;
+  grid-template-columns: 200px minmax(150px, 200px);
+  height: 100%;
+
+  font-weight: 400;
+
+  color: var(--text-color-secondary);
+}
+
+.task-full-view__info-field-left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  background: none;
+  border: none;
+  text-align: center;
+  color: var(--text-color-secondary);
+}
+
+.task-full-view__info-field-symbol-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+}
+
+.task-full-view__info-field-symbol--person {
+  width: 30px;
+
+  font-size: 1.3rem;
+}
+
+.task-full-view__info-field-text {
+  display: flex;
+  padding-bottom: 2px;
+}
+
+.task-full-view__info-field-right {
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
+  padding: 0 6px;
+
+  border-radius: 4px;
+  color: var(--text-color-muted);
+}
+
+.task-full-view__info-field-right:hover {
+  background-color: var(--hover-color-contrast-low);
+}
+
+.task-full-view__info-field-right app-status-tag {
+  display: block;
+  min-width: 0;
+}
+
+.task-full-view__info-field-symbol--calendar_today {
+  width: 30px;
+
+  font-size: 1rem;
+}
+
+.task-full-view__info-field-right--add-due-date-btn-container {
+  justify-content: normal;
+  align-items: normal;
+  padding-left: 0;
+}
+
+.task-full-view__info-field-symbol--priority {
+  width: 30px;
+
+  font-size: 1.2rem;
+}
+
+.task-full-view__info-field-right--set-priority-btn-container {
+  justify-content: normal;
+  align-items: normal;
+  padding-left: 0;
+}
+
+.task-description-read-only {
+  border: 1px solid var(--border-color);
+}
+
+.add-description-btn {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 35px;
+  width: 100%;
+  padding: 0 10px;
+  gap: 8px;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: none;
+  color: var(--text-color-muted);
+}
+
+.add-description-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.add-description-btn:disabled {
+  cursor: default;
+}
+
+.add-description-btn__symbol-description {
+  font-size: 1.3rem;
+}
+
+.task-description-editor {
+  border: 1px solid var(--border-color);
+}
+
+::ng-deep quill-editor {
+  width: 100%;
+}
+
+.ql-toolbar {
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid var(--border-color);
+  border-left: none;
+}
+
+::ng-deep .ql-container {
+  border: none !important;
+}
+
+::ng-deep .ql-picker {
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-picker:hover {
+  background-color: var(--hover-color-contrast-medium) !important;
+}
+
+::nog-deep .ql-picker-item:hover .ql-picker-label {
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-active {
+  background-color: var(--hover-color-contrast-medium) !important;
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-picker {
+  border: none;
+  border-radius: 4px;
+}
+
+::ng-deep .ql-picker-label {
+  border: none !important;
+  border-radius: 4px;
+}
+
+::ng-deep .ql-picker-label:hover {
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-picker-label::before {
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-picker-item {
+  border-radius: 4px;
+}
+
+::ng-deep .ql-selected {
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-picker-item:hover {
+  background-color: var(--hover-color-contrast-medium) !important;
+  color: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+::ng-deep button:has(.ql-stroke) {
+  stroke: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-fill {
+  fill: var(--text-color-quill-editor-toolbar-btn) !important;
+}
+
+::ng-deep .ql-stroke {
+  stroke: var(--text-color-quill-editor-toolbar-btn) !important;
+  stroke-width: 1.6 !important;
+}
+
+::ng-deep .ql-picker-options {
+  border: var(--border-color) !important;
+  background-color: var(--background-color-main-section) !important;
+}
+
+.ql-formats button {
+  border-radius: 2px;
+}
+
+.ql-formats button:hover {
+  background-color: var(--hover-color-contrast-medium) !important;
+}
+
+.ql-icon-picker {
+  border-radius: 2px;
+}
+
+.ql-icon-picker:hover {
+  background-color: var(--hover-color-contrast-medium) !important;
+}
+
+::ng-deep .ql-editor {
+  color: var(--text-color-quill-editor);
+}
+
+::ng-deep .ql-blank::before {
+  color: var(--text-color-muted) !important;
+}

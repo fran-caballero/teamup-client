@@ -1,0 +1,18 @@
+.add-due-date-btn {
+  display: flex;
+  align-items: center;
+}
+
+.add-due-date-btn:disabled {
+  cursor: default;
+}
+
+.add-due-date-btn--hover-outlined:hover {
+  z-index: 10;
+
+  outline: 1px solid var(--hover-color-contrast-very-high);
+}
+
+.add-due-date-btn__formatted-selected-date--overdue {
+  color: var(--text-color-overdue-date);
+}

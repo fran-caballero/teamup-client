@@ -1,0 +1,15 @@
+.assign-task-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.assign-task-btn:disabled {
+  cursor: default;
+}
+
+.assign-task-btn--hover-outlined:hover {
+  z-index: 10;
+
+  outline: 1px solid var(--hover-color-contrast-very-high);
+}

@@ -1,0 +1,53 @@
+<div class="unexpected-error">
+  <header class="unexpected-error__header">
+    <div class="unexpected-error__header-left"></div>
+    <div class="unexpected-error__header-right">
+      @if (user(); as user) {
+        <app-user-avatar
+          [username]="user.username"
+          [styles]="{ height: '28px', width: '28px' }"
+        />
+        <span class="unexpected-error__username">
+          {{ user.username }}
+        </span>
+      }
+
+      <button class="unexpected-error__sign-out-btn" (click)="onClickSignout()">
+        Sign Out
+      </button>
+    </div>
+  </header>
+  <div class="unexpected-error__main-section">
+    <div class="unexpected-error__error-card error-card">
+      <div class="error-card__error-avatar-container">
+        <div class="error-avatar">
+          <div class="error-avatar__icon-container-border">
+            <div class="error-avatar__icon-container">
+              <span
+                class="error-avatar__icon error-avatar__icon--error material-symbols-outlined"
+              >
+                error
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-card__text">
+        <div class="error-card__main-message">Something went wrong</div>
+        <div class="error-card__secondary-message">
+          The app could not finish loading this view.
+        </div>
+      </div>
+      @if (retryUrl) {
+        <button
+          class="error-card__go-back-btn"
+          type="button"
+          (click)="onClickRetry()"
+        >
+          Try again
+        </button>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="edit-permissions-modal">
+  <div class="edit-permissions-modal__body">
+    <h1 class="edit-permissions-modal__heading">
+      Edit {{ username }}'s permissions
+    </h1>
+    <div class="permissions-editor-menu-container">
+      <app-permissions-editor-menu
+        [workspaceMemberId]="userId"
+        [isUserMember]="true"
+      />
+    </div>
+  </div>
+
+  <div class="edit-permissions-modal__footer">
+    <button class="cancel-btn" (click)="onClickCancel()">Cancel</button>
+    <button class="accept-btn" (click)="onClickAccept()">Accept</button>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.section-options-header {
+  display: flex;
+  container-type: inline-size;
+  padding: 14px 18px;
+  gap: 8px;
+}
+
+.list__list-content {
+  flex: 1;
+  overflow: auto;
+  min-width: 0;
+}

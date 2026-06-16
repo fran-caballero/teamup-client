@@ -1,0 +1,174 @@
+<div class="login-page">
+  <div class="login-page__header">
+    <div class="login-page__brand">
+      <img class="login-page__brand-logo" src="icons/app-logo.svg" alt="" />
+      <span class="login-page__brand-name">TeamUp</span>
+    </div>
+    <div class="login-page__sign-up-btn-container">
+      <span class="login-page__sign-up-btn-container-text"
+        >Don't have an account?</span
+      >
+      <a class="sign-up-btn" [routerLink]="['/signup']">Sign up</a>
+    </div>
+  </div>
+
+  <div class="login-page__main-section">
+    <form class="login-form" [formGroup]="loginForm">
+      <h1 class="login-form__header">Welcome back!</h1>
+      <div class="login-form__username-input-container">
+        <label class="login-form__username-input-label" for="username"
+          >Username</label
+        >
+        <div
+          class="login-form__username-input-box"
+          [class.login-form__username-input-box--invalid]="
+            username.touched && username.dirty && username.invalid
+          "
+        >
+          <span
+            class="login-form__username-input-symbol login-form__username-input-symbol--person material-symbols-outlined"
+            [class.login-form__username-input-symbol--invalid]="
+              username.touched && username.dirty && username.invalid
+            "
+          >
+            person
+          </span>
+          <input
+            class="login-form__username-input"
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="username"
+            maxLength="30"
+            formControlName="username"
+          />
+        </div>
+        @if (username.invalid && username.touched && username.dirty) {
+          <div class="login-form__username-input-hint">
+            @if (username.hasError("required")) {
+              <span
+                class="login-form__input-hint-symbol login-form__input-hint-symbol--warning material-symbols-outlined"
+              >
+                warning
+              </span>
+              <div class="login-form__username-input-hint-text">
+                Username required!
+              </div>
+            } @else if (username.hasError("userNotFound")) {
+              <span
+                class="login-form__input-hint-symbol login-form__input-hint-symbol--warning material-symbols-outlined"
+              >
+                warning
+              </span>
+              <div class="login-form__username-input-hint-text">
+                User not found
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="login-form__password-input-container">
+        <label class="login-form__password-input-label" for="password"
+          >Password</label
+        >
+        <div
+          class="login-form__password-input-box"
+          [class.login-form__password-input-box--invalid]="
+            password.touched && password.dirty && password.invalid
+          "
+        >
+          <span
+            class="login-form__password-input-symbol login-form__password-input-symbol--lock material-symbols-outlined"
+            [class.login-form__password-input-symbol--invalid]="
+              password.touched && password.dirty && password.invalid
+            "
+          >
+            lock
+          </span>
+          <input
+            #passwordInput
+            class="login-form__password-input"
+            type="password"
+            id="password"
+            name="password"
+            maxLength="256"
+            autocomplete="current-password"
+            formControlName="password"
+            (keydown.enter)="login()"
+          />
+          @if (!isPasswordVisible()) {
+            <button
+              type="button"
+              class="show-password-btn"
+              (click)="
+                isPasswordVisible.set(true);
+                passwordInput.setAttribute('type', 'text')
+              "
+            >
+              Show
+            </button>
+          } @else {
+            <button
+              type="button"
+              class="show-password-btn"
+              (click)="isPasswordVisible.set(false)"
+              (click)="passwordInput.setAttribute('type', 'password')"
+            >
+              Hide
+            </button>
+          }
+        </div>
+        @if (password.invalid && password.touched && password.dirty) {
+          <div class="login-form__password-input-hint">
+            @if (password.hasError("required")) {
+              <span
+                class="login-form__input-hint-symbol login-form__input-hint-symbol--warning material-symbols-outlined"
+              >
+                warning
+              </span>
+              <div class="login-form__password-input-hint-text">
+                Password required!
+              </div>
+            }
+            @if (password.hasError("wrongPassword")) {
+              <span
+                class="login-form__input-hint-symbol login-form__input-hint-symbol--warning material-symbols-outlined"
+              >
+                warning
+              </span>
+              <div class="login-form__password-input-hint-text">
+                Wrong password
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        class="login-btn"
+        [disabled]="password.value === ''"
+        (click)="login()"
+      >
+        @if (isLoggingIn()) {
+          <app-three-dots-loading-animation />
+        } @else {
+          Log in
+        }
+      </button>
+      <button
+        type="button"
+        class="fill-demo-credentials-btn"
+        (click)="fillDemoCredentials()"
+      >
+        Use demo account
+      </button>
+      <div class="login-warning">
+        <span class="login-warning__highlight">Note:</span>
+        Demo data resets on a fixed schedule: 2:00, 5:00, 8:00, and 11:00
+        AM/PM (UTC+2).
+      </div>
+    </form>
+    <div class="login-page__purple-background"></div>
+  </div>
+</div>

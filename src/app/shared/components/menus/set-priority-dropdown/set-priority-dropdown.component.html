@@ -1,0 +1,60 @@
+<mat-menu #setPriorityDropdown class="set-priority-dropdown mat-menu-element">
+  <div class="set-priority-dropdown__content">
+    <div class="set-priority-dropdown__top">
+      <button
+        class="set-priority-dropdown__btn set-priority-dropdown__btn--priority-urgent"
+        (click)="prioritySelection.emit('urgent')"
+      >
+        <span
+          class="set-priority-dropdown__symbol set-priority-dropdown__symbol--urgent material-symbols-outlined"
+        >
+          flag_2
+        </span>
+        <span class="set-priority-dropdown__btn-text">Urgent</span>
+      </button>
+      <button
+        class="set-priority-dropdown__btn set-priority-dropdown__btn--priority-high"
+        (click)="prioritySelection.emit('high')"
+      >
+        <span
+          class="set-priority-dropdown__symbol set-priority-dropdown__symbol--high material-symbols-outlined"
+        >
+          flag_2
+        </span>
+        <span class="set-priority-dropdown__btn-text">High</span>
+      </button>
+      <button
+        class="set-priority-dropdown__btn set-priority-dropdown__btn--priority-normal"
+        (click)="prioritySelection.emit('normal')"
+      >
+        <span
+          class="set-priority-dropdown__symbol set-priority-dropdown__symbol--normal material-symbols-outlined"
+        >
+          flag_2 </span
+        ><span class="set-priority-dropdown__btn-text">Normal</span>
+      </button>
+      <button
+        class="set-priority-dropdown__btn set-priority-dropdown__btn--priority-low"
+        (click)="prioritySelection.emit('low')"
+      >
+        <span
+          class="set-priority-dropdown__symbol set-priority-dropdown__symbol--low material-symbols-outlined"
+        >
+          flag_2 </span
+        ><span class="set-priority-dropdown__btn-text">Low</span>
+      </button>
+    </div>
+    <div class="set-priority-dropdown__bottom">
+      <button
+        class="set-priority-dropdown__btn set-priority-dropdown__btn--clear"
+        (click)="prioritySelection.emit(null)"
+      >
+        <span
+          class="set-priority-dropdown__symbol set-priority-dropdown__symbol--block material-symbols-outlined"
+        >
+          block </span
+        ><span class="set-priority-dropdown__btn-text">Clear</span>
+      </button>
+    </div>
+  </div>
+</mat-menu>

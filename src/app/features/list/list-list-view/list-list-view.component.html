@@ -1,0 +1,203 @@
+@switch (selectedGroupByOption()) {
+  @case ("status") {
+    <div class="list">
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (
+          hasProperty(taskGroup, "status") &&
+          (taskGroup.status.type === "not_started" ||
+            taskGroup.standaloneTasks.length > 0)
+        ) {
+          <div class="list__task-group">
+            <div class="list__upper-bar">
+              <app-collapse-expand-btn
+                [buttonType]="'group'"
+                [isCollapsedOnCreation]="taskGroup.isCollapsed()"
+                [(isCollapsed)]="taskGroup.isCollapsed"
+              />
+              <app-status-tag
+                #statusTagComponent
+                [status]="taskGroup.status"
+                [spaceId]="spaceId()"
+                [folderId]="folderId()"
+                [listId]="
+                  list()?.id ||
+                  taskGroup.standaloneTasks[0].taskAncestorsData.listData.id
+                "
+                [isBtnDisabled]="!canEditStatuses()"
+              />
+
+              <span class="list__count">{{
+                taskGroup.standaloneTasks.length
+              }}</span>
+
+              @if (!groupOptionsDropdown.isEmpty()) {
+                <app-toggle-options-dropdown-btn
+                  [dropdownMenu]="groupOptionsDropdown.entityOptionsDropdown"
+                  [hoverColorContrast]="'medium'"
+                />
+              }
+
+              <app-entity-options-dropdown
+                #groupOptionsDropdown
+                [dropdownTitle]="'Group options'"
+                [includeRename]="canEditStatuses()"
+                [includeDelete]="canDeleteStatus(taskGroup.status)"
+                (startEntityRenaming)="
+                  statusTagComponent.statusTag.nativeElement.click()
+                "
+                (startEntityDeletion)="
+                  openDeleteStatusWarningModal(taskGroup.status)
+                "
+              />
+            </div>
+
+            @if (!taskGroup.isCollapsed()) {
+              <app-task-group-list
+                [standaloneTasks]="taskGroup.standaloneTasks"
+                [taskGroupType]="taskGroupsType()"
+                [taskGroupSubtype]="{
+                  statusType: taskGroup.status.type,
+                }"
+                [commonListStatuses]="list()?.statuses || null"
+                [tasksCommonAncestors]="tasksCommonAncestors()"
+                [canCreateTasks]="canCreateTasks()"
+                [hasAllEditingPermissionsInList]="
+                  isPersonal() || hasAllEditingPermissions()
+                "
+                [omitAddTaskBtn]="isAssignedToMe()"
+              />
+            }
+          </div>
+        }
+      }
+    </div>
+  }
+  @case ("priority") {
+    <div class="list">
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (
+          hasProperty(taskGroup, "priority") &&
+          (taskGroup.priority === null || taskGroup.standaloneTasks.length > 0)
+        ) {
+          <div class="list__upper-bar">
+            <app-collapse-expand-btn
+              [buttonType]="'group'"
+              [isCollapsedOnCreation]="taskGroup.isCollapsed()"
+              [(isCollapsed)]="taskGroup.isCollapsed"
+            />
+            <span
+              class="list__upper-bar__symbol list__upper-bar__symbol--flag_2 material-symbols-outlined"
+              [ngStyle]="{
+                color: getFlagColor(taskGroup.priority),
+                'font-variation-settings': getFontVariationSettings(
+                  taskGroup.priority
+                ),
+              }"
+            >
+              flag_2
+            </span>
+            <span class="list--priority__type">
+              {{
+                taskGroup.priority
+                  ? (taskGroup.priority | titlecase)
+                  : "No Priority"
+              }}
+            </span>
+            <span class="list__count">{{
+              taskGroup.standaloneTasks.length
+            }}</span>
+          </div>
+
+          @if (!taskGroup.isCollapsed()) {
+            <app-task-group-list
+              [standaloneTasks]="taskGroup.standaloneTasks"
+              [taskGroupType]="taskGroupsType()"
+              [taskGroupSubtype]="null"
+              [commonListStatuses]="null"
+              [tasksCommonAncestors]="null"
+              [canCreateTasks]="canCreateTasks()"
+              [omitAddTaskBtn]="isAssignedToMe()"
+            />
+          }
+        }
+      }
+    </div>
+  }
+  @case ("dueDate") {
+    <div class="list">
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (
+          hasProperty(taskGroup, "dueDate") &&
+          (taskGroup.dueDate === null || taskGroup.standaloneTasks.length > 0)
+        ) {
+          <div class="list__upper-bar">
+            <app-collapse-expand-btn
+              [buttonType]="'group'"
+              [isCollapsedOnCreation]="taskGroup.isCollapsed()"
+              [(isCollapsed)]="taskGroup.isCollapsed"
+            />
+            <span class="list--priority__type">
+              {{
+                taskGroup.dueDate
+                  ? (taskGroup.dueDate | titlecase)
+                  : "No due date"
+              }}
+            </span>
+            <span class="list__count">{{
+              taskGroup.standaloneTasks.length
+            }}</span>
+          </div>
+
+          @if (!taskGroup.isCollapsed()) {
+            <app-task-group-list
+              [standaloneTasks]="taskGroup.standaloneTasks"
+              [taskGroupType]="taskGroupsType()"
+              [taskGroupSubtype]="null"
+              [commonListStatuses]="null"
+              [tasksCommonAncestors]="null"
+              [canCreateTasks]="canCreateTasks()"
+              [omitAddTaskBtn]="isAssignedToMe()"
+            />
+          }
+        }
+      }
+    </div>
+  }
+  @case ("assignee") {
+    <div class="list">
+      @for (taskGroup of taskGroups(); track $index) {
+        @if (
+          hasProperty(taskGroup, "assignee") &&
+          (taskGroup.assignee === null || taskGroup.standaloneTasks.length > 0)
+        ) {
+          <div class="list__upper-bar">
+            <app-collapse-expand-btn
+              [buttonType]="'group'"
+              [isCollapsedOnCreation]="taskGroup.isCollapsed()"
+              [(isCollapsed)]="taskGroup.isCollapsed"
+            />
+            <span class="list--priority__type">
+              {{
+                taskGroup.assignee ? taskGroup.assignee.username : "No assignee"
+              }}
+            </span>
+            <span class="list__count">{{
+              taskGroup.standaloneTasks.length
+            }}</span>
+          </div>
+
+          @if (!taskGroup.isCollapsed()) {
+            <app-task-group-list
+              [standaloneTasks]="taskGroup.standaloneTasks"
+              [taskGroupType]="taskGroupsType()"
+              [taskGroupSubtype]="null"
+              [commonListStatuses]="null"
+              [tasksCommonAncestors]="null"
+              [canCreateTasks]="canCreateTasks()"
+            />
+          }
+        }
+      }
+    </div>
+  }
+}

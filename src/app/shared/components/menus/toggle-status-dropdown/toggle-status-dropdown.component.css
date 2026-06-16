@@ -1,0 +1,49 @@
+::ng-deep.toggle-status-dropdown {
+  margin-top: 8px !important;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep.toggle-status-dropdown .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+::ng-deep.color-picker-menu .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.toggle-status-dropdown__content {
+  min-width: 180px;
+  padding: 8px;
+
+  font-size: 0.7rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 #00000033;
+}
+
+.toggle-status-dropdown__status-group-name {
+  color: var(--text-color-muted);
+}
+.toggle-status-dropdown__btn {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding: 8px;
+  gap: 12px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.toggle-status-dropdown__btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+  outline: none;
+}
+
+.toggle-status-dropdown-btn__symbol {
+  font-size: 0.9rem;
+}

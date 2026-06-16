@@ -1,0 +1,125 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.home {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+  min-height: 0;
+  width: 100%;
+
+  background-color: var(--background-color-main-section);
+}
+
+.home__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 30px 0px 0px 30px;
+}
+
+.home__greeting {
+  padding: 0px 30px 30px 40px;
+
+  white-space: nowrap;
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.home__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  margin-bottom: 30px;
+  gap: 12px;
+}
+
+.home__my-work-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 36vh;
+  min-height: 300px;
+  min-width: 500px;
+  margin-right: 30px;
+  padding-bottom: 18px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+}
+
+.home__my-work-container:hover {
+  border: 1px solid var(--border-color-hover);
+}
+
+.home__bottom {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  min-width: 0;
+  margin-right: 30px;
+  gap: 12px;
+}
+.home__personal-list-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  max-height: 36vh;
+  min-width: 0;
+  padding-bottom: 18px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+}
+
+.home__personal-list-container:hover {
+  border: 1px solid var(--border-color-hover);
+}
+
+.home__personal-list-heading {
+  display: block;
+  padding: 1rem 1.5rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  border-bottom: 1px solid var(--border-color-var-1);
+  color: var(--text-color-heading);
+}
+
+.home__assigned-to-me-list-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  max-height: 36vh;
+  min-width: 0;
+  padding-bottom: 18px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+}
+
+.home__assigned-to-me-list-container:hover {
+  border: 1px solid var(--border-color-hover);
+}
+
+.home__assigned-to-me-list-heading {
+  display: block;
+  padding: 1rem 1.5rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  border-bottom: 1px solid var(--border-color-var-1);
+  color: var(--text-color-heading);
+}

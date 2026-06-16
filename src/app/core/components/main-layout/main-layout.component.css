@@ -1,0 +1,38 @@
+.app-container-grid {
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: "top-bar top-bar" "sidebar app-section";
+  height: 100vh;
+}
+
+.site-header {
+  grid-area: top-bar;
+}
+
+.sidebar {
+  display: flex;
+  grid-area: sidebar;
+  min-height: 0;
+}
+
+.app-section {
+  display: flex;
+  flex-direction: column;
+  grid-area: app-section;
+  min-height: 0;
+  min-width: 0;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.router-outlet-container {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}

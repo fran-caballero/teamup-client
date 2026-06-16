@@ -1,0 +1,41 @@
+<mat-menu #assignTaskMenu="matMenu" class="assign-task-menu">
+  <div class="assign-task-menu__content">
+    <div class="assign-task-menu__title">People in the list of this task</div>
+    @for (member of workspaceMembers(); track member.id) {
+      @if (isMemberInList(member.id)) {
+        <button
+          class="assign-task-menu__workspace-member"
+          (click)="onClickAssignee(member.id)"
+          (mouseenter)="hoveredMemberId.set(member.id)"
+          (mouseleave)="hoveredMemberId.set(null)"
+        >
+          @if (isMemberAssignee(member.id)) {
+            <app-user-avatar
+              [username]="member.username"
+              [styles]="{
+                height: '24px',
+                width: '24px',
+                padding: '1px',
+
+                outline: ' solid var(--background-color-purple-btn-var-1)',
+                'outline-offset': '1px',
+              }"
+              [showRemoveIndicator]="hoveredMemberId() === member.id"
+            />
+          } @else {
+            <app-user-avatar
+              [username]="member.username"
+              [styles]="{ height: '24px', width: '24px' }"
+            />
+          }
+
+          @if (member.id !== user()?.id) {
+            <span>{{ member.username }}</span>
+          } @else {
+            <span>Me</span>
+          }
+        </button>
+      }
+    }
+  </div>
+</mat-menu>

@@ -1,0 +1,135 @@
+<mat-menu #menu="matMenu" class="add-due-date-menu">
+  <form class="add-due-date-menu__form" tabindex="0" [formGroup]="dueDateForm">
+    <div
+      class="add-due-date-menu__common-dates-options"
+      tabindex="0"
+      (click)="$event.stopPropagation()"
+      (keyup.enter)="$event.stopPropagation()"
+    >
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'today'
+        "
+        (click)="selectedOption.set('today'); setSelectedDate('today')"
+      >
+        <span class="add-due-date-menu__date-title">Today</span
+        ><span class="add-due-date-menu__date-value">{{
+          getWeekdayToday()
+        }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'later'
+        "
+        (click)="selectedOption.set('later'); setSelectedDate('later')"
+      >
+        <span class="add-due-date-menu__date-title">Later</span
+        ><span class="add-due-date-menu__date-value">{{ laterTime() }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'tomorrow'
+        "
+        (click)="selectedOption.set('tomorrow'); setSelectedDate('tomorrow')"
+      >
+        <span class="add-due-date-menu__date-title">Tomorrow</span
+        ><span class="add-due-date-menu__date-value">{{
+          getWeekdayTomorrow()
+        }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'thisWeekend'
+        "
+        (click)="
+          selectedOption.set('thisWeekend'); setSelectedDate('thisWeekend')
+        "
+      >
+        <span class="add-due-date-menu__date-title">This weekend</span
+        ><span class="add-due-date-menu__date-value">Sat</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'nextWeek'
+        "
+        (click)="selectedOption.set('nextWeek'); setSelectedDate('nextWeek')"
+      >
+        <span class="add-due-date-menu__date-title">Next week</span
+        ><span class="add-due-date-menu__date-value">Mon</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'nextWeekend'
+        "
+        (click)="
+          selectedOption.set('nextWeekend'); setSelectedDate('nextWeekend')
+        "
+      >
+        <span class="add-due-date-menu__date-title">Next weekend</span
+        ><span class="add-due-date-menu__date-value">{{
+          getNextWeekendShortDate()
+        }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'twoWeeks'
+        "
+        (click)="selectedOption.set('twoWeeks'); setSelectedDate('twoWeeks')"
+      >
+        <span class="add-due-date-menu__date-title">2 weeks</span
+        ><span class="add-due-date-menu__date-value">{{
+          getTwoWeeksFromNowShortDate()
+        }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        [class.add-due-date-menu__common-dates-option--selected]="
+          selectedOption() === 'fourWeeks'
+        "
+        (click)="selectedOption.set('fourWeeks'); setSelectedDate('fourWeeks')"
+      >
+        <span class="add-due-date-menu__date-title">4 weeks</span
+        ><span class="add-due-date-menu__date-value">{{
+          getFourWeeksFromNowShortDate()
+        }}</span>
+      </button>
+      <button
+        class="add-due-date-menu__common-dates-option"
+        (click)="selectedOption.set(null); setSelectedDate(null)"
+      >
+        <span class="add-due-date-menu__date-title">No date</span>
+      </button>
+    </div>
+
+    <div class="add-due-date-menu__datepicker-container">
+      <div class="add-due-date-menu__timepicker-container">
+        <div class="add-due-date-menu__timepicker-input-container">
+          <input
+            matInput
+            class="add-due-date-menu__timepicker-input"
+            formControlName="selectedDate"
+            [matTimepicker]="picker"
+            [placeholder]="'Add time'"
+            (click)="$event.stopPropagation()"
+          />
+        </div>
+
+        <mat-timepicker #picker class="timepicker-menu" />
+      </div>
+      <mat-calendar
+        class="add-due-date-menu__datepicker"
+        [startAt]="dueDateForm.controls.selectedDate.value"
+        [selected]="dueDateForm.controls.selectedDate.value"
+        (click)="$event.stopPropagation()"
+        (selectedChange)="onDateSelected($event)"
+      ></mat-calendar>
+    </div>
+  </form>
+</mat-menu>

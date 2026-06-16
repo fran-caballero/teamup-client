@@ -1,0 +1,38 @@
+@if (space() && folderWithCollapsibleLists()) {
+  <div class="folder">
+    <app-view-selector-bar
+      class="folder__view-selector-bar"
+      [type]="'inFullView'"
+      [inputView]="viewParam()"
+    />
+    <div class="section-options-header">
+      <app-group-by-btn
+        (selectedGroupByOptionChange)="selectedGroupByOption.set($event)"
+        [groupByOrderingOption]="groupByOrderingOption()"
+        (groupByOrderingOptionChange)="groupByOrderingOption.set($event)"
+      />
+      <app-toggle-closed-tasks-btn
+        (showClosedTasksChange)="showClosedTasks.set($event)"
+      />
+    </div>
+    <div class="folder__folder-content">
+      @if (viewParam() === "list" && spaceIdFromRoute()) {
+        <app-folder-list-view
+          [selectedGroupByOption]="selectedGroupByOption()"
+          [folder]="folderWithCollapsibleLists()!"
+          [taskGroups]="taskGroups()"
+          [groupByOrderingOption]="groupByOrderingOption()"
+          [spaceId]="spaceIdFromRoute()!"
+          [showClosedTasks]="showClosedTasks()"
+        />
+      } @else {
+        <app-folder-board-view
+          [selectedGroupByOption]="selectedGroupByOption()"
+          [taskGroups]="taskGroups()"
+          [spaceId]="space()!.id"
+          [folder]="folderWithCollapsibleLists()!"
+        />
+      }
+    </div>
+  </div>
+}

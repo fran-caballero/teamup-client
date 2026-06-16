@@ -1,0 +1,84 @@
+.select-role-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 3px 4px;
+  gap: 3px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: none;
+  color: var(--text-color-secondary);
+
+  cursor: inherit;
+}
+
+.select-role-btn:disabled {
+  color: var(--text-color-muted);
+}
+
+.select-role-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.select-role-btn:disabled:hover {
+  background: none;
+}
+
+.select-role-btn__role-name {
+  font-weight: 600;
+}
+
+.select-role-btn__inheritance-status {
+  font-weight: 600;
+}
+
+::ng-deep.select-role-dropdown {
+  margin-top: 8px !important;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep.select-role-dropdown .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.select-role-dropdown__content {
+  padding: 8px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 #00000033;
+}
+
+.select-role-dropdown__btn {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 150px;
+
+  font-size: 0.9rem;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.select-role-dropdown__btn:disabled {
+  color: var(--text-color-muted);
+}
+
+.select-role-dropdown__btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.select-role-dropdown__btn:disabled:hover {
+  background: none;
+
+  cursor: default;
+}

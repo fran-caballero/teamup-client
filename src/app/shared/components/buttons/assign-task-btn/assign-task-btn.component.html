@@ -1,0 +1,57 @@
+<button
+  #assignTaskBtn="matMenuTrigger"
+  class="assign-task-btn"
+  type="button"
+  [class.assign-task-btn--hover-outlined]="hasHoverOutline() && !isDisabled()"
+  [ngStyle]="combinedBtnStyles()"
+  [disabled]="isDisabled()"
+  [matMenuTriggerFor]="assignTaskMenuComponent.assignTaskMenu"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+  (menuOpened)="menuOpened.emit()"
+  (menuClosed)="menuClosed.emit()"
+>
+  @if (task(); as task) {
+    @if (task.assignees.length > 0) {
+      @for (taskAssignee of task.assignees; track taskAssignee.id) {
+        @if (getMemberUsernameById(taskAssignee.id); as taskAssigneeUsername) {
+          <app-user-avatar
+            [username]="taskAssigneeUsername"
+            [styles]="avatarStyles() || { height: '24px', width: '24px' }"
+          />
+        }
+      }
+    } @else {
+      <span
+        class="assign-task-btn__symbol assign-task-btn__symbol--person-add material-symbols-outlined"
+        [ngStyle]="symbolStyles()"
+      >
+        person_add
+      </span>
+    }
+  } @else if (newTaskAssigneesIds() && newTaskAssigneesIds()!.length > 0) {
+    @for (taskAssigneeId of newTaskAssigneesIds(); track taskAssigneeId) {
+      @if (getMemberUsernameById(taskAssigneeId); as taskAssigneeUsername) {
+        <app-user-avatar
+          [username]="taskAssigneeUsername"
+          [styles]="avatarStyles() || { height: '24px', width: '24px' }"
+        />
+      }
+    }
+  } @else {
+    <span
+      class="assign-task-btn__symbol assign-task-btn__symbol--person-add material-symbols-outlined"
+      [ngStyle]="symbolStyles()"
+    >
+      person_add
+    </span>
+  }
+</button>
+
+<app-assign-task-menu
+  #assignTaskMenuComponent
+  [task]="task()"
+  [listId]="listId()"
+  [(newTaskAssigneesIds)]="newTaskAssigneesIds"
+  (assigneeSelection)="assigneeSelection.emit($event)"
+/>

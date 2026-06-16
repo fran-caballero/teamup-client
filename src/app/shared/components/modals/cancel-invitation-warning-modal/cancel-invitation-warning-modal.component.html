@@ -1,0 +1,28 @@
+<div class="cancel-invitation-warning-modal">
+  <div class="cancel-invitation-warning-modal__small-close-btn-container">
+    <button class="small-close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="small-close-btn__symbol small-close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <header class="cancel-invitation-warning-modal__body">
+    <div class="cancel-invitation-warning-modal__main-message">
+      You will cancel the invitation for
+      <span class="cancel-invitation-warning-modal__username">
+        {{ username }}</span
+      >.
+    </div>
+
+    <div class="cancel-invitation-warning-modal__secondary-message">
+      Do you want to proceed?
+    </div>
+  </header>
+
+  <div class="cancel-invitation-warning-modal__footer">
+    <button class="cancel-btn" (click)="onClickCancel()">Cancel</button>
+    <button class="accept-btn" (click)="onClickAccept()">Accept</button>
+  </div>
+</div>

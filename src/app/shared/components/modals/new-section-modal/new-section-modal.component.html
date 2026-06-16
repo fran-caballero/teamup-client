@@ -1,0 +1,36 @@
+<form class="new-section-modal" [formGroup]="newSectionForm">
+  <div class="new-section-modal__header">
+    <div class="new-section-modal__header-text">
+      <h1 class="new-section-modal__heading">
+        Create {{ sectionType | titlecase }}
+      </h1>
+      <div class="new-section-modal__description">
+        {{ sectionDescription }}
+      </div>
+    </div>
+    <button class="close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="close-btn__symbol close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <div class="new-section-modal__body">
+    <div class="new-section-modal__label">Name</div>
+    <input
+      #newSectionFormInput
+      class="new-section-modal__name-input"
+      id="sectionName"
+      maxlength="50"
+      formControlName="sectionName"
+      (keydown.enter)="$event.preventDefault(); createList()"
+    />
+  </div>
+
+  <div class="new-section-modal__footer">
+    <button class="create-section-btn" type="submit" (click)="createList()">
+      Create
+    </button>
+  </div>
+</form>

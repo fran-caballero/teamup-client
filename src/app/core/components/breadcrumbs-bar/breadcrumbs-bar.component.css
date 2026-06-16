@@ -1,0 +1,120 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.breadcrumbs-bar {
+  display: flex;
+  height: 48px;
+  min-width: 0;
+  padding: 10px;
+
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color-main-section);
+}
+
+.breadcrumbs-bar__section {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  min-width: 0;
+  padding: 2px 6px;
+  gap: 5px;
+
+  border-radius: 3px;
+}
+
+.breadcrumbs-bar__section:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.breadcrumbs-bar__section--active {
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.breadcrumbs-bar__section-path {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  color: var(--text-color-heading);
+}
+
+.breadcrumbs-bar__section-name {
+  align-items: center;
+  overflow: hidden;
+  min-width: 0;
+  gap: 6px;
+
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  border-radius: 3px;
+}
+
+.breadcrumbs-bar__symbol--home {
+  margin-top: 3px;
+
+  font-size: 1.2rem;
+}
+
+.breadcrumbs-bar__symbol--person {
+  padding-top: 3px;
+
+  font-size: 1.2rem;
+}
+
+.breadcrumbs-bar__symbol--approval-delegation {
+  padding-top: 1px;
+
+  font-size: 1.2rem;
+}
+
+.breadcrumbs-bar__symbol-container {
+  display: flex;
+  height: 18px;
+  width: 18px;
+  justify-content: center;
+  align-items: center;
+}
+
+.breadcrumbs-bar__symbol-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  width: 15px;
+
+  border-radius: 4px;
+  background-color: #c3ceff;
+}
+
+.breadcrumbs-bar__symbol--group {
+  margin: 2px;
+
+  font-size: 0.8rem;
+  font-variation-settings: "FILL" 1;
+
+  color: #324075;
+}
+
+.breadcrumbs-bar__section-divider {
+  padding: 2px 2px 3px 2px;
+
+  font-size: 0.85rem;
+}
+
+.breadcrumbs-bar__symbol--folder {
+  margin-top: 2px;
+
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.breadcrumbs-bar__symbol--active {
+  font-weight: 600;
+}

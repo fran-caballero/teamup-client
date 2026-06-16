@@ -1,0 +1,15 @@
+.folder-board-view {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: max-content;
+  width: max-content;
+  justify-content: start;
+  padding: 8px 14px;
+  gap: 1rem;
+}
+
+.folder-board-view--empty {
+  display: block;
+  padding-top: 100px;
+  width: 100%;
+}

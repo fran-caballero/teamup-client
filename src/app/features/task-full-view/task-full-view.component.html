@@ -1,0 +1,258 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+@if (task() && list()) {
+  <div class="task-full-view">
+    <form class="task-full-view__task-name-form" [formGroup]="taskNameForm()">
+      <textarea
+        cdkTextareaAutosize
+        [cdkAutosizeMinRows]="1"
+        #autosizeTextArea="cdkTextareaAutosize"
+        class="task-full-view__name"
+        maxlength="500"
+        formControlName="name"
+        [readonly]="!hasAllEditingPermissionsInTask()"
+        (blur)="updateTask()"
+        (keydown)="onKeyDown($event)"
+        >{{ task()!.name }}
+</textarea
+      >
+    </form>
+
+    <div class="task-full-view__info">
+      @if (status(); as status) {
+        <div class="task-full-view__info-field">
+          <button
+            class="task-full-view__info-field-left"
+            (click)="toggleStatusBtn.toggleMenu()"
+          >
+            <div class="task-full-view__info-field-symbol-container">
+              <app-toggle-status-btn
+                #toggleStatusBtn="matMenuTrigger"
+                [matMenuTriggerFor]="
+                  toggleStatusDropdownComponent.toggleStatusDropdown
+                "
+                [isEnabled]="true"
+                [hoverColorContrast]="'medium'"
+                [status]="status"
+                (click)="$event.stopPropagation()"
+                s
+              />
+              <app-toggle-status-dropdown
+                #toggleStatusDropdownComponent
+                class="toggle-status-dropdown-component"
+                [listStatuses]="list()!.statuses"
+                (statusSelection)="updateTaskStatus($event)"
+              />
+            </div>
+
+            <span class="task-full-view__info-field-text"> Status </span>
+          </button>
+          <div class="task-full-view__info-field-right">
+            <app-status-tag
+              (click)="$event.stopPropagation()"
+              [status]="status"
+              [spaceId]="spaceIdFromRoute() || null"
+              [folderId]="folderIdFromRoute() || null"
+              [listId]="list()!.id"
+              [isBtnDisabled]="!canEditStatuses()"
+            />
+          </div>
+        </div>
+      }
+      <div class="task-full-view__info-field">
+        <button
+          class="task-full-view__info-field-left"
+          (click)="assignTaskBtnComponent.assignTaskBtn?.toggleMenu()"
+        >
+          <div class="task-full-view__info-field-symbol-container">
+            <span
+              class="task-full-view__info-field-symbol task-full-view__info-field-symbol--person material-symbols-outlined"
+            >
+              person
+            </span>
+          </div>
+          <span class="task-full-view__info-field-text"> Assignees </span>
+        </button>
+        <app-assign-task-btn
+          #assignTaskBtnComponent
+          [isDisabled]="!canAssignTasks()"
+          [listId]="list()!.id"
+          [task]="task()!"
+          [btnStyles]="{
+            position: 'relative',
+            height: '100%',
+            width: '100%',
+
+            border: 'none',
+            'border-radius': '4px',
+            background: 'none',
+            color: 'var(--text-color-secondary)',
+            'padding-left': '10px',
+          }"
+          [symbolStyles]="{
+            'padding-right': '6px',
+
+            'font-size': '1.3rem',
+            'font-weight': '400',
+          }"
+          [newTaskAssigneesIds]="null"
+          (assigneeSelection)="onAssigneeSelection($event)"
+        />
+      </div>
+      <div class="task-full-view__info-field">
+        <button
+          class="task-full-view__info-field-left"
+          (click)="addDueDateBtnComponent.addDueDateBtn?.toggleMenu()"
+        >
+          <div class="task-full-view__info-field-symbol-container">
+            <span
+              class="task-full-view__info-field-symbol task-full-view__info-field-symbol--calendar_today material-symbols-outlined"
+            >
+              calendar_today
+            </span>
+          </div>
+          <span class="task-full-view__info-field-text"> Due date </span>
+        </button>
+        <div
+          class="task-full-view__info-field-right task-full-view__info-field-right--add-due-date-btn-container"
+        >
+          <app-add-due-date-btn
+            #addDueDateBtnComponent
+            [isDisabled]="!hasAllEditingPermissionsInTask()"
+            [btnStyles]="{
+              position: 'relative',
+              display: 'flex',
+              height: '100%',
+              width: '100%',
+              'padding-left': '10px',
+
+              'font-size': '0.9rem',
+              'font-weight': '500',
+
+              border: 'none',
+              'border-radius': '4px',
+              background: 'none',
+              color: 'var(--text-color-secondary)',
+            }"
+            [symbolStyles]="{
+              'padding-right': '6px',
+
+              'font-size': '1.2rem',
+              'font-weight': '400',
+            }"
+            [selectedDate]="task()!.dueDate"
+            (selectedDateChange)="onTaskDueDateChange($event)"
+          />
+        </div>
+      </div>
+      <div class="task-full-view__info-field">
+        <button
+          class="task-full-view__info-field-left"
+          (click)="setPriorityBtnComponent.setPriorityBtn?.toggleMenu()"
+        >
+          <div class="task-full-view__info-field-symbol-container">
+            <span
+              class="task-full-view__info-field-symbol task-full-view__info-field-symbol--priority material-symbols-outlined"
+            >
+              flag_2
+            </span>
+          </div>
+          <span class="task-full-view__info-field-text"> Priority </span>
+        </button>
+        <div
+          class="task-full-view__info-field-right task-full-view__info-field-right--set-priority-btn-container"
+        >
+          <app-set-priority-btn
+            #setPriorityBtnComponent
+            [isDisabled]="!hasAllEditingPermissionsInTask()"
+            [btnStyles]="{
+              position: 'relative',
+              display: 'flex',
+              height: '100%',
+              width: '100%',
+              'padding-left': '10px',
+
+              'font-size': '0.9rem',
+              'font-weight': '500',
+
+              border: 'none',
+              'border-radius': '4px',
+              background: 'none',
+              color: 'var(--text-color-secondary)',
+            }"
+            [symbolStyles]="{
+              'padding-right': '6px',
+
+              'font-size': '1.2rem',
+              'font-weight': '400',
+            }"
+            [taskPriority]="task()!.priority"
+            (taskPriorityChange)="onTaskPriorityChange($event)"
+          />
+        </div>
+      </div>
+    </div>
+    @if (!isDescriptionBeingEdited()) {
+      @if (task()!.description) {
+        <div class="task-description-read-only">
+          <quill-view
+            [content]="task()!.description"
+            (click)="
+              canUpdateDescription() && isDescriptionBeingEdited.set(true)
+            "
+          >
+          </quill-view>
+        </div>
+      } @else {
+        <button
+          class="add-description-btn"
+          [disabled]="!canUpdateDescription()"
+          (click)="isDescriptionBeingEdited.set(true)"
+        >
+          <span
+            class="add-description-btn__symbol-description material-symbols-outlined"
+            >description</span
+          >
+          @if (canUpdateDescription()) {
+            Add description
+          } @else {
+            No description yet
+          }
+        </button>
+      }
+    } @else {
+      <div class="task-description-editor">
+        <form
+          #taskDescriptionEditorForm
+          class="task-description-editor-form"
+          [formGroup]="taskDescriptionForm()"
+        >
+          <quill-editor
+            class="quill-editor"
+            formControlName="description"
+            (onEditorCreated)="handleEditorCreated($event)"
+          >
+            <div quill-editor-toolbar>
+              <span class="ql-formats">
+                <select class="ql-size"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-indent" value="-1"></button>
+                <button class="ql-indent" value="+1"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-align"></select>
+                <button class="ql-list" value="bullet"></button>
+              </span>
+            </div>
+          </quill-editor>
+        </form>
+      </div>
+    }
+  </div>
+}

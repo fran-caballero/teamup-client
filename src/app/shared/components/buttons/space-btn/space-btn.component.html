@@ -1,0 +1,234 @@
+@if (space(); as space) {
+  <div class="space-btn" [class.space-btn--in-space]="isInSpace()">
+    <div class="space-btn__left">
+      <app-collapse-expand-btn
+        class="collapse-expand-btn"
+        [isCollapsedOnCreation]="isSpaceCollapsed()"
+        [(isCollapsed)]="isSpaceCollapsed"
+      />
+      <div class="space-btn__symbol-container">
+        <div class="space-btn__symbol-frame">
+          <span
+            class="space-btn__symbol space-btn__symbol--group material-symbols-outlined"
+          >
+            group
+          </span>
+        </div>
+      </div>
+      @if (!isSpaceBeingRenamed()) {
+        @if (buttonType() === "link") {
+          <a
+            appIsEllipsed
+            #spaceLink="appIsEllipsed"
+            class="space-btn__a"
+            [routerLink]="['/spaces', space.id]"
+            [queryParams]="{ view: 'board' }"
+            [matTooltip]="space.name"
+            [matTooltipDisabled]="!spaceLink.isEllipsed"
+            >{{ space.name }}</a
+          >
+        } @else {
+          <button
+            appIsEllipsed
+            #spaceLink="appIsEllipsed"
+            class="space-btn__btn"
+            [matTooltip]="space.name"
+            [matTooltipDisabled]="!spaceLink.isEllipsed"
+          >
+            {{ space.name }}
+          </button>
+        }
+      } @else {
+        <form
+          class="space-btn__edit-space-form"
+          [formGroup]="editSpaceNameForm()"
+        >
+          <input
+            #editSpaceNameFormInput
+            class="space-btn__edit-space-form-input"
+            maxlength="32"
+            formControlName="spaceName"
+            (blur)="editSpace()"
+            (keydown.enter)="editSpace()"
+          />
+        </form>
+      }
+    </div>
+    <div class="space-btn__right">
+      @if (!spaceOptionsDropdownComponent.isEmpty()) {
+        <app-toggle-options-dropdown-btn
+          #spaceOptionsDropdownBtnComponent
+          class="toggle-options-dropdown-btn"
+          [ngStyle]="{
+            display:
+              isOptionsDropdownOpen() ||
+              isAddChildDropdownOpen() ||
+              !isSpaceCollapsed()
+                ? 'block'
+                : 'none',
+          }"
+          [dropdownMenu]="spaceOptionsDropdownComponent.entityOptionsDropdown"
+          [hoverColorContrast]="'ultra-high'"
+          (isMenuOpen)="isOptionsDropdownOpen.set($event)"
+        />
+      }
+
+      @if (canCreateEntitiesInSpace()) {
+        <button
+          class="add-child-btn"
+          [ngStyle]="{
+            display:
+              isOptionsDropdownOpen() ||
+              isAddChildDropdownOpen() ||
+              !isSpaceCollapsed()
+                ? 'flex'
+                : 'none',
+          }"
+          [matMenuTriggerFor]="addChildDropdown"
+          (menuOpened)="isAddChildDropdownOpen.set(true)"
+          (menuClosed)="isAddChildDropdownOpen.set(false)"
+        >
+          <span
+            class="add-child-btn__symbol add-child-btn__symbol--add material-symbols-outlined"
+            >add</span
+          >
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (!isSpaceCollapsed()) {
+    @if (
+      space.folders.length === 0 &&
+      space.lists.length === 0 &&
+      !isNewFolderBeingCreated() &&
+      !isNewListBeingCreated()
+    ) {
+      @if (canCreateEntitiesInSpace()) {
+        <div class="space-btn__empty-space-message">
+          Create a&nbsp;
+          <button
+            class="space-btn__empty-space-message-new-folder-btn"
+            (click)="onStartFolderCreation()"
+          >
+            Folder
+          </button>
+          &nbsp;or a&nbsp;
+          <button
+            class="space-btn__empty-space-message-new-list-btn"
+            (click)="onStartListCreation()"
+          >
+            List
+          </button>
+          .
+        </div>
+      } @else {
+        <div class="space-btn__empty-space-message">
+          This Space is still empty.
+        </div>
+      }
+    } @else {
+      <div class="space-btn__folders">
+        @for (folder of space.folders; track folder.id) {
+          <app-folder-btn
+            [folder]="folder"
+            [space]="space"
+            [buttonType]="buttonType()"
+            [columnStatus]="columnStatus()"
+            (listSelection)="
+              listSelection.emit({
+                selectedList: $event,
+                listAncestorsIds: { spaceId: space.id, folderId: folder.id },
+              })
+            "
+          />
+        }
+      </div>
+      @if (isNewFolderBeingCreated()) {
+        <form class="new-folder-form" [formGroup]="newFolderForm">
+          <div class="new-folder-form__symbol-container">
+            <span
+              class="new-folder-form__symbol new-folder-form__symbol--folder material-symbols-outlined"
+            >
+              folder
+            </span>
+          </div>
+          <input
+            #newFolderFormInput
+            class="new-folder-form__input"
+            placeholder="Folder name"
+            formControlName="folderName"
+            (blur)="createFolder()"
+            (keydown.enter)="createFolder()"
+          />
+        </form>
+      }
+      @for (list of space.lists; track list.id) {
+        <div class="list-btn-container">
+          <app-list-btn
+            class="list-btn"
+            [space]="space"
+            [folder]="null"
+            [list]="list"
+            [isDisabled]="isListBtnDisabled(list)"
+            [columnStatus]="columnStatus()"
+            [buttonType]="buttonType()"
+            (listSelection)="
+              listSelection.emit({
+                selectedList: $event,
+                listAncestorsIds: { spaceId: space.id, folderId: null },
+              })
+            "
+          />
+        </div>
+      }
+    }
+    @if (isNewListBeingCreated()) {
+      <form class="new-list-form" [formGroup]="newListForm">
+        <app-list-symbol class="new-list-form__icon" />
+        <input
+          #newListFormInput
+          class="new-list-form__input"
+          placeholder="List name"
+          formControlName="listName"
+          (blur)="createList()"
+          (keydown.enter)="createList()"
+        />
+      </form>
+    }
+  }
+
+  <app-entity-options-dropdown
+    #spaceOptionsDropdownComponent
+    [includeRename]="canRenameSpace()"
+    [includeDelete]="canDeleteSpace()"
+    [stopInnerClickPropagation]="true"
+    (startEntityRenaming)="onStartSpaceRenaming()"
+    (startEntityDeletion)="onStartSpaceDeletion()"
+  />
+
+  <mat-menu #addChildDropdown class="add-child-dropdown">
+    <button
+      class="add-child-dropdown__btn add-child-dropdown__btn--folder"
+      (click)="onStartFolderCreation()"
+    >
+      <span
+        class="add-child-dropdown__symbol add-child-dropdown__symbol--create_new_folder material-symbols-outlined"
+      >
+        create_new_folder
+      </span>
+      <span class="add-child-dropdown__btn-text">Folder</span>
+    </button>
+    <button
+      class="add-child-dropdown__btn add-child-dropdown__btn--list"
+      (click)="onStartListCreation()"
+    >
+      <span
+        class="add-child-dropdown__symbol add-child-dropdown__symbol--playlist_add material-symbols-outlined"
+      >
+        playlist_add
+      </span>
+      <span class="add-child-dropdown__btn-text">List</span>
+    </button>
+  </mat-menu>
+}

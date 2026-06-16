@@ -1,0 +1,120 @@
+.app-container {
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+.app-container__material-symbols-warmup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.reset-loading-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.reset-loading-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 30px;
+}
+
+.reset-loading-page__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reset-loading-page__username {
+  font-size: 0.9rem;
+
+  color: var(--text-color-heading);
+}
+
+.reset-loading-page__sign-out-btn {
+  display: flex;
+  justify-content: center;
+  padding: 6px 12px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-primary);
+}
+
+.reset-loading-page__sign-out-btn:hover {
+  background-color: var(--hover-color-contrast-high);
+}
+
+.reset-loading-page__main-section {
+  flex: 1;
+}
+
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 120px;
+}
+
+.resetting-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+  gap: 20px;
+
+  text-align: center;
+}
+
+.resetting-info__main-message {
+  font-size: 3rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.resetting-info__secondary-message {
+  font-size: 2rem;
+
+  color: var(--text-color-secondary);
+}
+
+.reset-notice-banner {
+  padding: 16px 20px;
+
+  border: 1px solid var(--hover-color-contrast-very-high);
+  background-color: var(--background-color-low-contrast);
+}
+
+.reset-notice-banner__main-message {
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.reset-notice-banner__secondary-message {
+  margin-top: 5.6px;
+
+  font-size: 0.9rem;
+
+  color: var(--text-color-secondary);
+}

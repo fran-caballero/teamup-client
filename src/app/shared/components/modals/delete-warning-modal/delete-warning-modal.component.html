@@ -1,0 +1,42 @@
+<div class="delete-warning-modal">
+  <div class="delete-warning-modal__body">
+    <div class="delete-warning-modal__symbol-container-frame">
+      <div class="delete-warning-modal__symbol-container">
+        <span
+          class="delete-warning-modal__symbol delete-warning-modal__symbol--delete material-symbols-outlined"
+        >
+          delete
+        </span>
+      </div>
+    </div>
+    <div class="delete-warning-modal__element-indication">
+      <span class="delete-warning-modal__element-indication-text">
+        Delete: {{ elementName }}
+      </span>
+    </div>
+    <div class="delete-warning-modal__consequences-message">
+      @switch (elementType) {
+        @case ("list") {
+          All Tasks within this List will be deleted.
+        }
+        @case ("status") {
+          All Tasks with this Status will be reassigned a default one.
+        }
+        @case ("folder") {
+          All Task Lists within this Folder will be deleted.
+        }
+        @case ("space") {
+          All Folders and Task Lists within this Space will be deleted.
+        }
+        @case ("workspace") {
+          Do you really want to delete this Workspace? This operation cannot be
+          undone. All Spaces with their Folders and Tasks lists will be deleted.
+        }
+      }
+    </div>
+  </div>
+  <div class="delete-warning-modal__footer">
+    <button class="cancel-btn" (click)="onClickClose()">Cancel</button>
+    <button class="delete-btn" (click)="onClickDelete()">Delete</button>
+  </div>
+</div>

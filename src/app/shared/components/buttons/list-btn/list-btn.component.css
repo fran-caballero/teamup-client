@@ -1,0 +1,109 @@
+.list-btn {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  padding: 0 8px 0 28px;
+
+  font-size: 0.9rem;
+
+  border-radius: 6px;
+}
+
+.list-btn:hover {
+  background-color: var(--border-color);
+}
+
+.list-btn--in-list {
+  background-color: var(--hover-color-purple);
+  color: var(--text-color-purple);
+}
+
+.list-btn--in-list:hover {
+  background-color: var(--hover-color-purple);
+}
+
+.list-btn--folder-child {
+  padding-left: 40px;
+}
+
+.list-btn:disabled:active {
+  background-color: transparent;
+}
+
+.list-btn:disabled:hover {
+  cursor: not-allowed;
+}
+
+.list-btn__left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.list-btn__symbol {
+  margin: 1px 12px 0 0;
+  color: var(--text-color-primary);
+}
+
+.list-btn__a {
+  display: block;
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.list-btn__btn {
+  display: block;
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: inherit;
+  font-weight: 600;
+
+  border: none;
+  background: none;
+  color: var(--text-color-primary);
+}
+
+.list-btn__btn:disabled {
+  cursor: not-allowed;
+}
+
+.list-btn__btn:disabled:hover {
+  cursor: not-allowed;
+}
+
+.list-btn__rename-list-form-input {
+  width: 140px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: none;
+  background: none;
+  color: var(--text-color-purple);
+}
+
+.list-btn__rename-list-form-input:focus {
+  outline: none;
+}
+
+.list-btn__right {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-options-dropdown-btn {
+  display: none;
+}
+
+.list-btn:hover .toggle-options-dropdown-btn {
+  display: block !important;
+}

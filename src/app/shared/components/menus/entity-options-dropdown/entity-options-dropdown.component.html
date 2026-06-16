@@ -1,0 +1,54 @@
+<mat-menu
+  #entityOptionsDropdown="matMenu"
+  class="entity-options-dropdown"
+  (click)="$event.stopPropagation()"
+>
+  @if (dropdownTitle()) {
+    <div class="entity-options-dropdown__title">
+      {{ dropdownTitle() }}
+    </div>
+  }
+  @if (includeRename()) {
+    <button
+      class="entity-options-dropdown__btn entity-options-dropdown__btn--edit"
+      [disabled]="disableRename()"
+      [matTooltip]="disableRenameMessage()"
+      [matTooltipClass]="'center-tooltip-text'"
+      (click)="
+        startEntityRenaming.emit();
+        stopInnerClickPropagation() ? $event.stopPropagation() : ''
+      "
+    >
+      <div class="entity-options-dropdown__symbol-container">
+        <span
+          class="entity-options-dropdown__symbol entity-options-dropdown__symbol--edit material-symbols-outlined"
+        >
+          edit
+        </span>
+      </div>
+
+      <span class="entity-options-dropdown__btn-text">Edit</span>
+    </button>
+  }
+  @if (includeDelete()) {
+    <button
+      class="entity-options-dropdown__btn entity-options-dropdown__btn--delete"
+      [disabled]="disableDelete()"
+      [matTooltip]="disableDelete() ? disableDeleteMessage() : ''"
+      [matTooltipClass]="'center-tooltip-text'"
+      (click)="
+        startEntityDeletion.emit();
+        stopInnerClickPropagation() ? $event.stopPropagation() : ''
+      "
+    >
+      <div class="entity-options-dropdown__symbol-container">
+        <span
+          class="entity-options-dropdown__symbol entity-options-dropdown__symbol--delete material-symbols-outlined"
+        >
+          delete
+        </span>
+      </div>
+      <span class="entity-options-dropdown__btn-text">Delete</span>
+    </button>
+  }
+</mat-menu>

@@ -1,0 +1,16 @@
+<div class="error-message-popup">
+  <div class="error-message-popup__body">
+    <div class="error-message-popup__error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  <div class="error-message-popup__footer">
+    <button class="close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="close-btn__symbol close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+</div>

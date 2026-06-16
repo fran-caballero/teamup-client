@@ -1,0 +1,118 @@
+.cancel-invitation-warning-modal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 50vh;
+  width: 500px;
+
+  border-radius: 12px;
+  background-color: var(--background-color-modal);
+}
+
+.cancel-invitation-warning-modal__small-close-btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  padding-right: 8px;
+}
+
+.small-close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+}
+
+.small-close-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.small-close-btn__symbol--close {
+  font-size: 1.2rem;
+  font-weight: 300;
+
+  color: var(--text-color-secondary);
+}
+
+.cancel-invitation-warning-modal__body {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 24px 24px 24px;
+  gap: 18px;
+
+  text-align: center;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cancel-invitation-warning-modal__main-message {
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.cancel-invitation-warning-modal__username {
+  font-weight: 700;
+}
+
+.cancel-invitation-warning-modal__secondary-message {
+  text-align: center;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.cancel-invitation-warning-modal__footer {
+  display: flex;
+  padding: 12px 24px;
+  gap: 12px;
+
+  background-color: var(--background-color-low-contrast);
+}
+
+.cancel-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-primary);
+}
+
+.cancel-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.accept-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-primary);
+}
+
+.accept-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}

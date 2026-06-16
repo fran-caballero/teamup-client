@@ -1,0 +1,57 @@
+::ng-deep.notifications-dropdown {
+  max-width: none !important;
+  margin-top: 16px !important;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep.notifications-dropdown .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.notifications-dropdown__content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+}
+
+.notifications-dropdown__header {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  gap: 12px;
+
+  color: var(--text-color-heading);
+}
+
+.notifications-dropdown__notification-btn {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  max-width: 380px;
+  padding: 6px 8px;
+  gap: 6px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.notifications-dropdown__notification-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.notifications-dropdown__no-pending-notifications-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 260px;
+  padding: 12px;
+
+  font-size: 0.8rem;
+
+  color: var(--text-color-primary);
+}

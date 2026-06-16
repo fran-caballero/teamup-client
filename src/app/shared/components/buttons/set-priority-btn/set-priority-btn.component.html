@@ -1,0 +1,31 @@
+<button
+  #setPriorityBtn="matMenuTrigger"
+  class="set-priority-btn"
+  [class.set-priority-btn--hover-outlined]="hasHoverOutline() && !isDisabled()"
+  [ngStyle]="combinedBtnStyles()"
+  type="button"
+  [disabled]="isDisabled()"
+  [matMenuTriggerFor]="setPriorityDropdownComponent.setPriorityDropdown"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+  (menuOpened)="menuOpened.emit()"
+  (menuClosed)="menuClosed.emit()"
+>
+  <span
+    class="set-priority-btn__symbol set-priority-btn__symbol--flag-2 material-symbols-outlined"
+    [ngStyle]="combinedSymbolStyles"
+  >
+    flag_2
+  </span>
+
+  @if (taskPriority()) {
+    {{ taskPriority() | titlecase }}
+  } @else if (noPriorityPlaceholder()) {
+    {{ noPriorityPlaceholder() }}
+  }
+</button>
+
+<app-set-priority-dropdown
+  #setPriorityDropdownComponent
+  (prioritySelection)="taskPriority.set($event)"
+/>

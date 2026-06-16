@@ -1,0 +1,81 @@
+.edit-folder-permissions-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  padding: 0 8px 0 28px;
+
+  font-size: 0.9rem;
+
+  border-radius: 6px;
+}
+
+.edit-folder-permissions-btn:hover {
+  background-color: var(--hover-color-contrast-low);
+}
+
+.edit-folder-permissions-btn:disabled {
+  cursor: not-allowed;
+}
+
+.edit-folder-permissions-btn:disabled:hover {
+  background-color: transparent;
+}
+
+.edit-folder-permissions-btn__left {
+  display: flex;
+  align-items: center;
+}
+
+.collapse-expand-btn {
+  display: none;
+  margin-right: 6px;
+}
+
+.edit-folder-permissions-btn:hover .collapse-expand-btn {
+  display: block;
+}
+
+.edit-folder-permissions-btn__symbol-container {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.edit-folder-permissions-btn:hover
+  .edit-folder-permissions-btn__symbol-container {
+  display: none;
+}
+
+.edit-folder-permissions-btn__symbol--folder {
+  margin: 2px;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  color: var(--text-color-primary);
+}
+
+.edit-folder-permissions-btn__btn {
+  font-weight: 600;
+
+  border: none;
+  background: none;
+  color: var(--text-color-primary);
+
+  cursor: inherit;
+}
+
+.edit-folder-permissions-btn:disabled .edit-folder-permissions-btn__btn {
+  color: var(--text-color-muted);
+}
+
+.edit-folder-permissions-btn__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.edit-folder-permissions-btn__checkbox {
+  cursor: inherit;
+}

@@ -1,0 +1,60 @@
+::ng-deep .mdc-snackbar__surface {
+  min-width: 336px !important;
+
+  background-color: var(--error-color) !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: var(--background-color-menu);
+}
+
+.error-message-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  background-color: var(--background-color-menu);
+}
+
+.error-message-popup__body {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.error-message-popup__error-message {
+  display: flex;
+
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.error-message-popup__footer {
+  display: flex;
+  justify-content: right;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+}
+
+.close-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.close-btn__symbol--close {
+  font-size: 1.2rem;
+  font-weight: 900;
+
+  color: var(--text-color-secondary);
+}

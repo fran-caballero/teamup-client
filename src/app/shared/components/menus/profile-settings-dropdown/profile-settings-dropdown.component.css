@@ -1,0 +1,54 @@
+::ng-deep.profile-settings-dropdown {
+  width: 300px;
+  margin-top: 16px !important;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep.profile-settings-dropdown .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.profile-settings-dropdown__content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+}
+
+.profile-settings-dropdown__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-settings-dropdown__username {
+  text-align: center;
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}
+
+.sign-out-btn {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 6px;
+
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-color-heading);
+}
+
+.sign-out-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.log-out-btn__symbol--logout {
+  margin-top: 2px;
+
+  font-size: 1.1rem;
+
+  color: var(--text-color-muted);
+}

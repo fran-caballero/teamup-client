@@ -1,0 +1,53 @@
+<div class="invite-user-modal">
+  <div class="invite-user-modal__body">
+    <div class="invite-user-modal__question">
+      Invite {{ username }} to {{ currentWorkspace()?.name }}?
+    </div>
+    <div class="invite-user-modal__select-sections-message">
+      Select the sections you want to invite {{ username }} to:
+      <button
+        #permissionsEditorDropdownTrigger="matMenuTrigger"
+        class="open-permissions-editor-dropdown-btn"
+        type="button"
+        [matMenuTriggerFor]="permissionsEditorDropdown"
+      >
+        <mat-menu
+          #permissionsEditorDropdown="matMenu"
+          class="permissions-editor-dropdown"
+        >
+          <app-permissions-editor-menu
+            #permissionsEditorDropdownComponent
+            [workspaceMemberId]="userId"
+            [isUserMember]="false"
+          />
+        </mat-menu>
+        <div class="open-permissions-editor-dropdown-btn__text">
+          Invite to sections...
+        </div>
+
+        <span
+          class="open-permissions-editor-dropdown-btn__symbol open-permissions-editor-dropdown-btn__symbol--keyboard-arrow-down material-symbols-outlined"
+        >
+          keyboard_arrow_down
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="invite-user-modal__footer">
+    <button class="cancel-btn" (click)="onClickCancel()">Cancel</button>
+    <button
+      class="invite-btn"
+      [disabled]="!selectedMembershipsData().workspaceMembershipData"
+      [matTooltip]="
+        'Please, select at least one section.
+      '
+      "
+      [matTooltipClass]="'center-tooltip-text'"
+      [matTooltipDisabled]="!!selectedMembershipsData().workspaceMembershipData"
+      (click)="onClickInvite()"
+    >
+      Invite
+    </button>
+  </div>
+</div>

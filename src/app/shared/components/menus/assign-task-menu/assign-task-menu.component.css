@@ -1,0 +1,32 @@
+::ng-deep.assign-task-menu {
+  min-height: 70px;
+  min-width: 220px;
+  padding: 8px;
+
+  background-color: var(--background-color-modal);
+}
+
+.assign-task-menu__title {
+  padding: 0 0 8px 8px;
+
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.assign-task-menu__workspace-member {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 4px 6px;
+  gap: 6px;
+
+  border: none;
+  border-radius: 6px;
+  background-color: var(--background-color-modal);
+  color: var(--text-color-primary);
+}
+
+.assign-task-menu__workspace-member:hover {
+  background-color: var(--hover-color-contrast-medium);
+}

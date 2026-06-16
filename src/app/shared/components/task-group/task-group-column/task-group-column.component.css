@@ -1,0 +1,277 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  padding: 4px;
+  gap: 4px;
+
+  border-radius: 8px;
+  background-color: var(--background-color-column);
+}
+
+.column__header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 4px;
+}
+
+.column__header-left {
+  display: flex;
+}
+
+.column__tag {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px 4px 6px;
+  max-width: 200px;
+
+  line-height: 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 4px;
+  color: var(--text-color-primary);
+}
+
+.column__tag-symbol {
+  display: inline-block;
+  margin-top: 1px;
+  padding-right: 4px;
+
+  font-size: 1rem;
+
+  color: var(--text-color-muted);
+}
+
+.status-tag__name {
+  overflow: hidden;
+  min-width: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.column__header-right {
+  display: flex;
+}
+
+.column__task-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task {
+  padding: 3px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-color-menu);
+}
+
+.task:hover {
+  border-color: var(--border-color-var-2);
+}
+
+.task--sim-hover {
+  border-color: var(--border-color-var-2);
+}
+
+.task__name-row {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: 6px;
+}
+
+.task__name {
+  min-width: 0;
+
+  color: var(--text-color-heading);
+
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.task__edit-task-form-name-input-container {
+  display: flex;
+  height: 100%;
+}
+
+.task__edit-task-form-name-input {
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: none;
+  background: none;
+  color: var(--text-color-purple);
+}
+
+.task__edit-task-form-name-input:focus {
+  outline: none;
+}
+
+.task__options-container {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  display: none;
+  padding: 3px;
+
+  border: 1px solid var(--border-color-var-2);
+  border-radius: 6px;
+  background-color: var(--background-color-menu);
+}
+
+.task:hover .task__options-container {
+  display: flex;
+}
+
+.task--sim-hover .task__options-container {
+  display: flex;
+}
+
+.rename-btn {
+  height: 24px;
+  width: 24px;
+
+  border: none;
+  border-radius: 4px;
+  background: none;
+}
+
+.rename-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.rename-btn-symbol--edit {
+  margin-top: 1px;
+
+  font-size: 1.2rem;
+
+  color: var(--text-color-secondary);
+}
+
+.task__path {
+  padding: 6px;
+
+  font-size: 0.8rem;
+
+  color: var(--text-color-muted);
+}
+
+.new-task-form {
+  display: grid;
+  margin-bottom: 4px;
+  padding: 6px;
+
+  border: 1px solid var(--border-color-purple-var-1);
+  border-radius: 8px;
+  background-color: var(--background-color-menu);
+}
+
+.new-task-form__new-task-name-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 6px 0 6px;
+}
+
+.new-task-form__name-input {
+  width: 160px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: none;
+  background-color: var(--background-color-menu);
+  color: var(--text-color-status-column-input);
+}
+
+.new-task-form__name-input:focus {
+  outline: none;
+}
+
+.save-new-task-btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 6px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 5px;
+  background-color: var(--border-color-purple-var-1);
+  color: white;
+}
+
+.save-new-task-btn:disabled {
+  background-color: var(--border-color-purple-var-3);
+}
+
+.save-new-task-btn:disabled:hover {
+  cursor: not-allowed;
+}
+
+.save-new-task-btn__symbol--subdirectory-arrow-left {
+  padding-left: 4px;
+
+  font-size: 1rem;
+}
+
+.select-list-btn {
+  display: flex;
+  padding: 0 0 8px 6px;
+
+  font-size: 0.7rem;
+
+  border: none;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.select-list-btn--invalid {
+  color: var(--text-color-invalid-form);
+}
+
+.add-task-btn {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-secondary);
+}
+
+.add-task-btn:hover {
+  background-color: var(--hover-color-contrast-ultra-high);
+}
+
+.add-task-btn:disabled {
+  color: var(--text-color-muted);
+}
+
+.add-task-btn:disabled:hover {
+  background-color: transparent;
+
+  cursor: not-allowed;
+}
+
+.add-task-btn__symbol--add {
+  display: block;
+
+  font-size: 1.3rem;
+  font-weight: 400;
+
+  color: var(--text-color-secondary);
+}

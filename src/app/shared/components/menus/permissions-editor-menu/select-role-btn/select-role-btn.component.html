@@ -1,0 +1,70 @@
+<button
+  #selectRoleDropdownTrigger="matMenuTrigger"
+  class="select-role-btn"
+  type="button"
+  [disabled]="isDisabled()"
+  [matMenuTriggerFor]="selectRoleDropdown"
+  (click)="$event.stopPropagation()"
+>
+  @if (selectedRole()) {
+    <div class="select-role-btn__role-name">
+      {{ selectedRole()! | formatRole }}
+    </div>
+    @if (isInherited()) {
+      <div class="select-role-btn__inheritance-status">(Inherited)</div>
+    }
+  } @else {
+    <div class="select-role-btn__text">Select role...</div>
+  }
+
+  <span
+    class="select-role-btn__symbol select-role-btn__symbol--keyboard-arrow-down material-symbols-outlined"
+  >
+    keyboard_arrow_down
+  </span>
+</button>
+
+<mat-menu #selectRoleDropdown="matMenu" class="select-role-dropdown">
+  <div class="select-role-dropdown__content">
+    <button
+      class="select-role-dropdown__btn select-role-dropdown__btn--super-admin"
+      [disabled]="
+        !allowedAssignableRoles().includes('super_admin') ||
+        disabledRoleButtons()['super_admin']
+      "
+      (click)="onSelectRole('super_admin', $event)"
+    >
+      Super admin
+    </button>
+    <button
+      class="select-role-dropdown__btn select-role-dropdown__btn--admin"
+      [disabled]="
+        !allowedAssignableRoles().includes('admin') ||
+        disabledRoleButtons()['admin']
+      "
+      (click)="onSelectRole('admin', $event)"
+    >
+      Admin
+    </button>
+    <button
+      class="select-role-dropdown__btn select-role-dropdown__btn--member"
+      [disabled]="
+        !allowedAssignableRoles().includes('member') ||
+        disabledRoleButtons()['member']
+      "
+      (click)="onSelectRole('member', $event)"
+    >
+      Member
+    </button>
+    <button
+      class="select-role-dropdown__btn select-role-dropdown__btn--guest"
+      [disabled]="
+        !allowedAssignableRoles().includes('guest') ||
+        disabledRoleButtons()['guest']
+      "
+      (click)="onSelectRole('guest', $event)"
+    >
+      Guest
+    </button>
+  </div>
+</mat-menu>

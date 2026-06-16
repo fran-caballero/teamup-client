@@ -1,0 +1,140 @@
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.5rem;
+  padding: 6px;
+  gap: 6px;
+
+  background-color: var(--background-color-site-header);
+}
+
+.site-header__left {
+  padding-left: 11px;
+}
+
+.site-header__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.permissions-docs-btn {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding: 4px 6px;
+  gap: 4px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border-radius: 6px;
+
+  color: white;
+}
+
+.permissions-docs-btn:hover {
+  background: rgb(71, 73, 100);
+}
+
+@media (max-width: 486px) {
+  .permissions-docs-btn {
+    height: 28px;
+  }
+  .permissions-docs-btn__main-text {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .permissions-docs-btn__docs-suffix {
+    display: none;
+  }
+}
+
+.new-task-btn {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding: 4px 6px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: white;
+}
+
+.new-task-btn:hover {
+  background: rgb(71, 73, 100);
+}
+
+@media (max-width: 486px) {
+  .new-task-btn {
+    height: 28px;
+
+    font-size: 0.75rem;
+  }
+}
+
+.new-task-btn__symbol--add-circle {
+  display: flex;
+  padding: 2px 4px 0 0;
+
+  font-size: 1rem;
+}
+
+.site-header__notifications-dropdown {
+  display: none;
+}
+
+.notifications-btn {
+  display: flex;
+  height: 26px;
+  width: 26px;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: white;
+}
+
+.notifications-btn:hover {
+  background: rgb(71, 73, 100);
+}
+
+.notifications-btn__symbol--notifications {
+  padding-top: 2px;
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.open-profile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 4px;
+
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background: rgb(71, 73, 100);
+}
+
+.open-profile-menu-btn:hover {
+  border: 1px solid #595b73;
+}
+
+.open-profile-menu-btn__symbol--chevron-left {
+  transform: rotate(270deg);
+
+  font-size: 1.1rem;
+  font-weight: 200;
+
+  color: white;
+}

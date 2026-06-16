@@ -1,0 +1,44 @@
+<form
+  class="new-workspace-modal"
+  autocomplete="off"
+  [formGroup]="newWorkspaceForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="new-workspace-modal__header">
+    <div class="new-workspace-modal__title">New workspace</div>
+  </div>
+  <div class="new-workspace-modal__body">
+    <div class="new-workspace-modal__main-text">
+      What would you like to name <br />
+      your Workspace?
+    </div>
+    <div class="new-workspace-name-input-container">
+      <input
+        class="new-workspace-name-input-container__input"
+        type="text"
+        id="new-workspace-name"
+        name="new-workspace-name"
+        placeholder="Your workspace name"
+        maxlength="50"
+        formControlName="workspaceName"
+      />
+    </div>
+  </div>
+  <div class="new-workspace-modal__footer">
+    <button class="back-btn" type="button" (click)="onClickBack()">
+      <span
+        class="back-btn__symbol back-btn__symbol--arrow-back-ios material-symbols-outlined"
+      >
+        arrow_back_ios
+      </span>
+      Back
+    </button>
+    <button
+      class="create-workspace-btn"
+      type="submit"
+      [disabled]="newWorkspaceForm.invalid"
+    >
+      Create workspace
+    </button>
+  </div>
+</form>

@@ -1,0 +1,19 @@
+<mat-menu class="notifications-dropdown" #notificationsDropdown>
+  <div class="notifications-dropdown__content">
+    <header class="notifications-dropdown__header">Notifications</header>
+    @if (notifications().length) {
+      @for (notification of notifications(); track notification.id) {
+        <button
+          class="notifications-dropdown__notification-btn"
+          (click)="openDialog(notification)"
+        >
+          {{ notification.description }}
+        </button>
+      }
+    } @else {
+      <div class="notifications-dropdown__no-pending-notifications-msg">
+        You have no pending notifications
+      </div>
+    }
+  </div>
+</mat-menu>

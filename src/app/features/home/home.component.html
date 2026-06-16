@@ -1,0 +1,46 @@
+<div class="home">
+  <div class="home__content">
+    <h1 class="home__greeting">Good {{ partOfTheDay }}, {{ username() }}</h1>
+    <div class="home__main">
+      <section class="home__my-work-container">
+        <app-my-work />
+      </section>
+      <div class="home__bottom">
+        <section class="home__personal-list-container">
+          <a
+            class="home__personal-list-heading"
+            [routerLink]="['/personal-list']"
+            >Personal list</a
+          >
+          @if (user(); as user) {
+            <app-list
+              [isStandalone]="true"
+              [isEmbedded]="true"
+              [inputSpaceId]="null"
+              [inputFolderId]="null"
+              [inputList]="user.personalList"
+            />
+          }
+        </section>
+        <section class="home__assigned-to-me-list-container">
+          <h2 class="home__assigned-to-me-list-heading">Assigned to me</h2>
+          @if (assignedToList()) {
+            <app-list
+              [isStandalone]="true"
+              [isEmbedded]="true"
+              [isAssignedToMe]="true"
+              [inputSpaceId]="null"
+              [inputFolderId]="null"
+              [inputList]="null"
+              [inputTaskGroups]="assignedToMeTaskGroups()"
+              [groupByOrderingOption]="groupByOrderingOption()"
+              (selectedGroupByOptionChange)="selectedGroupByOption.set($event)"
+              (groupByOrderingOptionChange)="groupByOrderingOption.set($event)"
+              (showClosedTasksChange)="showClosedTasks.set($event)"
+            />
+          }
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

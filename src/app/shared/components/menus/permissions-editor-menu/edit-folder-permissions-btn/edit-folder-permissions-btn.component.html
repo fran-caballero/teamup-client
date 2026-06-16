@@ -1,0 +1,62 @@
+@if (folder(); as folder) {
+  <div
+    class="edit-folder-permissions-btn"
+    [matTooltip]="
+      'You are not allowed to edit this user\'s permissions for this folder. '
+    "
+    [matTooltipClass]="'center-tooltip-text'"
+    [matTooltipDisabled]="!isDisabled()"
+  >
+    <div class="edit-folder-permissions-btn__left">
+      <app-collapse-expand-btn
+        class="collapse-expand-btn"
+        [isCollapsedOnCreation]="true"
+        [(isCollapsed)]="isFolderCollapsed"
+      />
+      <div class="edit-folder-permissions-btn__symbol-container">
+        <span
+          class="edit-folder-permissions-btn__symbol edit-folder-permissions-btn__symbol--folder material-symbols-outlined"
+        >
+          folder
+        </span>
+      </div>
+      <button class="edit-folder-permissions-btn__btn">
+        {{ folder.name }}
+      </button>
+    </div>
+    <div class="edit-folder-permissions-btn__right">
+      <input
+        #checkbox
+        class="edit-folder-permissions-btn__checkbox"
+        type="checkbox"
+        [disabled]="isCheckboxDisabled()"
+        [checked]="folderMembershipData() ? true : false"
+        (change)="toggleFolderChecked($event)"
+      />
+      <app-select-role-btn
+        [isDisabled]="isDisabled() || !checkbox.checked"
+        [disabledRoleButtons]="disabledRoleButtons()"
+        [btnType]="'subsection'"
+        [isInherited]="folderMembershipData()?.isInherited"
+        [allowedAssignableRoles]="allowedAssignableRoles()"
+        [selectedRole]="folderMembershipData()?.role"
+        (selectedRoleChange)="onSelectRole($event)"
+      />
+    </div>
+  </div>
+
+  @if (!isFolderCollapsed()) {
+    @for (list of folder.lists; track list.id) {
+      <app-edit-list-permissions-btn
+        [isDisabled]="!canEditListPermissions(list.id)"
+        [isCheckboxDisabled]="folderMembershipData() ? true : false"
+        [space]="space()"
+        [folder]="folder"
+        [list]="list"
+        [allowedAssignableRoles]="getAllowedAssignableListRoles(list.id)"
+        [workspaceMemberId]="workspaceMemberId()"
+        [(selectedMemberships)]="selectedMemberships"
+      />
+    }
+  }
+}

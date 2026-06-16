@@ -1,0 +1,68 @@
+::ng-deep.entity-options-dropdown {
+  margin-top: 8px !important;
+  padding: 8px;
+
+  background-color: var(--background-color-main-section) !important;
+}
+
+::ng-deep.entity-options-dropdown .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.entity-options-dropdown__title {
+  padding: 6px 0 6px 6px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  color: var(--text-color-muted);
+}
+
+.entity-options-dropdown__btn {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 150px;
+
+  font-size: 0.9rem;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-heading);
+}
+
+.entity-options-dropdown__btn:not(:disabled):hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.entity-options-dropdown__btn:disabled:hover {
+  cursor: not-allowed;
+}
+
+.entity-options-dropdown__symbol-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  margin: 3px;
+}
+
+.entity-options-dropdown__symbol {
+  color: var(--text-color-secondary);
+}
+
+.entity-options-dropdown__symbol--edit {
+  font-size: 1.2rem;
+}
+
+.entity-options-dropdown__btn--delete {
+  color: var(--delete-color);
+}
+
+.entity-options-dropdown__symbol--delete {
+  color: var(--delete-color);
+
+  font-size: 1.2rem;
+}

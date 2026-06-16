@@ -1,0 +1,351 @@
+@if (user(); as user) {
+  <div class="people__view-selector">
+    <div
+      class="people-view-selector-tab-container"
+      [class.people-view-selector-tab-container--selected]="
+        view() === 'my-team'
+      "
+    >
+      <a
+        class="people-view-selector-tab my-team-btn"
+        [routerLink]="[]"
+        [queryParams]="{ view: 'my-team' }"
+        [matTooltip]="'My team'"
+        [matTooltipDisabled]="myTeamBtnText.offsetWidth > 0"
+      >
+        <div class="my-team-btn__symbol-container">
+          <span
+            class="my-team-btn__symbol my-team-btn__symbol--group material-symbols-outlined"
+          >
+            group
+          </span>
+        </div>
+        <span class="my-team-btn__text" #myTeamBtnText>My team</span>
+      </a>
+    </div>
+    <div
+      class="people-view-selector-tab-container"
+      [class.people-view-selector-tab-container--selected]="
+        view() === 'search-people'
+      "
+    >
+      <a
+        class="people-view-selector-tab search-people-btn"
+        [routerLink]="[]"
+        [queryParams]="{ view: 'search-people' }"
+        [matTooltip]="'Search people'"
+        [matTooltipDisabled]="searchPeopleBtnText.offsetWidth > 0"
+      >
+        <div class="search-people-btn__symbol-container">
+          <span
+            class="material-symbols-outlined search-people-btn__symbol search-people-btn__symbol--search"
+          >
+            search
+          </span>
+        </div>
+        <span class="search-people-btn__text" #searchPeopleBtnText>
+          Search people
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="people">
+    @if (view() === "my-team") {
+      <div class="people__header">
+        <h1 class="people__heading">
+          Manage people in {{ workspace()?.name }}
+        </h1>
+      </div>
+
+      <div class="people__table-container">
+        <table class="people__table people-table">
+          <tr class="people-table__header-row">
+            <th
+              class="people-table__header-cell people-table__header-cell--username"
+            >
+              USERNAME
+            </th>
+            <th
+              class="people-table__header-cell people-table__header-cell--section-type"
+            >
+              SECTION TYPE
+            </th>
+            <th
+              class="people-table__header-cell people-table__header-cell--section-name"
+            >
+              SECTION NAME
+            </th>
+            <th
+              class="people-table__header-cell people-table__header-cell--path"
+            >
+              PATH
+            </th>
+            <th
+              class="people-table__header-cell people-table__header-cell--role"
+            >
+              ROLE
+            </th>
+            <th
+              class="people-table__header-cell people-table__header-cell--edit-permissions-btn-container"
+            ></th>
+          </tr>
+          @for (
+            member of collapsibleWorkspaceMembers();
+            track member.username
+          ) {
+            <tr class="people-table__person-row">
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--username"
+              >
+                <div class="people-table__person-username">
+                  @if (hasSubsectionMemberships(member.memberships)) {
+                    <app-collapse-expand-btn
+                      class="people-table__collapse-expand-btn"
+                      [isCollapsedOnCreation]="false"
+                      [(isCollapsed)]="member.isCollapsed"
+                    />
+                  }
+                  <app-user-avatar [username]="member.username" />
+                  {{ member.username }}
+                </div>
+              </td>
+
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--section-type"
+              >
+                Workspace
+              </td>
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--section-name"
+              >
+                {{ workspace()?.name }}
+              </td>
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--path"
+              ></td>
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--role"
+              >
+                {{ member.memberships.workspaceMembership.role | formatRole }}
+              </td>
+              <td
+                class="people-table__person-row-cell people-table__person-row-cell--edit-permissions-btn-container"
+              >
+                @if (member.id !== user.id) {
+                  <button
+                    class="edit-permissions-btn"
+                    [disabled]="!canEditMemberPermissions(member.id)"
+                    [matTooltip]="
+                      'You are not allowed to edit this user\'s permissions. '
+                    "
+                    [matTooltipDisabled]="canEditMemberPermissions(member.id)"
+                    (click)="openEditPermissionsModal(member)"
+                  >
+                    Edit permissions...
+                  </button>
+                }
+              </td>
+            </tr>
+
+            @if (
+              hasSubsectionMemberships(member.memberships) &&
+              !member.isCollapsed()
+            ) {
+              @for (
+                spaceMembership of member.memberships.spaceMemberships;
+                track spaceMembership.spaceId
+              ) {
+                @if (isSpaceInWorkspace(spaceMembership.spaceId)) {
+                  <tr class="people-table__person-row">
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--username"
+                    ></td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-type"
+                    >
+                      Space
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-name"
+                    >
+                      {{
+                        mappedWorkspace()?.spacesMap?.get(
+                          spaceMembership.spaceId
+                        )?.name
+                      }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--path"
+                    >
+                      {{ getLocalSpace(spaceMembership.spaceId)?.name }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--role"
+                    >
+                      {{ spaceMembership.role | formatRole }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--edit-permissions-btn-container"
+                    ></td>
+                  </tr>
+                }
+              }
+              @for (
+                folderMembership of member.memberships.folderMemberships;
+                track folderMembership.folderId
+              ) {
+                @if (isFolderInWorkspace(folderMembership.folderId)) {
+                  <tr class="people-table__person-row">
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--username"
+                    ></td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-type"
+                    >
+                      Folder
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-name"
+                    >
+                      {{
+                        mappedWorkspace()?.foldersMap?.get(
+                          folderMembership.folderId
+                        )?.name
+                      }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--path"
+                    >
+                      {{ buildFolderPath(folderMembership.folderId) }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--role"
+                    >
+                      {{ folderMembership.role | formatRole }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--edit-permissions-btn-container"
+                    ></td>
+                  </tr>
+                }
+              }
+              @for (
+                listMembership of member.memberships.listMemberships;
+                track listMembership.listId
+              ) {
+                @if (isListInWorkspace(listMembership.listId)) {
+                  <tr class="people-table__person-row">
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--username"
+                    ></td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-type"
+                    >
+                      List
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--section-name"
+                    >
+                      {{
+                        mappedWorkspace()?.listsMap?.get(listMembership.listId)
+                          ?.name
+                      }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--path"
+                    >
+                      {{ buildListPath(listMembership.listId) }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--role"
+                    >
+                      {{ listMembership.role | formatRole }}
+                    </td>
+                    <td
+                      class="people-table__person-row-cell people-table__person-row-cell--edit-permissions-btn-container"
+                    ></td>
+                  </tr>
+                }
+              }
+            }
+          }
+        </table>
+      </div>
+    } @else {
+      <div class="people__header">
+        <h1 class="people__heading">Search people everywhere</h1>
+      </div>
+
+      <form
+        class="people__global-user-search-form"
+        [formGroup]="userSearchForm"
+      >
+        <div class="people__global-user-search-input-container">
+          <span
+            class="people__global-user-search-input-symbol people__global-user-search-input-symbol--search material-symbols-outlined"
+          >
+            search
+          </span>
+          <input
+            class="people__global-user-search-input"
+            placeholder="Search users"
+            formControlName="username"
+          />
+        </div>
+
+        <button
+          class="people__user-global-search-submit-btn"
+          (click)="submitUserSearchForm()"
+        >
+          Search
+        </button>
+      </form>
+
+      <div class="people__user-search-table-container">
+        <table class="people__user-search-table user-search-table">
+          <tr class="user-search-table__header-row">
+            <th
+              class="user-search-table__header-cell user-search-table__header-cell--username"
+            >
+              USERNAME
+            </th>
+          </tr>
+          @for (person of searchUsersResult(); track person.username) {
+            <tr class="user-search-table__person-row">
+              <td
+                class="user-search-table__person-row-cell user-search-table__person-row-cell--username"
+              >
+                <div class="user-search-table__person-username">
+                  <app-user-avatar [username]="person.username" />
+                  {{ person.username }}
+                </div>
+                <div class="user-search-table__row-btn-container">
+                  @if (isUserInWorkspace(person.id)) {
+                    <div class="in-workspace-tag">In workspace</div>
+                  } @else if (person.isInvited) {
+                    <button
+                      class="invite-user-btn invite-user-btn--invited"
+                      matTooltip="Cancel invitation"
+                      (click)="
+                        openCancelInvitationDialog(person.id, person.username)
+                      "
+                    >
+                      Invited
+                    </button>
+                  } @else {
+                    <button
+                      class="invite-user-btn"
+                      (click)="openInviteUserDialog(person.id, person.username)"
+                    >
+                      Invite...
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </table>
+      </div>
+    }
+  </div>
+}

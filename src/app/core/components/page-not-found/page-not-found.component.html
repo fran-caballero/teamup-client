@@ -1,0 +1,47 @@
+<div class="page-not-found">
+  <header class="page-not-found__header">
+    <div class="page-not-found__header-left"></div>
+    <div class="page-not-found__header-right">
+      @if (user(); as user) {
+        <app-user-avatar
+          [username]="user.username"
+          [styles]="{ height: '28px', width: '28px' }"
+        />
+        <span class="page-not-found__username">
+          {{ user.username }}
+        </span>
+      }
+
+      <button class="page-not-found__sign-out-btn" (click)="onClickSignout()">
+        Sign Out
+      </button>
+    </div>
+  </header>
+  <div class="page-not-found__main-section">
+    <div class="page-not-found__not-found-card not-found-card">
+      <div class="not-found-card__error-avatar-container">
+        <div class="error-avatar">
+          <div class="error-avatar__icon-container-border">
+            <div class="error-avatar__icon-container">
+              <span
+                class="error-avatar__icon error-avatar__icon--error material-symbols-outlined"
+              >
+                error
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="not-found-card__text">
+        <div class="not-found-card__main-message">This page is unavailable</div>
+        <div class="not-found-card__secondary-message">
+          You don't have access to this link or this link is invalid.
+        </div>
+      </div>
+      <button class="not-found-card__go-back-btn" [routerLink]="'/home'">
+        Go back
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<header class="site-header">
+  <div class="site-header__left">
+    <a class="site-header__logo-container" [routerLink]="['/home']">
+      <app-logo class="site-header__logo" [height]="20" [width]="20" />
+    </a>
+  </div>
+  <div class="site-header__right">
+    <a class="permissions-docs-btn" [routerLink]="['/roles-and-permissions']">
+      <span class="permissions-docs-btn__main-text"> Roles & Permissions </span>
+
+      <span class="permissions-docs-btn__docs-suffix">· Docs&nbsp;</span>
+    </a>
+    <button class="new-task-btn" (click)="openDialog()">
+      <span
+        class="new-task-btn__symbol new-task-btn__symbol--add-circle material-symbols-outlined"
+      >
+        add_circle
+      </span>
+      New task
+    </button>
+    <app-notifications-dropdown
+      #notificationsDropdownComponent
+      class="site-header__notifications-dropdown"
+    />
+    <button
+      class="notifications-btn"
+      [matBadge]="numberOfNotifications() || null"
+      [matMenuTriggerFor]="notificationsDropdownComponent.notificationsDropdown"
+    >
+      <span
+        class="notifications-btn__symbol notifications-btn__symbol--notifications material-symbols-outlined"
+        >Notifications</span
+      >
+    </button>
+    <app-toggle-color-mode-btn />
+    <button
+      class="open-profile-menu-btn"
+      [matMenuTriggerFor]="profileSettingsDropdown.profileSettingsDropdown"
+    >
+      @if (user(); as user) {
+        <app-user-avatar
+          [username]="user.username"
+          [styles]="{ width: '20px', height: '20px' }"
+        />
+      }
+
+      <span
+        class="open-profile-menu-btn__symbol open-profile-menu-btn__symbol--chevron-left material-symbols-outlined"
+      >
+        chevron_left
+      </span>
+    </button>
+    <app-profile-settings-dropdown #profileSettingsDropdown />
+  </div>
+</header>

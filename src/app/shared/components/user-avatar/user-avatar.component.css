@@ -1,0 +1,36 @@
+.user-avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+
+  border-radius: 50%;
+  background-color: var(--background-color-purple-btn-var-1);
+  color: white;
+}
+
+.user-avatar__remove-indicator {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16px;
+  width: 16px;
+
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: var(--delete-color);
+}
+
+.user-avatar__remove-indicator-symbol--close-small {
+  padding-top: 2px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: white;
+}

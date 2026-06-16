@@ -1,0 +1,238 @@
+@if (urlSegments() && currentSectionType) {
+  <div class="breadcrumbs-bar">
+    @if (isSidebarClosed()) {
+      <app-open-sidebar-btn />
+    }
+    <div class="breadcrumbs-bar__section-path">
+      <ng-template #sectionOneContent>
+        @switch (urlSegments()![0].path) {
+          @case ("home") {
+            <span
+              class="breadcrumbs-bar__symbol breadcrumbs-bar__symbol--home material-symbols-outlined"
+            >
+              home
+            </span>
+            <span> Home </span>
+          }
+
+          @case ("personal-list") {
+            <app-list-symbol
+              class="list-btn__symbol"
+              [styles]="{
+                width: '15px',
+                'padding-bottom': '1px',
+
+                stroke:
+                  currentSectionType() === 'personalList'
+                    ? 'var(--text-color-heading)'
+                    : 'var(--text-color-primary)',
+                'stroke-width':
+                  currentSectionType() === 'personalList' ? '0.3' : '0.1',
+              }"
+            />
+            <span class="breadcrumbs-bar__section-name"> Personal list </span>
+          }
+          @case ("people") {
+            <span
+              class="breadcrumbs-bar__symbol breadcrumbs-bar__symbol--person material-symbols-outlined"
+            >
+              person
+            </span>
+            <span class="breadcrumbs-bar__section-name"> People </span>
+          }
+          @case ("roles-and-permissions") {
+            <span
+              class="breadcrumbs-bar__symbol breadcrumbs-bar__symbol--approval-delegation material-symbols-outlined"
+            >
+              approval_delegation
+            </span>
+            <span class="breadcrumbs-bar__section-name">
+              Roles & Permissions · Docs
+            </span>
+          }
+
+          @case ("spaces") {
+            <div class="breadcrumbs-bar__symbol-container">
+              <div class="breadcrumbs-bar__symbol-frame">
+                <span
+                  class="breadcrumbs-bar__symbol breadcrumbs-bar__symbol--group material-symbols-outlined"
+                >
+                  group
+                </span>
+              </div>
+            </div>
+            <span class="breadcrumbs-bar__section-name">
+              {{ space!()?.name }}
+            </span>
+          }
+        }
+      </ng-template>
+      @if (
+        currentSectionType() === "home" ||
+        currentSectionType() === "personalList" ||
+        currentSectionType() === "people" ||
+        currentSectionType() === "people" ||
+        currentSectionType() === "rolesAndPermissions" ||
+        currentSectionType() === "space"
+      ) {
+        <span
+          class="breadcrumbs-bar__section breadcrumbs-bar__section--active breadcrumbs-bar__section-1"
+        >
+          <ng-container *ngTemplateOutlet="sectionOneContent"></ng-container>
+        </span>
+      } @else {
+        <a
+          class="breadcrumbs-bar__section breadcrumbs-bar__section-1"
+          [routerLink]="getSectionOneLink(urlSegments()![0].path)"
+        >
+          <ng-container *ngTemplateOutlet="sectionOneContent"></ng-container>
+        </a>
+      }
+
+      @if (urlSegments()![0].path === "personal-list" && urlSegments()![1]) {
+        <span class="breadcrumbs-bar__section-divider"> / </span>
+        <span
+          class="breadcrumbs-bar__section breadcrumbs-bar__section--2"
+          [class.breadcrumbs-bar__section--active]="
+            currentSectionType() === 'taskInPersonalList'
+          "
+        >
+          <span class="breadcrumbs-bar__section-name">
+            {{ task!()?.name }}</span
+          >
+        </span>
+      }
+
+      @if (urlSegments()![2]) {
+        <ng-template #sectionTwoContent>
+          @switch (urlSegments()![2].path) {
+            @case ("folders") {
+              <div class="breadcrumbs-bar__symbol-container">
+                <span
+                  class="breadcrumbs-bar__symbol breadcrumbs-bar__symbol--folder material-symbols-outlined"
+                  [class.breadcrumbs-bar__symbol--active]="
+                    currentSectionType() === 'folder' ||
+                    currentSectionType() === 'listInSpace'
+                  "
+                >
+                  folder
+                </span>
+              </div>
+              <span class="breadcrumbs-bar__section-name">
+                {{ folder!()?.name }}
+              </span>
+            }
+            @case ("lists") {
+              <app-list-symbol
+                class="list-btn__symbol"
+                [styles]="{
+                  width: '15px',
+                  'padding-bottom': '1px',
+
+                  stroke:
+                    currentSectionType() === 'listInSpace'
+                      ? 'var(--text-color-heading)'
+                      : 'var(--text-color-primary)',
+                  'stroke-width':
+                    currentSectionType() === 'listInSpace' ? '0.3' : '0.1',
+                }"
+              />
+              <span class="breadcrumbs-bar__section-name">
+                {{ list!()?.name }}
+              </span>
+            }
+          }
+        </ng-template>
+        <span class="breadcrumbs-bar__section-divider"> / </span>
+        @if (
+          currentSectionType() === "folder" ||
+          currentSectionType() === "listInSpace"
+        ) {
+          <span
+            class="breadcrumbs-bar__section breadcrumbs-bar__section--active breadcrumbs-bar__section--2"
+          >
+            <ng-container *ngTemplateOutlet="sectionTwoContent"></ng-container>
+          </span>
+        } @else {
+          <a
+            class="breadcrumbs-bar__section breadcrumbs-bar__section--2"
+            [routerLink]="getSectionTwoLink(urlSegments()![2].path)"
+          >
+            <ng-container *ngTemplateOutlet="sectionTwoContent"></ng-container>
+          </a>
+        }
+
+        @if (urlSegments()![4]) {
+          <span class="breadcrumbs-bar__section-divider"> / </span>
+          <ng-template #sectionThreeContent>
+            @switch (urlSegments()![4].path) {
+              @case ("lists") {
+                <app-list-symbol
+                  class="list-btn__symbol"
+                  [styles]="{
+                    width: '15px',
+                    'padding-bottom': '1px',
+
+                    stroke:
+                      currentSectionType() === 'listInFolder'
+                        ? 'var(--text-color-heading)'
+                        : 'var(--text-color-primary)',
+                    'stroke-width':
+                      currentSectionType() === 'listInFolder' ? '0.3' : '0.1',
+                  }"
+                />
+                <span class="breadcrumbs-bar__section-name">
+                  {{ list!()?.name }}
+                </span>
+              }
+              @case ("tasks") {
+                <span class="breadcrumbs-bar__section-name">
+                  {{ task!()?.name }}
+                </span>
+              }
+            }
+          </ng-template>
+          @if (
+            currentSectionType() === "listInFolder" ||
+            currentSectionType() === "taskInListInSpace"
+          ) {
+            <span
+              class="breadcrumbs-bar__section breadcrumbs-bar__section--3"
+              [class.breadcrumbs-bar__section--active]="
+                currentSectionType() === 'listInFolder' ||
+                currentSectionType() === 'taskInListInSpace'
+              "
+            >
+              <ng-container
+                *ngTemplateOutlet="sectionThreeContent"
+              ></ng-container>
+            </span>
+          } @else {
+            <a
+              class="breadcrumbs-bar__section breadcrumbs-bar__section--2"
+              [routerLink]="getSectionThreeLink(urlSegments()![4].path)"
+            >
+              <ng-container
+                *ngTemplateOutlet="sectionThreeContent"
+              ></ng-container>
+            </a>
+          }
+
+          @if (urlSegments()![6]) {
+            <span class="breadcrumbs-bar__section-divider"> / </span>
+            <span
+              class="breadcrumbs-bar__section breadcrumbs-bar__section--4"
+              [class.breadcrumbs-bar__section--active]="
+                currentSectionType() === 'taskInListInFolder'
+              "
+            >
+              <span class="breadcrumbs-bar__section-name">
+                {{ task!()?.name }}
+              </span>
+            </span>
+          }
+        }
+      }
+    </div>
+  </div>
+}

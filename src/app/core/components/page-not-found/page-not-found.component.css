@@ -1,0 +1,137 @@
+.page-not-found {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.page-not-found__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 30px;
+}
+
+.page-not-found__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-not-found__username {
+  font-size: 0.9rem;
+
+  color: var(--text-color-primary);
+}
+
+.page-not-found__sign-out-btn {
+  display: flex;
+  justify-content: center;
+  padding: 6px 12px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-color-primary);
+}
+
+.page-not-found__sign-out-btn:hover {
+  background-color: var(--hover-color-contrast-high);
+}
+
+.page-not-found__main-section {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 260px;
+  width: 400px;
+  padding: 24px;
+
+  border-radius: 12px;
+  box-shadow: 0 10px 12px #00000033;
+  background-color: var(--background-color-modal);
+}
+
+.not-found-card__error-avatar-container {
+  padding: 16px;
+}
+
+.error-avatar__icon-container-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+
+  border: 2px solid var(--background-color-error-avatar-icon-container);
+  border-radius: 12px;
+}
+
+.error-avatar__icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 43px;
+  width: 46px;
+  margin: 2px;
+
+  border-radius: 7px;
+  background-color: var(--background-color-error-avatar-icon-container);
+}
+
+.error-avatar__icon--error {
+  font-size: 2rem;
+  font-variation-settings: "FILL" 1;
+
+  color: var(--error-avatar-icon-color);
+}
+
+.not-found-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.not-found-card__main-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}
+
+.not-found-card__secondary-message {
+  text-align: center;
+  font-size: 0.9rem;
+
+  color: var(--text-color-secondary);
+}
+
+.not-found-card__go-back-btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+  background-color: var(--background-color-purple-btn-var-1);
+  color: #ffffff;
+}
+
+.not-found-card__go-back-btn:hover {
+  background-color: var(--hover-color-purple-btn-var-1);
+}

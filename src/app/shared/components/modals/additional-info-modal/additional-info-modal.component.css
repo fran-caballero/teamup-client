@@ -1,0 +1,24 @@
+.additional-info-modal {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 600px;
+  padding: 0 12px;
+  gap: 80px;
+
+  font-size: 0.8rem;
+
+  border-radius: 6px;
+  background-color: var(--background-color-purple);
+  color: var(--text-color-modal-indication);
+}
+
+.additional-info-modal__symbol--info {
+  font-size: 0.85rem;
+
+  color: var(--text-color-purple);
+}
+
+.additional-info-modal__message {
+  color: var(--text-color-heading);
+}

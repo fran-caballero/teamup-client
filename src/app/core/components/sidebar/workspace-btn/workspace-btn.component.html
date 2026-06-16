@@ -1,0 +1,181 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+@if (currentWorkspace(); as currentWorkspace) {
+  <button
+    #workspaceBtn="matMenuTrigger"
+    class="workspace-btn"
+    [matMenuTriggerFor]="workspaceOptionsMenu"
+  >
+    <div class="workspace-btn__workspace-icon">
+      {{ currentWorkspace.name[0] }}
+    </div>
+    <div class="workspace-btn__current-workspace-name">
+      {{ currentWorkspace.name }}
+    </div>
+    <span class="workspace-btn__arrow-down material-symbols-outlined">
+      keyboard_arrow_down
+    </span>
+  </button>
+
+  <mat-menu
+    #workspaceOptionsMenu="matMenu"
+    class="workspace-options-menu"
+    (click)="$event.stopPropagation()"
+    (closed)="onCloseWorkspaceOptionsMenu(currentWorkspace.id)"
+  >
+    <div
+      class="workspace-options-menu-content"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="workspace-options-menu__header">
+        <div
+          class="workspace-options-menu__current-workspace workspace-options-menu__workspace--current"
+        >
+          <div class="workspace-icon workspace-icon--current">
+            {{ currentWorkspace.name[0] }}
+          </div>
+          @if (!workspacesBeingRenamedMap().get(currentWorkspace.id)) {
+            <div class="workspace-options-menu__current-workspace-name">
+              {{ currentWorkspace.name }}
+            </div>
+          } @else {
+            <form
+              class="workspace-options-menu__rename-workspace-form"
+              [formGroup]="renameCurrentWorkspaceForm()"
+            >
+              <input
+                #editCurrentWorkspaceNameFormInput
+                class="workspace-options-menu__rename-workspace-form-input"
+                spellcheck="false"
+                maxlength="32"
+                formControlName="workspaceName"
+                (blur)="renameWorkspace(currentWorkspace.id, null)"
+                (keydown.enter)="renameWorkspace(currentWorkspace.id, null)"
+                (click)="$event.stopPropagation()"
+              />
+            </form>
+          }
+
+          @if (!workspaceOptionsDropdownComponent.isEmpty()) {
+            <app-toggle-options-dropdown-btn
+              #currentWorkspaceOptionsDropdownBtn
+              class="toggle-options-dropdown-btn"
+              [hoverColorContrast]="'ultra-high'"
+              [dropdownMenu]="
+                workspaceOptionsDropdownComponent.entityOptionsDropdown
+              "
+              (click)="$event.stopPropagation()"
+            />
+          }
+          <app-entity-options-dropdown
+            #workspaceOptionsDropdownComponent
+            [includeRename]="canRenameWorkspace(currentWorkspace.id)"
+            [includeDelete]="canDeleteWorkspace(currentWorkspace.id)"
+            [disableDelete]="!isSuperAdminOfMoreWorkspaces()"
+            [disableDeleteMessage]="
+              'You need to be super admin of at least one additional workspace to delete this one.'
+            "
+            [stopInnerClickPropagation]="true"
+            (startEntityRenaming)="
+              onStartWorkspaceRenaming(currentWorkspace.id, null, 'current')
+            "
+            (startEntityDeletion)="
+              onStartWorkspaceDeletion(currentWorkspace.id)
+            "
+          />
+        </div>
+      </div>
+      <div class="workspace-options-menu__body">
+        <div class="workspace-options-menu__body-top">SWITCH WORKSPACES</div>
+        @for (workspace of user()?.workspaces; track workspace.id) {
+          @if (workspace.id !== currentWorkspace.id) {
+            <div
+              class="workspace-options-menu__switch-workspace-btn switch-workspace-btn"
+              (click)="onClickSwitchWorkspace(workspace.id)"
+            >
+              <div class="switch-workspace-btn__icon-container">
+                <div class="workspace-icon workspace-icon--other">
+                  {{ workspace.name[0] }}
+                </div>
+              </div>
+              <div class="switch-workspace-btn__name-container">
+                @if (!workspacesBeingRenamedMap().get(workspace.id)) {
+                  <div class="switch-workspace-btn__workspace-name">
+                    {{ workspace.name }}
+                  </div>
+                } @else {
+                  <form
+                    class="switch-workspace-btn__rename-workspace-form"
+                    [formGroup]="renameOtherWorkspacesForm"
+                  >
+                    <div formArrayName="workspaceNames">
+                      @for (
+                        otherWorkspaceName of otherWorkspacesNamesControls();
+                        track $index
+                      ) {
+                        @if ($index === workspaceBeingRenamedIndex()) {
+                          <input
+                            #editOtherWorkspaceNameFormInput
+                            class="switch-workspace-btn__rename-workspace-form-input"
+                            spellcheck="false"
+                            maxlength="32"
+                            formControlName="{{ $index }}"
+                            (blur)="renameWorkspace(workspace.id, $index)"
+                            (keydown.enter)="
+                              renameWorkspace(workspace.id, $index)
+                            "
+                            (click)="$event.stopPropagation()"
+                          />
+                        }
+                      }
+                    </div>
+                  </form>
+                }
+
+                <div class="switch-workspace-btn__role">
+                  {{ workspace.role | formatRole }}
+                </div>
+              </div>
+              @if (!otherWorkspaceOptionsDropdownComponent.isEmpty()) {
+                <app-toggle-options-dropdown-btn
+                  #otherWorkspaceOptionsDropdownBtn
+                  class="toggle-options-dropdown-btn"
+                  [hoverColorContrast]="'ultra-high'"
+                  [dropdownMenu]="
+                    otherWorkspaceOptionsDropdownComponent.entityOptionsDropdown
+                  "
+                  (click)="$event.stopPropagation()"
+                />
+              }
+              <app-entity-options-dropdown
+                #otherWorkspaceOptionsDropdownComponent
+                [includeRename]="canRenameWorkspace(workspace.id)"
+                [includeDelete]="canDeleteWorkspace(workspace.id)"
+                [stopInnerClickPropagation]="true"
+                (startEntityRenaming)="
+                  onStartWorkspaceRenaming(workspace.id, $index, 'other')
+                "
+                (startEntityDeletion)="onStartWorkspaceDeletion(workspace.id)"
+              />
+            </div>
+          }
+        }
+
+        <div class="workspace-options-menu__footer">
+          <button
+            class="workspace-options-menu__new-workspace-btn"
+            (click)="openNewWorkspaceDialog()"
+          >
+            <span
+              class="workspace-options-menu__symbol workspace-options-menu__symbol--add material-symbols-outlined"
+            >
+              add
+            </span>
+
+            New workspace
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-menu>
+}

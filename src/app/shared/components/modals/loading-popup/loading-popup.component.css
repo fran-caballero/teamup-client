@@ -1,0 +1,32 @@
+::ng-deep .mdc-snackbar__surface {
+  min-width: 336px !important;
+
+  background-color: var(--side-color-loading-popup) !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: var(--background-color-menu);
+}
+
+.loading-message-popup {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 20px;
+
+  background-color: var(--background-color-menu);
+}
+
+.loading-message-popup__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-message-popup__loading-message {
+  display: flex;
+
+  font-weight: 600;
+
+  color: var(--text-color-primary);
+}

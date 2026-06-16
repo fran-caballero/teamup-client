@@ -1,0 +1,88 @@
+@if (taskGroups(); as taskGroups) {
+  <div
+    class="space-board-view"
+    [class.space-board-view--empty]="taskGroups.length === 0"
+  >
+    @switch (selectedGroupByOption()) {
+      @case ("status") {
+        @if (taskGroups.length === 0) {
+          <app-empty-section
+            [spaceId]="spaceWithCollapsibleLists()?.id"
+            [folderId]="null"
+            [sectionType]="'space'"
+          />
+        } @else {
+          @for (taskGroup of taskGroups; track $index) {
+            @if (hasProperty(taskGroup, "status")) {
+              <app-task-group-column
+                [taskGroup]="taskGroup"
+                [taskGroupType]="'inSpace'"
+                [tasksCommonAncestors]="null"
+                [status]="taskGroup.status"
+                [columnName]="taskGroup.status.name"
+                [columnVariant]="'status'"
+                [columnSubvariant]="taskGroup.status.type"
+                [canCreateTasks]="canCreateTasks()"
+              />
+            }
+          }
+        }
+      }
+      @case ("priority") {
+        @for (taskGroup of taskGroups; track $index) {
+          @if (hasProperty(taskGroup, "priority")) {
+            <app-task-group-column
+              [taskGroup]="taskGroup"
+              [taskGroupType]="'inSpace'"
+              [tasksCommonAncestors]="null"
+              [columnName]="
+                taskGroup.priority
+                  ? (taskGroup.priority | titlecase)
+                  : 'No priority'
+              "
+              [columnVariant]="'priority'"
+              [columnSubvariant]="taskGroup.priority"
+              [canCreateTasks]="canCreateTasks()"
+            />
+          }
+        }
+      }
+      @case ("dueDate") {
+        @for (taskGroup of taskGroups; track $index) {
+          @if (hasProperty(taskGroup, "dueDate")) {
+            <app-task-group-column
+              [taskGroup]="taskGroup"
+              [taskGroupType]="'inSpace'"
+              [tasksCommonAncestors]="null"
+              [columnName]="
+                taskGroup.dueDate
+                  ? (taskGroup.dueDate | titlecase)
+                  : 'No due date'
+              "
+              [columnVariant]="'dueDate'"
+              [columnSubvariant]="taskGroup.dueDate"
+              [canCreateTasks]="canCreateTasks()"
+            />
+          }
+        }
+      }
+      @case ("assignee") {
+        @for (taskGroup of taskGroups; track $index) {
+          @if (hasProperty(taskGroup, "assignee")) {
+            <app-task-group-column
+              [taskGroup]="taskGroup"
+              [taskGroupType]="'inSpace'"
+              [tasksCommonAncestors]="null"
+              [columnName]="
+                taskGroup.assignee ? taskGroup.assignee.username : 'No assignee'
+              "
+              [columnVariant]="'assignee'"
+              [columnSubvariant]="'user'"
+              [canCreateTasks]="canCreateTasks()"
+            />
+          }
+        }
+      }
+    }
+  </div>
+}

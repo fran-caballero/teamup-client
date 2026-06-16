@@ -1,0 +1,24 @@
+<div class="info-modal">
+  <div class="info-modal__header">
+    <button class="small-close-btn" type="button" (click)="onClickClose()">
+      <span
+        class="small-close-btn__symbol small-close-btn__symbol--close material-symbols-outlined"
+      >
+        close
+      </span>
+    </button>
+  </div>
+  <div class="info-modal__body">
+    <div class="info-modal__main-message">
+      {{ mainMessage }}
+    </div>
+    @if (secondaryMessage) {
+      <div class="info-modal__secondary-message">
+        {{ secondaryMessage }}
+      </div>
+    }
+  </div>
+  <div class="info-modal__footer">
+    <button class="close-btn" (click)="onClickClose()">Close</button>
+  </div>
+</div>

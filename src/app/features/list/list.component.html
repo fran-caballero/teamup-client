@@ -1,0 +1,50 @@
+<div class="list">
+  @if (isStandalone()) {
+    @if (isEmbedded()) {
+      <app-view-selector-bar
+        [type]="'embedded'"
+        (selectedViewChange)="view.set($event)"
+      />
+    } @else {
+      <app-view-selector-bar
+        class="list__view-selector-bar"
+        [type]="'inFullView'"
+        [inputView]="view()"
+      />
+    }
+    <div class="section-options-header">
+      <app-group-by-btn
+        [omitOptions]="isAssignedToMe() ? ['assignee'] : null"
+        (selectedGroupByOptionChange)="selectedGroupByOption.set($event)"
+        [groupByOrderingOption]="effectiveGroupByOrderingOption()"
+        (groupByOrderingOptionChange)="groupByOrderingOption.set($event)"
+      />
+      <app-toggle-closed-tasks-btn
+        [showClosedTasks]="effectiveShowClosedTasks()"
+        (showClosedTasksChange)="showClosedTasks.set($event)"
+      />
+    </div>
+  }
+  <div class="list__list-content">
+    @if (view() === "list") {
+      <app-list-list-view
+        [list]="computedList() || null"
+        [spaceId]="inputSpaceId()"
+        [folderId]="inputFolderId()"
+        [selectedGroupByOption]="selectedGroupByOption()"
+        [taskGroups]="inputTaskGroups() ?? taskGroups()"
+        [tasksCommonAncestors]="tasksAncestorsData()"
+        [taskGroupsType]="'inList'"
+        [isAssignedToMe]="isAssignedToMe()"
+      />
+    } @else {
+      <app-list-board-view
+        [selectedGroupByOption]="selectedGroupByOption()"
+        [list]="computedList() || null"
+        [taskGroups]="inputTaskGroups() ?? taskGroups()"
+        [tasksCommonAncestors]="tasksAncestorsData()"
+        [isAssignedToMe]="isAssignedToMe()"
+      />
+    }
+  </div>
+</div>

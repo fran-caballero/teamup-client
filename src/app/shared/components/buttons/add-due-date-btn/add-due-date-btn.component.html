@@ -1,0 +1,40 @@
+<button
+  #addDueDateBtn="matMenuTrigger"
+  class="add-due-date-btn"
+  [class.add-due-date-btn--hover-outlined]="hasHoverOutline() && !isDisabled()"
+  [ngStyle]="combinedBtnStyles()"
+  type="button"
+  [disabled]="isDisabled()"
+  [matMenuTriggerFor]="addDueDateMenuComponent.addDueDateMenu"
+  (click)="$event.stopPropagation()"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+  (menuOpened)="menuOpened.emit()"
+  (menuClosed)="menuClosed.emit()"
+>
+  @if (addDueDateMenuComponent.selectedDate(); as selectedDate) {
+    <span
+      class="add-due-date-btn__formatted-selected-date"
+      [class.add-due-date-btn__formatted-selected-date--overdue]="
+        isDateOverdue(selectedDate)
+      "
+    >
+      {{ addDueDateMenuComponent.formattedSelectedDate() }}
+    </span>
+  } @else {
+    <span
+      class="add-due-date-btn__symbol add-due-date-btn__symbol--calendar_add_on material-symbols-outlined"
+      [ngStyle]="symbolStyles()"
+    >
+      calendar_add_on
+    </span>
+    @if (noDueDatePlaceholder()) {
+      {{ noDueDatePlaceholder() }}
+    }
+  }
+</button>
+
+<app-add-due-date-menu
+  #addDueDateMenuComponent
+  [(selectedDate)]="selectedDate"
+/>

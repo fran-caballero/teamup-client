@@ -1,0 +1,36 @@
+<div class="space">
+  <app-view-selector-bar
+    class="space__view-selector-bar"
+    [type]="'inFullView'"
+    [inputView]="viewParam()"
+  />
+  <div class="section-options-header">
+    <app-group-by-btn
+      (selectedGroupByOptionChange)="selectedGroupByOption.set($event)"
+      [groupByOrderingOption]="groupByOrderingOption()"
+      (groupByOrderingOptionChange)="groupByOrderingOption.set($event)"
+    />
+    <app-toggle-closed-tasks-btn
+      (showClosedTasksChange)="showClosedTasks.set($event)"
+    />
+  </div>
+  <div class="space-content">
+    @if (spaceWithCollapsibleLists(); as spaceWithCollapsibleLists) {
+      @if (viewParam() === "list") {
+        <app-space-list-view
+          [taskGroups]="taskGroups()"
+          [selectedGroupByOption]="selectedGroupByOption()"
+          [groupByOrderingOption]="groupByOrderingOption()"
+          [spaceWithCollapsibleLists]="spaceWithCollapsibleLists"
+          [showClosedTasks]="showClosedTasks()"
+        />
+      } @else {
+        <app-space-board-view
+          [taskGroups]="taskGroups()"
+          [selectedGroupByOption]="selectedGroupByOption()"
+          [spaceWithCollapsibleLists]="spaceWithCollapsibleLists"
+        />
+      }
+    }
+  </div>
+</div>

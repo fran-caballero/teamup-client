@@ -1,0 +1,55 @@
+<div class="view-selector">
+  @if (type() === "inFullView") {
+    <div
+      class="board-btn-container"
+      [class.board-btn-container--selected]="currentView() === 'board'"
+    >
+      <a
+        class="board-btn"
+        [routerLink]="[]"
+        [queryParams]="{ view: 'board' }"
+      >
+        <div class="board-btn__symbol-container">
+          <app-board-symbol /> Board
+        </div>
+      </a>
+    </div>
+    <div
+      class="list-btn-container"
+      [class.list-btn-container--selected]="currentView() === 'list'"
+    >
+      <a
+        class="list-btn"
+        [routerLink]="[]"
+        [queryParams]="{ view: 'list' }"
+      >
+        <div class="list-btn__symbol-container">
+          <app-list-symbol />
+        </div>
+        List
+      </a>
+    </div>
+  } @else {
+    <div
+      class="board-btn-container"
+      [class.board-btn-container--selected]="currentView() === 'board'"
+    >
+      <button class="board-btn" (click)="selectedView.set('board')">
+        <div class="board-btn__symbol-container">
+          <app-board-symbol /> Board
+        </div>
+      </button>
+    </div>
+    <div
+      class="list-btn-container"
+      [class.list-btn-container--selected]="currentView() === 'list'"
+    >
+      <button class="list-btn" (click)="selectedView.set('list')">
+        <div class="list-btn__symbol-container">
+          <app-list-symbol />
+        </div>
+        List
+      </button>
+    </div>
+  }
+</div>

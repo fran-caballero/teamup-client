@@ -1,0 +1,81 @@
+@if (space(); as space) {
+  <div
+    class="edit-space-permissions-btn"
+    [matTooltip]="
+      'You are not allowed to edit this user\'s permissions for this space.'
+    "
+    [matTooltipClass]="'center-tooltip-text'"
+    [matTooltipDisabled]="!isDisabled()"
+  >
+    <div class="edit-space-permissions-btn__left">
+      <app-collapse-expand-btn
+        class="collapse-expand-btn"
+        [isCollapsedOnCreation]="isSpaceCollapsed()"
+        [(isCollapsed)]="isSpaceCollapsed"
+      />
+      <div class="edit-space-permissions-btn__symbol-container">
+        <div class="edit-space-permissions-btn__symbol-frame">
+          <span
+            class="edit-space-permissions-btn__symbol edit-space-permissions-btn__symbol--group material-symbols-outlined"
+          >
+            group
+          </span>
+        </div>
+      </div>
+
+      <button class="edit-space-permissions-btn__btn">
+        {{ space.name | trimName: 21 }}
+      </button>
+    </div>
+    <div class="edit-space-permissions-btn__right">
+      <input
+        #checkbox
+        class="edit-space-permissions-btn__checkbox"
+        type="checkbox"
+        [disabled]="isCheckboxDisabled()"
+        [checked]="spaceMembershipData() ? true : false"
+        (change)="toggleSpaceChecked($event)"
+      />
+      <app-select-role-btn
+        [isDisabled]="isDisabled() || !checkbox.checked"
+        [disabledRoleButtons]="disabledRoleButtons()"
+        [btnType]="'subsection'"
+        [isInherited]="spaceMembershipData()?.isInherited"
+        [allowedAssignableRoles]="allowedAssignableRoles()"
+        [selectedRole]="spaceMembershipData()?.role"
+        (selectedRoleChange)="onSelectRole($event)"
+      />
+    </div>
+  </div>
+
+  @if (!isSpaceCollapsed()) {
+    <div class="edit-space-permissions-btn__folders">
+      @for (folder of space.folders; track folder.id) {
+        <app-edit-folder-permissions-btn
+          [isDisabled]="!isAllowedToEditFolderPermissions(folder.id)"
+          [isCheckboxDisabled]="spaceMembershipData() ? true : false"
+          [space]="space"
+          [folder]="folder"
+          [allowedAssignableRoles]="getAllowedAssignableFolderRoles(folder.id)"
+          [workspaceMemberId]="workspaceMemberId()"
+          [(selectedMemberships)]="selectedMemberships"
+        />
+      }
+    </div>
+    @for (list of space.lists; track list.id) {
+      <div class="list-btn-container">
+        <app-edit-list-permissions-btn
+          class="list-btn"
+          [isDisabled]="!canEditListPermissions(list.id)"
+          [isCheckboxDisabled]="spaceMembershipData() ? true : false"
+          [space]="space"
+          [folder]="null"
+          [list]="list"
+          [allowedAssignableRoles]="getAllowedAssignableListRoles(list.id)"
+          [workspaceMemberId]="workspaceMemberId()"
+          [(selectedMemberships)]="selectedMemberships"
+        />
+      </div>
+    }
+  } @else {}
+}

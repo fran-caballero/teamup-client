@@ -1,0 +1,123 @@
+.delete-warning-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  width: 400px;
+
+  border-radius: 12px;
+  background-color: var(--background-color-modal);
+}
+
+.delete-warning-modal__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 140px;
+  padding: 24px;
+
+  background-color: var(--background-color-main-section);
+}
+
+.delete-warning-modal__symbol-container-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 42px;
+
+  border: 2px solid var(--border-color-delete-warning-modal-symbol-container);
+  border-radius: 12px;
+}
+
+.delete-warning-modal__symbol-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  width: 36px;
+  margin: 2px;
+
+  border-radius: 7px;
+  background-color: var(
+    --background-color-delete-warning-modal-symbol-container
+  );
+}
+
+.delete-warning-modal__symbol--delete {
+  color: var(--delete-color);
+}
+
+.delete-warning-modal__element-indication {
+  display: flex;
+  max-width: 300px;
+  padding-top: 12px;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--text-color-modal-indication);
+}
+
+.delete-warning-modal__element-indication-text {
+  overflow: hidden;
+
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.delete-warning-modal__consequences-message {
+  padding-top: 12px;
+
+  font-size: 0.8rem;
+  text-align: center;
+
+  color: var(--text-color-secondary);
+}
+
+.delete-warning-modal__footer {
+  display: flex;
+  padding: 18px 24px;
+  gap: 12px;
+
+  background-color: var(--background-color-sidebar);
+}
+
+.cancel-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color-main-section);
+  color: var(--text-color-primary);
+}
+
+.cancel-btn:hover {
+  background-color: var(--hover-color-contrast-medium);
+}
+
+.delete-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+
+  font-weight: 600;
+
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color-delete-warning-modal-btn);
+  border-radius: 6px;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: var(--hover-color-delete-warning-modal-btn);
+}

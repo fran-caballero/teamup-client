@@ -1,0 +1,33 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+}
+
+.list__upper-bar {
+  display: flex;
+  align-items: center;
+}
+
+.list__count {
+  padding: 0 6px;
+
+  font-size: 0.9rem;
+
+  color: var(--text-color-secondary);
+}
+
+.list__upper-bar__symbol--flag_2 {
+  padding-right: 0.4rem;
+
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.list--priority__type {
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  color: var(--text-color-heading);
+}

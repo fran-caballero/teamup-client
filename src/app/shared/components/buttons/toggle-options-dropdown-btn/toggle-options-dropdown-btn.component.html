@@ -1,0 +1,16 @@
+<button
+  #menuTriggerBtn="matMenuTrigger"
+  class="toggle-options-dropdown-btn"
+  [ngClass]="
+    'toggle-options-dropdown-btn--hover-color-contrast-' + hoverColorContrast()
+  "
+  [matMenuTriggerFor]="dropdownMenu()"
+  (menuOpened)="isMenuOpen.emit(menuTriggerBtn.menuOpen)"
+  (menuClosed)="isMenuOpen.emit(menuTriggerBtn.menuOpen)"
+>
+  <span
+    class="toggle-options-dropdown-btn__symbol toggle-options-dropdown-btn__symbol--more_horiz material-symbols-outlined"
+  >
+    more_horiz
+  </span>
+</button>

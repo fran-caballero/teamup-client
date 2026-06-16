@@ -1,0 +1,80 @@
+<div class="my-work">
+  <h2 class="my-work__heading">My Work</h2>
+  <div class="my-work__status-tabs-container">
+    <div
+      class="my-work__status-tab-container"
+      [class.my-work__status-tab-container--selected]="
+        selectedStatus() === 'not_started'
+      "
+    >
+      <button
+        class="my-work__status-tab"
+        (click)="updateSelectedStatus('not_started')"
+      >
+        Not started
+      </button>
+    </div>
+    <div
+      class="my-work__status-tab-container"
+      [class.my-work__status-tab-container--selected]="
+        selectedStatus() === 'active'
+      "
+    >
+      <button
+        class="my-work__status-tab"
+        (click)="updateSelectedStatus('active')"
+      >
+        Active
+      </button>
+    </div>
+    <div
+      class="my-work__status-tab-container"
+      [class.my-work__status-tab-container--selected]="
+        selectedStatus() === 'done'
+      "
+    >
+      <button
+        class="my-work__status-tab"
+        (click)="updateSelectedStatus('done')"
+      >
+        Done
+      </button>
+    </div>
+  </div>
+  <div class="my-work__tasks-container">
+    @switch (selectedStatus()) {
+      @case ("not_started") {
+        <app-task-group-list
+          [standaloneTasks]="
+            taskGroupsByStatus().notStartedTasks.standaloneTasks
+          "
+          [taskGroupType]="'inMyWork'"
+          [taskGroupSubtype]="{ statusType: 'not_started' }"
+          [commonListStatuses]="null"
+          [tasksCommonAncestors]="null"
+          [canCreateTasks]="true"
+        />
+      }
+      @case ("active") {
+        <app-task-group-list
+          [standaloneTasks]="taskGroupsByStatus().activeTasks.standaloneTasks"
+          [taskGroupType]="'inMyWork'"
+          [taskGroupSubtype]="{ statusType: 'active' }"
+          [commonListStatuses]="null"
+          [tasksCommonAncestors]="null"
+          [canCreateTasks]="true"
+        />
+      }
+      @case ("done") {
+        <app-task-group-list
+          [standaloneTasks]="taskGroupsByStatus().doneTasks.standaloneTasks"
+          [taskGroupType]="'inMyWork'"
+          [taskGroupSubtype]="{ statusType: 'done' }"
+          [commonListStatuses]="null"
+          [tasksCommonAncestors]="null"
+          [canCreateTasks]="true"
+        />
+      }
+    }
+  </div>
+</div>

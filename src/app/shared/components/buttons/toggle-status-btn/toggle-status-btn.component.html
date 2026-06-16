@@ -1,0 +1,39 @@
+@if (status()) {
+  <button
+    class="status-btn"
+    [ngClass]="'status-btn--hover-color-contrast-' + hoverColorContrast()"
+  >
+    @switch (status()!.type) {
+      @case ("not_started") {
+        <span
+          class="status-btn__symbol status-btn__symbol--unchecked material-symbols-outlined"
+          [ngStyle]="{
+            color: statusColor(),
+          }"
+        >
+          radio_button_unchecked
+        </span>
+      }
+      @case ("active") {
+        <span
+          class="status-btn__symbol status-btn__symbol--partial material-symbols-outlined"
+          [ngStyle]="{
+            color: statusColor(),
+          }"
+        >
+          radio_button_partial
+        </span>
+      }
+      @case ("done") {
+        <span
+          class="status-btn__symbol status-btn__symbol--check_circle material-symbols-outlined"
+          [ngStyle]="{
+            color: statusColor(),
+          }"
+        >
+          check_circle
+        </span>
+      }
+    }
+  </button>
+}

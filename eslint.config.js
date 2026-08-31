@@ -48,6 +48,17 @@ module.exports = tseslint.config(
     },
   },
   {
+    files: ["tests/**/*.ts", "playwright.config.ts"],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-floating-promises": "error",
+    },
+  },
+  {
     files: ["**/*.html"],
     extends: [
       ...angular.configs.templateRecommended,

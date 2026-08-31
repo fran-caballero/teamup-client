@@ -40,6 +40,8 @@ This repository contains the Angular frontend for the app. It handles workspace 
 - Angular Material / CDK
 - Socket.IO client
 - ngx-quill / Quill
+- Playwright
+- GitHub Actions
 
 ## Architecture
 
@@ -57,6 +59,28 @@ Key frontend patterns:
 - Nested entities are exposed through lookup maps for efficient UI access
 - Task grouping is centralised in a shared service
 - Some create, update and delete flows use optimistic UI updates with rollback behaviour
+
+## End-to-End Testing
+
+The Playwright suite covers four core user journeys:
+
+- Protected routes redirect anonymous users to login
+- Authentication persists after a full page reload
+- Tasks can be created, updated, reopened and deleted
+- Users can navigate the workspace hierarchy and switch between Board and List views
+
+Authenticated scenarios reuse saved browser state, while generated task data is unique and automatically cleaned up after each run.
+
+Install Chromium and run the complete suite with:
+
+```bash
+npx playwright install chromium
+npm run e2e
+```
+
+## Continuous Integration
+
+GitHub Actions runs the complete Playwright suite in Chromium for every pull request targeting `main` and every push to `main`. The pipeline performs a clean dependency installation, starts the Angular application, executes the tests, saves an HTML report and captures traces on retry for diagnostics.
 
 ## Getting Started
 

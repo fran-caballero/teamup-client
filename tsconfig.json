@@ -28,7 +28,8 @@
     "lib": [
       "ESNext",
       "dom"
-    ]
+    ],
+    "types": ["node"],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
